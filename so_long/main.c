@@ -13,11 +13,12 @@ typedef struct map_size
 	int is_valid;
 }	t_map_size;
 
-t_map_size	get_map_size(int fd)
+t_map_size	get_map_size(char *path_map)
 {
 	t_map_size	map_size;
 	int			readed;
 	int			x;
+	int			fd;
 	char		buf;
 
 	map_size.x = 0;
@@ -25,6 +26,7 @@ t_map_size	get_map_size(int fd)
 	map_size.is_valid = 1;
 	readed = 1;
 	x = 0;
+	fd = open(path_map, O_RDONLY);
 	while(buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
@@ -51,21 +53,51 @@ t_map_size	get_map_size(int fd)
 	printf("%d\n", map_size.x);
 	printf("%d\n", map_size.y);
 	printf("%d\n", map_size.is_valid);
+	close(fd);
 	return (map_size);
 }
 
-char **fill_map(char **map)
+char **fill_map(char **map, t_map_size map_size, char *path_map)
 {
+	int		fd;
+	int		readed;
+	char	buf;
+	int		y;
+	int		x;
 
+	fd = open(path_map, O_RDONLY);
+	readed = 1;
+	y = 0;
+	x = 0;
+	while(readed > 0)
+	{
+		readed = read(fd, &buf, 1);
+		if (buf == '\n' || readed == 0)
+		{
+			map[y][x] = '\0';
+			x = 0;
+			y++;
+		}
+		else
+		{
+			map[y][x] = buf;
+			x++;
+		}
+	}
+	y = 0;
+	while (y < map_size.y)
+	{
+		printf("%s\n", map[y]);
+		y++;
+	}
 }
 
-char **create_map(t_map_size map_size, )
+char **create_map(t_map_size map_size, char *path_map)
 {
 	char	**map;
 	char	buf;
 	int		y;
 	int		i;
-	lseek(fd, 0, SEEK_SET);
 
 	map = malloc(sizeof(char *) * (map_size.y));
 	if (!map)
@@ -84,7 +116,6 @@ char **create_map(t_map_size map_size, )
 		}
 		y++;
 	}
-	map = fill_map(map, map_size);
 	return (map);
 }
 
@@ -96,26 +127,18 @@ char **create_map(t_map_size map_size, )
 	map_path_is_valid();
 }*/
 
-/* a changer */ void	map_parser(const char *path_map)
+/* a changer */ void	map_parser(char *path_map)
 {
-	int			fd;
 	t_map_size	map_size;
 	char		**map;
-	//char	*buf;
 
-	fd = open(path_map, O_RDONLY);
-	if(!fd)
-		return ;
-	map_size = get_map_size(fd);
+	map_size = get_map_size(path_map);
 	if (!map_size.is_valid)
 		return ;
-	map = create_map(map_size, fd);
-
-
-	//get_map_size(fd);
-	//read(fd, buf, 10);
-	//return ;
-	close (fd);
+	map = create_map(map_size, path_map);
+	if (!map)
+		return ;
+	map = fill_map(map, map_size, path_map);
 }
 
 // MAPPING MAPPING //
