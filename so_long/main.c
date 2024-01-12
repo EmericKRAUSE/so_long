@@ -50,9 +50,6 @@ t_map_size	get_map_size(char *path_map)
 		else
 			x++;
 	}
-	printf("%d\n", map_size.x);
-	printf("%d\n", map_size.y);
-	printf("%d\n", map_size.is_valid);
 	close(fd);
 	return (map_size);
 }
@@ -85,14 +82,26 @@ char **fill_map(char **map, t_map_size map_size, char *path_map)
 		}
 	}
 	y = 0;
-	while (y < map_size.y)
-	{
-		printf("%s\n", map[y]);
-		y++;
-	}
+	close (fd);
+	return (map);
 }
 
-char **create_map(t_map_size map_size, char *path_map)
+void	free_map(char **map)
+{
+	int i;
+	
+	if (!map)
+		return ;
+	i = 0;
+	while(map[i])
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+char **create_map(t_map_size map_size)
 {
 	char	**map;
 	char	buf;
@@ -108,11 +117,8 @@ char **create_map(t_map_size map_size, char *path_map)
 		map[y] = malloc(sizeof(char) * (map_size.x + 1));
 		if (!map[y])
 		{
-			i = 0;
-			while (i < y)
-				free(map[i]);
-			free(map);
-			return(NULL);
+			free_map(map);
+			return (NULL);	
 		}
 		y++;
 	}
@@ -135,10 +141,18 @@ char **create_map(t_map_size map_size, char *path_map)
 	map_size = get_map_size(path_map);
 	if (!map_size.is_valid)
 		return ;
-	map = create_map(map_size, path_map);
+	map = create_map(map_size);
 	if (!map)
 		return ;
 	map = fill_map(map, map_size, path_map);
+	if (!map)
+		return ;
+	int y = 0;
+	while (y < map_size.y)
+	{
+		printf("%s\n", map[y]);
+		y++;
+	}
 }
 
 // MAPPING MAPPING //
