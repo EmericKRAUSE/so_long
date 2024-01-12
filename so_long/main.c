@@ -6,52 +6,55 @@
 
 // MAPPING MAPPING //
 
-typedef struct map_size
+typedef struct map
 {
-	int	x;
-	int y;
-	int is_valid;
-}	t_map_size;
+	char	**tab;
+	int		x;
+	int		y;
+	int		is_valid;
+}			t_map;
 
-t_map_size	get_map_size(char *path_map)
+t_map	get_map_size(char *path_map)
 {
-	t_map_size	map_size;
+	t_map		map;
 	int			readed;
 	int			x;
 	int			fd;
 	char		buf;
 
-	map_size.x = 0;
-	map_size.y = 0;
-	map_size.is_valid = 1;
+	map.x = 0;
+	map.y = 0;
+	map.is_valid = 1;
+	map.tab = NULL;
 	readed = 1;
 	x = 0;
 	fd = open(path_map, O_RDONLY);
+	buf = ' ';
 	while(buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
 		if (buf != '\n')
-			map_size.x++;
+			map.x++;
 	}
-	map_size.y++;
+	map.y++;
 	while (readed > 0)
 	{
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
 		{
-			if (x != map_size.x)
+			if (x != map.x)
 			{
-				map_size.is_valid = 0;
-				return(map_size);
+				map.is_valid = 0;
+				return(map);
 			}
-			map_size.y++;
+			map.y++;
 			x = 0;
 		}
 		else
 			x++;
 	}
 	close(fd);
-	return (map_size);
+	return (map);
 }
 
 char **fill_map(char **map, t_map_size map_size, char *path_map)
@@ -86,73 +89,171 @@ char **fill_map(char **map, t_map_size map_size, char *path_map)
 	return (map);
 }
 
-void	free_map(char **map)
+void	free_map(t_map map)
 {
-	int i;
+	int y;
 	
-	if (!map)
+	if (!map.tab)
 		return ;
-	i = 0;
-	while(map[i])
+	y = 0;
+	while(y < map.y)
 	{
-		free(map[i]);
-		i++;
+		free(map.tab[y]);
+		y++;
 	}
-	free(map);
+	free(map.tab);
 }
 
-char **create_map(t_map_size map_size)
+t_map create_map(t_map map)
 {
-	char	**map;
 	char	buf;
 	int		y;
 	int		i;
 
-	map = malloc(sizeof(char *) * (map_size.y));
-	if (!map)
-		return (NULL);
-	y = 0;
-	while (y < map_size.y)
+	map.tab = malloc(sizeof(char *) * (map.y));
+	if (!map.tab)
 	{
-		map[y] = malloc(sizeof(char) * (map_size.x + 1));
-		if (!map[y])
+		map.is_valid = 0;
+		return (map);
+	}
+	y = 0;
+	while (y < map.y)
+	{
+		map.tab[y] = malloc(sizeof(char) * (map.x + 1));
+		if (!map.tab[y])
 		{
-			free_map(map);
-			return (NULL);	
+			free_map(map.tab);
+			map.is_valid = 0;
+			return (map);	
 		}
 		y++;
 	}
 	return (map);
 }
 
-/*int map_is_valid(fd)
+int	map_wall_is_valid(char **map, t_map_size map_size)
 {
-	get_map_size();
-	map_is_rectangle();
-	map_wall_is_valid();
-	map_path_is_valid();
-}*/
+	int y;
+	int x;
 
-/* a changer */ void	map_parser(char *path_map)
+	y = 0;
+	while (y < map_size.y)
+	{
+		x = 0;
+		while(map[y][x])
+		{
+			if ((y == 0 || y == map_size.y - 1 ||\
+			x == 0 || x == map_size.x - 1) && map[y][x] != '1')
+				return (0);
+			x++;
+		}
+		y++;
+	}
+	return (1);
+}
+
+int	ft_strchr(char *str, char to_find)
 {
-	t_map_size	map_size;
-	char		**map;
+	int i;
 
-	map_size = get_map_size(path_map);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == to_find)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	map_component_is_valid(char **map, t_map_size map_size)
+{
+	char component[6] = "10CEP";
+	int exit;
+	int collectible;
+	int position;
+	int y;
+	int x;
+
+	exit = 0;
+	collectible = 0;
+	position = 0;
+	y = 0;
+	while (y < map_size.y)
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (!ft_strchr(component, map[y][x]))
+				return (0);
+			if (map[y][x] == 'C')
+				collectible++;
+			else if (map[y][x] == 'E')
+				exit++;
+			else if (map[y][x] == 'P')
+				position++;
+			x++;
+		}
+		y++;
+	}
+	if (collectible <= 0 || exit != 1 || position != 1)
+		return (0);
+	return (1);
+}
+
+void	display_map(char **map, t_map_size map_size)
+{
+	int y;
+	int x;
+
+	y = 0;
+	x = 0;
+	while (y < map_size.y)
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'C')
+				collectible++;
+			else if (map[y][x] == 'E')
+				exit++;
+			else if (map[y][x] == 'P')
+				position++;
+		}
+		y++;
+	}
+}
+
+char **map_parser(char *path_map)
+{
+	t_map	map;
+
+	map = get_map_size(path_map);
 	if (!map_size.is_valid)
 		return ;
-	map = create_map(map_size);
+
+	map = create_map(map);
 	if (!map)
 		return ;
 	map = fill_map(map, map_size, path_map);
-	if (!map)
+	if (!map_component_is_valid(map, map_size))
+	{
+		free_map(map, map_size);
 		return ;
+	}
+	if (!map_wall_is_valid(map, map_size))
+	{
+		free_map(map, map_size);
+		return ;
+	}
 	int y = 0;
 	while (y < map_size.y)
 	{
 		printf("%s\n", map[y]);
 		y++;
 	}
+	return (map);
+	free_map(map, map_size);
 }
 
 // MAPPING MAPPING //
@@ -163,15 +264,17 @@ int main(void)
 	void *texture_ptr;
 	void *img_ptr;
 	char *path_map;
+	char **map;
 
 	path_map = "./map.ber";
 
 	//mlx_ptr = mlx_init(1920, 1080, "game", true);
-	//texture_ptr = mlx_load_png("./assets/Dirt.png");
 	//img_ptr = mlx_texture_to_image(mlx_ptr, texture_ptr);
 	
 	//mlx_image_to_window(mlx_ptr, img_ptr, 0, 0);
-	map_parser(path_map);
+	map = map_parser(path_map);
+	display_map(map);
+	
 	//mlx_loop(mlx_ptr);
 
 	//mlx_delete_image(mlx_ptr, img_ptr);
