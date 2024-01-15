@@ -11,6 +11,9 @@ typedef struct map
 	char	**tab;
 	int		x;
 	int		y;
+	int		collectible;
+	int		exit;
+	int		position;
 	int		is_valid;
 }			t_map;
 
@@ -21,6 +24,9 @@ t_map	init_map()
 	map.tab = NULL;
 	map.x = 0;
 	map.y = 0;
+	map.collectible = 0;
+	map.exit = 0;
+	map.position = 0;
 	map.is_valid = 1;
 
 	return (map);
@@ -40,20 +46,21 @@ void	get_map_size(t_map *map, char *path_map)
 	while(buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
-		map.x++;
+		if (buf != '\n')
+			map->x++;
 	}
-	map.y++;
+	map->y++;
 	while (readed > 0)
 	{
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
 		{
-			if (x != map.x)
+			if (x != map->x)
 			{
-				map.is_valid = 0;
+				map->is_valid = 0;
 				return ;
 			}
-			map.y++;
+			map->y++;
 			x = 0;
 		}
 		else
@@ -81,27 +88,27 @@ void	create_map(t_map *map)
 {
 	int		y;
 
-	map.tab = malloc(sizeof(char *) * (map.y));
-	if (!map.tab)
+	map->tab = malloc(sizeof(char *) * (map->y));
+	if (!map->tab)
 	{
-		map.is_valid = 0;
+		map->is_valid = 0;
 		return ;
 	}
 	y = 0;
-	while (y < map.y)
+	while (y < map->y)
 	{
-		map.tab[y] = malloc(sizeof(char) * (map.x + 1));
-		if (!map.tab[y])
+		map->tab[y] = malloc(sizeof(char) * (map->x + 1));
+		if (!map->tab[y])
 		{
-			free_map(map);
-			map.is_valid = 0;
+			free_map(*map);
+			map->is_valid = 0;
 			return ;	
 		}
 		y++;
 	}
 }
 
-char **fill_map(char **map, t_map_size map_size, char *path_map)
+void	fill_map(t_map *map, char *path_map)
 {
 	int		fd;
 	int		readed;
@@ -118,40 +125,18 @@ char **fill_map(char **map, t_map_size map_size, char *path_map)
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
 		{
-			map[y][x] = '\0';
+			map->tab[y][x] = '\0';
 			x = 0;
 			y++;
 		}
 		else
 		{
-			map[y][x] = buf;
+			map->tab[y][x] = buf;
 			x++;
 		}
 	}
 	y = 0;
 	close (fd);
-	return (map);
-}
-
-int	map_wall_is_valid(char **map, t_map_size map_size)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (y < map_size.y)
-	{
-		x = 0;
-		while(map[y][x])
-		{
-			if ((y == 0 || y == map_size.y - 1 ||\
-			x == 0 || x == map_size.x - 1) && map[y][x] != '1')
-				return (0);
-			x++;
-		}
-		y++;
-	}
-	return (1);
 }
 
 int	ft_strchr(char *str, char to_find)
@@ -168,62 +153,54 @@ int	ft_strchr(char *str, char to_find)
 	return (0);
 }
 
-int	map_component_is_valid(char **map, t_map_size map_size)
+int	map_component_is_valid(t_map *map)
 {
 	char component[6] = "10CEP";
-	int exit;
-	int collectible;
-	int position;
 	int y;
 	int x;
 
-	exit = 0;
-	collectible = 0;
-	position = 0;
 	y = 0;
-	while (y < map_size.y)
+	while (y < map->y)
 	{
 		x = 0;
-		while (map[y][x])
+		while (map->tab[y][x])
 		{
-			if (!ft_strchr(component, map[y][x]))
-				return (0);
-			if (map[y][x] == 'C')
-				collectible++;
-			else if (map[y][x] == 'E')
-				exit++;
-			else if (map[y][x] == 'P')
-				position++;
+			if (!ft_strchr(component, map->tab[y][x]))
+				return (map->is_valid = 0);
+			if (map->tab[y][x] == 'C')
+				map->collectible++;
+			else if (map->tab[y][x] == 'E')
+				map->exit++;
+			else if (map->tab[y][x] == 'P')
+				map->position++;
 			x++;
 		}
 		y++;
 	}
-	if (collectible <= 0 || exit != 1 || position != 1)
-		return (0);
-	return (1);
+	if (map->collectible <= 0 || map->exit != 1 || map->position != 1)
+		return (map->is_valid = 0);
+	return (map->is_valid);
 }
 
-void	display_map(char **map, t_map_size map_size)
+int	map_wall_is_valid(t_map *map)
 {
 	int y;
 	int x;
 
 	y = 0;
-	x = 0;
-	while (y < map_size.y)
+	while (y < map->y)
 	{
 		x = 0;
-		while (map[y][x])
+		while(map->tab[y][x])
 		{
-			if (map[y][x] == 'C')
-				collectible++;
-			else if (map[y][x] == 'E')
-				exit++;
-			else if (map[y][x] == 'P')
-				position++;
+			if ((y == 0 || y == map->y - 1 ||\
+			x == 0 || x == map->x - 1) && map->tab[y][x] != '1')
+				return (map->is_valid = 0);
+			x++;
 		}
 		y++;
 	}
+	return (map->is_valid);
 }
 
 t_map	map_parser(char *path_map)
@@ -232,56 +209,89 @@ t_map	map_parser(char *path_map)
 
 	map = init_map();
 	get_map_size(&map, path_map);
-	if (!map_size.is_valid)
-		return ;
-
+	if (!map.is_valid)
+		return (map);
 	create_map(&map);
-	if (!map)
-		return ;
-	map = fill_map(map, map_size, path_map);
-	if (!map_component_is_valid(map, map_size))
+	if (!map.is_valid)
+		return (map);
+	fill_map(&map, path_map);
+	if (!map_component_is_valid(&map))
 	{
-		free_map(map, map_size);
-		return ;
+		free_map(map);
+		return (map);
 	}
-	if (!map_wall_is_valid(map, map_size))
-	{
-		free_map(map, map_size);
-		return ;
-	}
-	int y = 0;
-	while (y < map_size.y)
-	{
-		printf("%s\n", map[y]);
-		y++;
-	}
+	if (!map_wall_is_valid(&map))
+		free_map(map);
 	return (map);
-	free_map(map, map_size);
 }
 
 // MAPPING MAPPING //
+
+void	display_map(t_map map, void *mlx_ptr)
+{
+	void	*texture_dirt;
+	void	*texture_tree;
+	void	*img_dirt;
+	void	*img_tree;
+	int y;
+	int x;
+	int y_pixels;
+	int	x_pixels;
+
+	y_pixels = 64;
+	x_pixels = 64;
+
+	texture_dirt = mlx_load_png("./assets/Grass2.png");
+	img_dirt = mlx_texture_to_image(mlx_ptr, texture_dirt);
+	mlx_resize_image(img_dirt, x_pixels, y_pixels);
+
+	texture_tree = mlx_load_png("./assets/Tree.png");
+	img_tree = mlx_texture_to_image(mlx_ptr, texture_tree);
+	mlx_resize_image(img_tree, x_pixels, y_pixels);
+
+	y = 0;
+	while (y < map.y)
+	{
+		x = 0;
+		while (map.tab[y][x])
+		{
+			if (map.tab[y][x] == '1')
+			{
+				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+				mlx_image_to_window(mlx_ptr, img_tree, x * x_pixels, y * y_pixels);
+			}
+			else if (map.tab[y][x] == '0')
+				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+			else if (map.tab[y][x] == 'C')
+				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+			else if (map.tab[y][x] == 'E')
+				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+			else if (map.tab[y][x] == 'P')
+				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+			x++;
+		}
+		y++;
+	}
+}
 
 int main(void)
 {
 	char	*path_map;
 	t_map	map;
 	void	*mlx_ptr;
-	void	*texture_ptr;
-	void	*img_ptr;
 
 	path_map = "./map.ber";
 	map = map_parser(path_map);
+	if (!map.is_valid)
+		return (1);
 
-	//mlx_ptr = mlx_init(1920, 1080, "game", true);
-	//img_ptr = mlx_texture_to_image(mlx_ptr, texture_ptr);
+	mlx_ptr = mlx_init(1920, 1080, "game", true);
+	display_map(map, mlx_ptr);
 	
-	//mlx_image_to_window(mlx_ptr, img_ptr, 0, 0);
-	display_map(map);
-	
-	//mlx_loop(mlx_ptr);
+	mlx_loop(mlx_ptr);
 
 	//mlx_delete_image(mlx_ptr, img_ptr);
 	//mlx_delete_texture(texture_ptr);
-	//mlx_terminate(mlx_ptr);
+	mlx_terminate(mlx_ptr);
 	return (0);
 }
