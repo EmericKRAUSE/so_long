@@ -14,7 +14,19 @@ typedef struct map
 	int		is_valid;
 }			t_map;
 
-void	get_map_size(t_map map, char *path_map)
+t_map	init_map()
+{
+	t_map	map;
+
+	map.tab = NULL;
+	map.x = 0;
+	map.y = 0;
+	map.is_valid = 1;
+
+	return (map);
+}
+
+void	get_map_size(t_map *map, char *path_map)
 {
 	int			readed;
 	int			x;
@@ -50,6 +62,45 @@ void	get_map_size(t_map map, char *path_map)
 	close(fd);
 }
 
+void	free_map(t_map map)
+{
+	int y;
+	
+	if (!map.tab)
+		return ;
+	y = 0;
+	while(y < map.y)
+	{
+		free(map.tab[y]);
+		y++;
+	}
+	free(map.tab);
+}
+
+void	create_map(t_map *map)
+{
+	int		y;
+
+	map.tab = malloc(sizeof(char *) * (map.y));
+	if (!map.tab)
+	{
+		map.is_valid = 0;
+		return ;
+	}
+	y = 0;
+	while (y < map.y)
+	{
+		map.tab[y] = malloc(sizeof(char) * (map.x + 1));
+		if (!map.tab[y])
+		{
+			free_map(map);
+			map.is_valid = 0;
+			return ;	
+		}
+		y++;
+	}
+}
+
 char **fill_map(char **map, t_map_size map_size, char *path_map)
 {
 	int		fd;
@@ -79,47 +130,6 @@ char **fill_map(char **map, t_map_size map_size, char *path_map)
 	}
 	y = 0;
 	close (fd);
-	return (map);
-}
-
-void	free_map(t_map map)
-{
-	int y;
-	
-	if (!map.tab)
-		return ;
-	y = 0;
-	while(y < map.y)
-	{
-		free(map.tab[y]);
-		y++;
-	}
-	free(map.tab);
-}
-
-t_map create_map(t_map map)
-{
-	int		y;
-	int		i;
-
-	map.tab = malloc(sizeof(char *) * (map.y));
-	if (!map.tab)
-	{
-		map.is_valid = 0;
-		return (map);
-	}
-	y = 0;
-	while (y < map.y)
-	{
-		map.tab[y] = malloc(sizeof(char) * (map.x + 1));
-		if (!map.tab[y])
-		{
-			free_map(map.tab);
-			map.is_valid = 0;
-			return (map);	
-		}
-		y++;
-	}
 	return (map);
 }
 
@@ -225,7 +235,7 @@ t_map	map_parser(char *path_map)
 	if (!map_size.is_valid)
 		return ;
 
-	map = create_map(map);
+	create_map(&map);
 	if (!map)
 		return ;
 	map = fill_map(map, map_size, path_map);
@@ -247,18 +257,6 @@ t_map	map_parser(char *path_map)
 	}
 	return (map);
 	free_map(map, map_size);
-}
-
-t_map	init_map()
-{
-	t_map	map;
-
-	map.tab = NULL;
-	map.x = 0;
-	map.y = 0;
-	map.is_valid = 1;
-
-	return (map);
 }
 
 // MAPPING MAPPING //
