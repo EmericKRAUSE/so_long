@@ -14,18 +14,13 @@ typedef struct map
 	int		is_valid;
 }			t_map;
 
-t_map	get_map_size(char *path_map)
+void	get_map_size(t_map map, char *path_map)
 {
-	t_map		map;
 	int			readed;
 	int			x;
 	int			fd;
 	char		buf;
 
-	map.x = 0;
-	map.y = 0;
-	map.is_valid = 1;
-	map.tab = NULL;
 	readed = 1;
 	x = 0;
 	fd = open(path_map, O_RDONLY);
@@ -33,8 +28,7 @@ t_map	get_map_size(char *path_map)
 	while(buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
-		if (buf != '\n')
-			map.x++;
+		map.x++;
 	}
 	map.y++;
 	while (readed > 0)
@@ -45,7 +39,7 @@ t_map	get_map_size(char *path_map)
 			if (x != map.x)
 			{
 				map.is_valid = 0;
-				return(map);
+				return ;
 			}
 			map.y++;
 			x = 0;
@@ -54,7 +48,6 @@ t_map	get_map_size(char *path_map)
 			x++;
 	}
 	close(fd);
-	return (map);
 }
 
 char **fill_map(char **map, t_map_size map_size, char *path_map)
@@ -106,7 +99,6 @@ void	free_map(t_map map)
 
 t_map create_map(t_map map)
 {
-	char	buf;
 	int		y;
 	int		i;
 
@@ -224,11 +216,12 @@ void	display_map(char **map, t_map_size map_size)
 	}
 }
 
-char **map_parser(char *path_map)
+t_map	map_parser(char *path_map)
 {
 	t_map	map;
 
-	map = get_map_size(path_map);
+	map = init_map();
+	get_map_size(&map, path_map);
 	if (!map_size.is_valid)
 		return ;
 
@@ -256,23 +249,35 @@ char **map_parser(char *path_map)
 	free_map(map, map_size);
 }
 
+t_map	init_map()
+{
+	t_map	map;
+
+	map.tab = NULL;
+	map.x = 0;
+	map.y = 0;
+	map.is_valid = 1;
+
+	return (map);
+}
+
 // MAPPING MAPPING //
 
 int main(void)
 {
-	void *mlx_ptr;
-	void *texture_ptr;
-	void *img_ptr;
-	char *path_map;
-	char **map;
+	char	*path_map;
+	t_map	map;
+	void	*mlx_ptr;
+	void	*texture_ptr;
+	void	*img_ptr;
 
 	path_map = "./map.ber";
+	map = map_parser(path_map);
 
 	//mlx_ptr = mlx_init(1920, 1080, "game", true);
 	//img_ptr = mlx_texture_to_image(mlx_ptr, texture_ptr);
 	
 	//mlx_image_to_window(mlx_ptr, img_ptr, 0, 0);
-	map = map_parser(path_map);
 	display_map(map);
 	
 	//mlx_loop(mlx_ptr);
