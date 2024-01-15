@@ -231,15 +231,21 @@ void	display_map(t_map map, void *mlx_ptr)
 {
 	void	*texture_dirt;
 	void	*texture_tree;
+	void	*texture_key;
+	void	*texture_chest;
+
 	void	*img_dirt;
 	void	*img_tree;
+	void	*img_key;
+	void	*img_chest;
+
 	int y;
 	int x;
 	int y_pixels;
 	int	x_pixels;
 
-	y_pixels = 64;
-	x_pixels = 64;
+	y_pixels = 128;
+	x_pixels = 128;
 
 	texture_dirt = mlx_load_png("./assets/Grass2.png");
 	img_dirt = mlx_texture_to_image(mlx_ptr, texture_dirt);
@@ -248,6 +254,14 @@ void	display_map(t_map map, void *mlx_ptr)
 	texture_tree = mlx_load_png("./assets/Tree.png");
 	img_tree = mlx_texture_to_image(mlx_ptr, texture_tree);
 	mlx_resize_image(img_tree, x_pixels, y_pixels);
+
+	texture_key = mlx_load_png("./assets/Key.png");
+	img_key = mlx_texture_to_image(mlx_ptr, texture_key);
+	mlx_resize_image(img_key, x_pixels, y_pixels / 1.5);
+
+	texture_chest = mlx_load_png("./assets/Chest_Locked.png");
+	img_chest = mlx_texture_to_image(mlx_ptr, texture_chest);
+	mlx_resize_image(img_chest, x_pixels, y_pixels);
 
 	y = 0;
 	while (y < map.y)
@@ -263,9 +277,15 @@ void	display_map(t_map map, void *mlx_ptr)
 			else if (map.tab[y][x] == '0')
 				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
 			else if (map.tab[y][x] == 'C')
+			{
 				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+				mlx_image_to_window(mlx_ptr, img_key, x * x_pixels, y * y_pixels);
+			}
 			else if (map.tab[y][x] == 'E')
+			{
 				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+				mlx_image_to_window(mlx_ptr, img_chest, x * x_pixels, y * y_pixels);
+			}
 			else if (map.tab[y][x] == 'P')
 				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
 			x++;
@@ -285,7 +305,7 @@ int main(void)
 	if (!map.is_valid)
 		return (1);
 
-	mlx_ptr = mlx_init(1920, 1080, "game", true);
+	mlx_ptr = mlx_init(map.x * 128, map.y * 128, "game", true);
 	display_map(map, mlx_ptr);
 	
 	mlx_loop(mlx_ptr);
