@@ -18,7 +18,7 @@ typedef struct map
 	int		is_valid;
 }			t_map;
 
-t_map	init_map()
+t_map	init_map(void)
 {
 	t_map	map;
 
@@ -29,7 +29,6 @@ t_map	init_map()
 	map.exit = 0;
 	map.position = 0;
 	map.is_valid = 1;
-
 	return (map);
 }
 
@@ -42,7 +41,7 @@ int	get_map_width(int fd)
 	readed = 1;
 	x = 0;
 	buf = ' ';
-	while(readed > 0 && buf != '\n')
+	while (readed > 0 && buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
 		if (buf != '\n')
@@ -51,7 +50,7 @@ int	get_map_width(int fd)
 	return (x);
 }
 
-int get_map_height(int fd, int map_x)
+int	get_map_height(int fd, int map_x)
 {
 	int		readed;
 	int		x;
@@ -80,7 +79,7 @@ int get_map_height(int fd, int map_x)
 
 void	get_map_size(t_map *map, char *path_map)
 {
-	int fd;
+	int	fd;
 
 	fd = open(path_map, O_RDONLY);
 	if (fd == -1)
@@ -97,12 +96,12 @@ void	get_map_size(t_map *map, char *path_map)
 
 void	free_map(t_map map)
 {
-	int y;
-	
+	int	y;
+
 	if (!map.tab)
 		return ;
 	y = 0;
-	while(y < map.y)
+	while (y < map.y)
 	{
 		free(map.tab[y]);
 		y++;
@@ -128,7 +127,7 @@ void	create_map(t_map *map)
 		{
 			free_map(*map);
 			map->is_valid = 0;
-			return ;	
+			return ;
 		}
 		y++;
 	}
@@ -147,27 +146,23 @@ void	fill_map(t_map *map, char *path_map)
 	buf = ' ';
 	y = 0;
 	x = 0;
-	while(y < map->y)
+	while (y < map->y)
 	{
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
 		{
-			map->tab[y][x] = '\0';
+			map->tab[y++][x] = '\0';
 			x = 0;
-			y++;
 		}
 		else
-		{
-			map->tab[y][x] = buf;
-			x++;
-		}
+			map->tab[y][x++] = buf;
 	}
 	close (fd);
 }
 
 int	ft_strchr(char *str, char to_find)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -181,10 +176,11 @@ int	ft_strchr(char *str, char to_find)
 
 int	map_component_is_valid(t_map *map)
 {
-	char component[6] = "10CEP";
-	int y;
-	int x;
+	char	*component;
+	int		y;
+	int		x;
 
+	component = "10CEP";
 	y = 0;
 	while (y < map->y)
 	{
@@ -210,16 +206,16 @@ int	map_component_is_valid(t_map *map)
 
 int	map_wall_is_valid(t_map *map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (y < map->y)
 	{
 		x = 0;
-		while(map->tab[y][x])
+		while (map->tab[y][x])
 		{
-			if ((y == 0 || y == map->y - 1 ||\
+			if ((y == 0 || y == map->y - 1 || \
 			x == 0 || x == map->x - 1) && map->tab[y][x] != '1')
 				return (map->is_valid = 0);
 			x++;
@@ -333,25 +329,28 @@ int	so_long(char *path_map)
 {
 	t_map	map;
 	//void	*mlx_ptr;
-
 	map = map_parser(path_map);
 	if (!map.is_valid)
 		return (0);
-	
+	int y = 0;
+	while (y < map.y)
+	{
+		printf ("%s\n", map.tab[y]);
+		y++;
+	}
+	free_map(map);
 	//mlx_ptr = mlx_init(map.x * 128, map.y * 128, "game", true);
 	//display_map(map, mlx_ptr);
-	
 	//mlx_loop(mlx_ptr);
-
 	//mlx_delete_image(mlx_ptr, img_ptr);
 	//mlx_delete_texture(texture_ptr);
 	//mlx_terminate(mlx_ptr);
 	return (1);
 }
 
-int main(void)
+int	main(void)
 {
-	char *path_map;
+	char	*path_map;
 
 	path_map = "./map.ber";
 	if (!so_long(path_map))
