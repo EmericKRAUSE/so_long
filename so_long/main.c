@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-// MAPPING MAPPING //
+// PARSING //
 
 typedef struct map
 {
@@ -32,40 +32,65 @@ t_map	init_map()
 	return (map);
 }
 
-void	get_map_size(t_map *map, char *path_map)
+int	get_map_width(int fd)
 {
-	int			readed;
-	int			x;
-	int			fd;
-	char		buf;
+	int		readed;
+	int		x;
+	char	buf;
 
 	readed = 1;
 	x = 0;
-	fd = open(path_map, O_RDONLY);
 	buf = ' ';
-	while(buf != '\n')
+	while(readed > 0 && buf != '\n')
 	{
 		readed = read(fd, &buf, 1);
 		if (buf != '\n')
-			map->x++;
+			x++;
 	}
-	map->y++;
+	return (x);
+}
+
+int get_map_height(int fd, int map_x)
+{
+	int		readed;
+	int		x;
+	int		y;
+	char	buf;
+
+	readed = 1;
+	x = 0;
+	y = 0;
+	buf = ' ';
 	while (readed > 0)
 	{
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
 		{
-			if (x != map->x)
-			{
-				map->is_valid = 0;
-				return ;
-			}
-			map->y++;
+			if (x != map_x)
+				return (-1);
+			y++;
 			x = 0;
 		}
 		else
 			x++;
 	}
+	return (y);
+}
+
+void	get_map_size(t_map *map, char *path_map)
+{
+	int fd;
+
+	fd = open(path_map, O_RDONLY);
+	if (fd == -1)
+	{
+		map->is_valid = 0;
+		return ;
+	}
+	map->x = get_map_width(fd);
+	map->y = get_map_height(fd, map->x) + 1;
+	if (map->y == -1 || map->y == map->x)
+		map->is_valid = 0;
 	close(fd);
 }
 
@@ -118,6 +143,7 @@ void	fill_map(t_map *map, char *path_map)
 
 	fd = open(path_map, O_RDONLY);
 	readed = 1;
+	buf = ' ';
 	y = 0;
 	x = 0;
 	while(readed > 0)
@@ -225,7 +251,7 @@ t_map	map_parser(char *path_map)
 	return (map);
 }
 
-// MAPPING MAPPING //
+// PARSING //
 
 void	display_map(t_map map, void *mlx_ptr)
 {
@@ -233,11 +259,13 @@ void	display_map(t_map map, void *mlx_ptr)
 	void	*texture_tree;
 	void	*texture_key;
 	void	*texture_chest;
+	void	*texture_c;
 
 	void	*img_dirt;
 	void	*img_tree;
 	void	*img_key;
 	void	*img_chest;
+	void	*img_c;
 
 	int y;
 	int x;
@@ -247,21 +275,25 @@ void	display_map(t_map map, void *mlx_ptr)
 	y_pixels = 128;
 	x_pixels = 128;
 
-	texture_dirt = mlx_load_png("./assets/Grass2.png");
+	texture_dirt = mlx_load_png("./assets/grass.png");
 	img_dirt = mlx_texture_to_image(mlx_ptr, texture_dirt);
 	mlx_resize_image(img_dirt, x_pixels, y_pixels);
 
-	texture_tree = mlx_load_png("./assets/Tree.png");
+	texture_tree = mlx_load_png("./assets/tree.png");
 	img_tree = mlx_texture_to_image(mlx_ptr, texture_tree);
 	mlx_resize_image(img_tree, x_pixels, y_pixels);
 
-	texture_key = mlx_load_png("./assets/Key.png");
+	texture_key = mlx_load_png("./assets/key.png");
 	img_key = mlx_texture_to_image(mlx_ptr, texture_key);
-	mlx_resize_image(img_key, x_pixels, y_pixels / 1.5);
+	mlx_resize_image(img_key, x_pixels, y_pixels);
 
-	texture_chest = mlx_load_png("./assets/Chest_Locked.png");
+	texture_chest = mlx_load_png("./assets/chest.png");
 	img_chest = mlx_texture_to_image(mlx_ptr, texture_chest);
 	mlx_resize_image(img_chest, x_pixels, y_pixels);
+
+	texture_c = mlx_load_png("./assets/character.png");
+	img_c = mlx_texture_to_image(mlx_ptr, texture_c);
+	mlx_resize_image(img_c, x_pixels, y_pixels);
 
 	y = 0;
 	while (y < map.y)
@@ -287,31 +319,48 @@ void	display_map(t_map map, void *mlx_ptr)
 				mlx_image_to_window(mlx_ptr, img_chest, x * x_pixels, y * y_pixels);
 			}
 			else if (map.tab[y][x] == 'P')
+			{
 				mlx_image_to_window(mlx_ptr, img_dirt, x * x_pixels, y * y_pixels);
+				mlx_image_to_window(mlx_ptr, img_c, x * x_pixels, y * y_pixels);
+			}
 			x++;
 		}
 		y++;
 	}
 }
 
-int main(void)
+int	so_long(char *path_map)
 {
-	char	*path_map;
 	t_map	map;
 	void	*mlx_ptr;
 
-	path_map = "./map.ber";
 	map = map_parser(path_map);
 	if (!map.is_valid)
 		return (1);
-
+	//int y = 0;
+	/*while (y < map.y)
+	{
+		printf ("%s\n", map.tab[y]);
+		y++;
+	}*/
+	//free_map(map);
 	mlx_ptr = mlx_init(map.x * 128, map.y * 128, "game", true);
 	display_map(map, mlx_ptr);
+	free_map(map);
 	
 	mlx_loop(mlx_ptr);
 
 	//mlx_delete_image(mlx_ptr, img_ptr);
 	//mlx_delete_texture(texture_ptr);
 	mlx_terminate(mlx_ptr);
+	return (0);
+}
+
+int main(void)
+{
+	char *path_map;
+
+	path_map = "./map.ber";
+	so_long(path_map);
 	return (0);
 }
