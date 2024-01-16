@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
+/*   Updated: 2024/01/16 15:22:05 by ekrause          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "MLX42/include/MLX42/MLX42.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -174,7 +186,7 @@ int	ft_strchr(char *str, char to_find)
 	return (0);
 }
 
-int	map_component_is_valid(t_map *map)
+void	map_component_is_valid(t_map *map)
 {
 	char	*component;
 	int		y;
@@ -188,7 +200,7 @@ int	map_component_is_valid(t_map *map)
 		while (map->tab[y][x])
 		{
 			if (!ft_strchr(component, map->tab[y][x]))
-				return (map->is_valid = 0);
+				map->is_valid = 0;
 			if (map->tab[y][x] == 'C')
 				map->collectible++;
 			else if (map->tab[y][x] == 'E')
@@ -200,11 +212,10 @@ int	map_component_is_valid(t_map *map)
 		y++;
 	}
 	if (map->collectible <= 0 || map->exit != 1 || map->position != 1)
-		return (map->is_valid = 0);
-	return (map->is_valid);
+		map->is_valid = 0;
 }
 
-int	map_wall_is_valid(t_map *map)
+void	map_wall_is_valid(t_map *map)
 {
 	int	y;
 	int	x;
@@ -217,12 +228,56 @@ int	map_wall_is_valid(t_map *map)
 		{
 			if ((y == 0 || y == map->y - 1 || \
 			x == 0 || x == map->x - 1) && map->tab[y][x] != '1')
-				return (map->is_valid = 0);
+				map->is_valid = 0;
 			x++;
 		}
 		y++;
 	}
-	return (map->is_valid);
+}
+
+t_map	map_dup(t_map *map)
+{
+	t_map	map_dup;
+	int		y;
+	int		x;
+
+	map_dup.tab = NULL;
+	map_dup.x = map->x;
+	map_dup.y = map->y;
+	map_dup.collectible = map->collectible;
+	map_dup.exit = map->exit;
+	map_dup.position = map->position;
+	map_dup.is_valid = map->is_valid;
+	create_map(&map_dup);
+	if (!map_dup.is_valid)
+		return (map_dup);
+	y = 0;
+	while (y < map_dup.y)
+	{
+		x = 0;
+		map_dup.tab[y][map->x] = '\0';
+		while (map_dup.tab[y][x])
+		{
+			map_dup.tab[y][x] = map->tab[y][x];
+			x++;
+		}
+		y++;
+	}
+	y = 0;
+	while (y < map_dup.y)
+	{
+		printf ("%s\n", map_dup.tab[y]);
+		y++;
+	}
+	free_map(map_dup);
+	return (map_dup);
+}
+
+void path_is_valid(t_map *map)
+{
+	t_map flood_map;
+
+	flood_map = map_dup(map);
 }
 
 t_map	map_parser(char *path_map)
@@ -237,13 +292,11 @@ t_map	map_parser(char *path_map)
 	if (!map.is_valid)
 		return (map);
 	fill_map(&map, path_map);
-	if (!map_component_is_valid(&map))
-	{
-		free_map(map);
+	map_component_is_valid(&map);
+	if (!map.is_valid)
 		return (map);
-	}
-	if (!map_wall_is_valid(&map))
-		free_map(map);
+	map_wall_is_valid(&map);
+	map_dup(&map);
 	return (map);
 }
 
@@ -327,12 +380,16 @@ t_map	map_parser(char *path_map)
 
 int	so_long(char *path_map)
 {
+	int		y;
 	t_map	map;
 	//void	*mlx_ptr;
 	map = map_parser(path_map);
 	if (!map.is_valid)
+	{
+		free_map(map);
 		return (0);
-	int y = 0;
+	}
+	y = 0;
 	while (y < map.y)
 	{
 		printf ("%s\n", map.tab[y]);
