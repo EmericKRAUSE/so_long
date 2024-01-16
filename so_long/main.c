@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 // PARSING //
 
@@ -146,7 +147,7 @@ void	fill_map(t_map *map, char *path_map)
 	buf = ' ';
 	y = 0;
 	x = 0;
-	while(readed > 0)
+	while(y < map->y)
 	{
 		readed = read(fd, &buf, 1);
 		if (buf == '\n' || readed == 0)
@@ -161,7 +162,6 @@ void	fill_map(t_map *map, char *path_map)
 			x++;
 		}
 	}
-	y = 0;
 	close (fd);
 }
 
@@ -253,7 +253,7 @@ t_map	map_parser(char *path_map)
 
 // PARSING //
 
-void	display_map(t_map map, void *mlx_ptr)
+/*void	display_map(t_map map, void *mlx_ptr)
 {
 	void	*texture_dirt;
 	void	*texture_tree;
@@ -327,33 +327,26 @@ void	display_map(t_map map, void *mlx_ptr)
 		}
 		y++;
 	}
-}
+}*/
 
 int	so_long(char *path_map)
 {
 	t_map	map;
-	void	*mlx_ptr;
+	//void	*mlx_ptr;
 
 	map = map_parser(path_map);
 	if (!map.is_valid)
-		return (1);
-	//int y = 0;
-	/*while (y < map.y)
-	{
-		printf ("%s\n", map.tab[y]);
-		y++;
-	}*/
-	//free_map(map);
-	mlx_ptr = mlx_init(map.x * 128, map.y * 128, "game", true);
-	display_map(map, mlx_ptr);
-	free_map(map);
+		return (0);
 	
-	mlx_loop(mlx_ptr);
+	//mlx_ptr = mlx_init(map.x * 128, map.y * 128, "game", true);
+	//display_map(map, mlx_ptr);
+	
+	//mlx_loop(mlx_ptr);
 
 	//mlx_delete_image(mlx_ptr, img_ptr);
 	//mlx_delete_texture(texture_ptr);
-	mlx_terminate(mlx_ptr);
-	return (0);
+	//mlx_terminate(mlx_ptr);
+	return (1);
 }
 
 int main(void)
@@ -361,6 +354,7 @@ int main(void)
 	char *path_map;
 
 	path_map = "./map.ber";
-	so_long(path_map);
+	if (!so_long(path_map))
+		return (1);
 	return (0);
 }
