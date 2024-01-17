@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:14:10 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:37:17 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	get_map_size(t_map *map, char *path_map);
 t_map	init_map(void);
 void	create_map(t_map *map);
 void	fill_map(t_map *map, char *path_map);
-
 void	path_is_valid(t_map *map);
 int	ft_strchr(char *str, char to_find);
+char *ft_strcat(char *s1, char *s2);
 
 #endif
