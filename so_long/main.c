@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 10:59:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/17 11:20:05 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 
 // PARSING //
 
-typedef struct position_info
-{
-	int	nb;
-	int	x;
-	int	y;
-}		t_position;
-
 typedef struct map
 {
 	char		**tab;
@@ -33,7 +26,7 @@ typedef struct map
 	int			y;
 	int			collectible;
 	int			exit;
-	t_position	position;
+	int			position;
 	int			is_valid;
 }				t_map;
 
@@ -46,9 +39,7 @@ t_map	init_map(void)
 	map.y = 0;
 	map.collectible = 0;
 	map.exit = 0;
-	map.position.nb = 0;
-	map.position.x = 0;
-	map.position.y = 0;
+	map.position = 0;
 	map.is_valid = 1;
 	return (map);
 }
@@ -215,16 +206,12 @@ void	map_component_is_valid(t_map *map)
 			else if (map->tab[y][x] == 'E')
 				map->exit++;
 			else if (map->tab[y][x] == 'P')
-			{
-				map->position.y = y;
-				map->position.x = x;
-				map->position.nb++;
-			}
+				map->position++;
 			x++;
 		}
 		y++;
 	}
-	if (map->collectible <= 0 || map->exit != 1 || map->position.nb != 1)
+	if (map->collectible <= 0 || map->exit != 1 || map->position != 1)
 		map->is_valid = 0;
 }
 
@@ -292,12 +279,37 @@ void	flood_fill(t_map *flooded_map, int y, int x)
 	flood_fill(flooded_map, y, x - 1);
 }
 
+int	get_position(t_map flooded_map, char c)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while(y < flooded_map.y)
+	{
+		x = 0;
+		while (x < flooded_map.x)
+		{
+			if (flooded_map.tab[y][x] == 'P')
+			{
+				if (c == 'y')
+					return (y);
+				else if (c  == 'x')
+					return (x);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
 void	path_is_valid(t_map *map)
 {
 	t_map	flooded_map;
 
 	flooded_map = map_dup(map);
-	flood_fill(&flooded_map, map->position.y, map->position.x);
+	flood_fill(&flooded_map, get_position(flooded_map, 'y'), get_position(flooded_map, 'x'));
 	if (flooded_map.collectible != map->collectible || \
 	flooded_map.exit != map->exit)
 		map->is_valid = 0;
