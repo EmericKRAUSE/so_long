@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/16 16:51:50 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/17 09:14:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,100 +235,68 @@ void	map_wall_is_valid(t_map *map)
 	}
 }
 
-t_map	map_cpy(t_map dest, t_map src)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < dest.y)
-	{
-		x = 0;
-		dest.tab[y][src.x] = '\0';
-		while (x < dest.x)
-		{
-			dest.tab[y][x] = src.tab[y][x];
-			x++;
-		}
-		y++;
-	}
-	return (dest);
-}
-
 t_map	map_dup(t_map *map)
 {
 	t_map	map_dup;
 	int		y;
+	int		x;
 
-	map_dup.tab = NULL;
+	map_dup = init_map();
 	map_dup.x = map->x;
 	map_dup.y = map->y;
-	map_dup.collectible = 0;
-	map_dup.exit = 0;
-	map_dup.position = map->position;
-	map_dup.is_valid = map->is_valid;
 	create_map(&map_dup);
 	if (!map_dup.is_valid)
 		return (map_dup);
-	map_dup = map_cpy(map_dup, *map);
-	return (map_dup);
-}
-
-void	init_flood_map(t_map *flood_map, t_map *map)
-{
-	int	y;
-	int	x;
-
 	y = 0;
-	while (y < flood_map->y)
+	while (y < map_dup.y)
 	{
 		x = 0;
-		while (x < flood_map->x)
+		map_dup.tab[y][map->x] = '\0';
+		while (x < map_dup.x)
 		{
-			if (map->tab[y][x] == '1')
-				flood_map->tab[y][x] = '1';
-			else
-				flood_map->tab[y][x] = '0';
+			map_dup.tab[y][x] = map->tab[y][x];
 			x++;
 		}
 		y++;
 	}
-	y = 0;
+	return (map_dup);
 }
 
-void	flood_fill(t_map *flood_map, int y, int x)
+void	flood_fill(t_map *flooded_map, int y, int x)
 {
-	if (y < 0 || y >= flood_map->y || x < 0 || x >= flood_map->x)
+	if (y < 0 || y >= flooded_map->y || x < 0 || x >= flooded_map->x)
 		return;
-	if (flood_map->tab[y][x] == '1' || flood_map->tab[y][x] == 'X')
+	if (flooded_map->tab[y][x] == '1' || flooded_map->tab[y][x] == 'X')
 		return;
-	if (flood_map->tab[y][x] == 'C')
-		flood_map->collectible++;
-	else if (flood_map->tab[y][x] == 'E')
-		flood_map->exit++;
-	flood_map->tab[y][x] = 'X';
-	flood_fill(flood_map, y - 1, x);
-	flood_fill(flood_map, y + 1, x);
-	flood_fill(flood_map, y, x + 1);
-	flood_fill(flood_map, y, x - 1);
+	if (flooded_map->tab[y][x] == 'C')
+		flooded_map->collectible++;
+	else if (flooded_map->tab[y][x] == 'E')
+		flooded_map->exit++;
+	flooded_map->tab[y][x] = 'X';
+	flood_fill(flooded_map, y - 1, x);
+	flood_fill(flooded_map, y + 1, x);
+	flood_fill(flooded_map, y, x + 1);
+	flood_fill(flooded_map, y, x - 1);
 }
 
 void path_is_valid(t_map *map)
 {
-	t_map flood_map;
+	t_map flooded_map;
 
-	flood_map = map_dup(map);
+	flooded_map = map_dup(map);
 	int y = 0;
-	//init_flood_map(&flood_map, map);
-	flood_fill(&flood_map, 2, 2);
-	while (y < flood_map.y)
+	flood_fill(&flooded_map, 2, 2);
+	if (flooded_map.collectible != map->collectible && flooded_map.exit != map->exit)
+		map->is_valid = 0;
+	while (y < flooded_map.y)
 	{
-		printf ("%s\n", flood_map.tab[y]);
+		printf ("%s\n", flooded_map.tab[y]);
 		y++;
 	}
-	printf ("%d\n%d\n", flood_map.collectible, flood_map.exit);
-	printf ("\n");
-	free_map(flood_map);
+	printf ("collectibles : %d\nexits : %d\n", flooded_map.collectible, flooded_map.exit);
+	printf ("collectibles : %d\nexits : %d\n", map->collectible, map->exit);
+	printf ("valid : %d\n", map->is_valid);
+	free_map(flooded_map);
 }
 
 t_map	map_parser(char *path_map)
@@ -347,6 +315,8 @@ t_map	map_parser(char *path_map)
 	if (!map.is_valid)
 		return (map);
 	map_wall_is_valid(&map);
+	if (!map.is_valid)
+		return (map);
 	path_is_valid(&map);
 	return (map);
 }
