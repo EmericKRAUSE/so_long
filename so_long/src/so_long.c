@@ -6,11 +6,14 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:00:55 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:54:22 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+char	*g_map_name = "../maps/map";
+char	*g_map_extension = ".ber";
 
 /*void	display_map(t_map map, void *mlx_ptr)
 {
@@ -119,8 +122,9 @@ int	main(void)
 {
 	char	*path_map;
 
-	path_map = "../maps/map.ber";
+	path_map = ft_strcat(g_map_name, g_map_extension);
 	if (!so_long(path_map))
 		return (1);
+	free (path_map);
 	return (0);
 }
