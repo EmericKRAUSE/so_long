@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 14:30:24 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:52:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,6 @@ image_package_t	init_image_package(mlx_t *mlx)
 
 	return (images);
 }
-
-/*mlx_texture_t	*init_texture(void)
-{
-	mlx_texture_t	*texture;
-
-	texture->width = 16;
-	texture->height = 16;
-	texture->bytes_per_pixel = 4;
-	texture->pixels = "1";
-
-	return(texture);
-}*/
-
-
-/*mlx_image_t	init_image(void)
-{
-	mlx_image_t image;
-
-	width = 16;
-	height = 16;
-	pixels = 1;
-	instances->x = 0;
-	instances->y = 0;
-	instances->z = 0;
-	instances->enabled = true;
-
-	return (image);
-}*/
 
 void	display_character(t_map map, mlx_t *mlx)
 {
@@ -132,10 +104,7 @@ void	hook(void *param)
 	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
 		mlx_close_window(param);
 	if (mlx_is_key_down(param, MLX_KEY_W))
-	{
-		printf ("%d\n%d\n", mlx->width, mlx->height);
 		g_images.image_character->instances->y -= 16;
-	}
 	if (mlx_is_key_down(param, MLX_KEY_S))
 		g_images.image_character->instances->y += 16;
 	if (mlx_is_key_down(param, MLX_KEY_A))
