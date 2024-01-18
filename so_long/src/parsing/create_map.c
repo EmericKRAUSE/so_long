@@ -6,11 +6,11 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:04:40 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 09:43:10 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 // Initialise la t_map avec les valeurs par defaut //
 

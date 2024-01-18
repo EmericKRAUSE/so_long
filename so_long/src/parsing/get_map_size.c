@@ -6,11 +6,11 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:12:47 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 09:45:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 // Renvoie la taille x du tableau de tableau //
 

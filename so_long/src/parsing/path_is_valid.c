@@ -6,11 +6,11 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:13:07 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 09:44:54 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 // Renvoie les coordonnees x et y corespondant //
 // a la position de depart du personnage //

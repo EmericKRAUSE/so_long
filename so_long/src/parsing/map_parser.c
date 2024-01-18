@@ -6,11 +6,11 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:12:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 09:45:00 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../../include/so_long.h"
 
 // Verifie que le contenue du tableau de tableau //
 // et leurs nombres sont corrects //
