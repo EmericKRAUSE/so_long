@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 12:59:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:30:24 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char			*g_map_name = "../maps/map";
 char			*g_map_extension = ".ber";
 int				g_pixels = 124;
+
 
 typedef struct	image_package
 {
@@ -31,10 +32,12 @@ typedef struct	image_package
 	mlx_image_t		*image_character;
 }					image_package_t;
 
+image_package_t	g_images;
+
 image_package_t	init_image_package(mlx_t *mlx)
 {
 	image_package_t images;
-
+	
 	images.texture_background = mlx_load_png("../assets/grass.png");
 	images.texture_wall = mlx_load_png("../assets/tree.png");
 	images.texture_collectible = mlx_load_png("../assets/key.png");
@@ -78,41 +81,47 @@ image_package_t	init_image_package(mlx_t *mlx)
 	return (image);
 }*/
 
+void	display_character(t_map map, mlx_t *mlx)
+{
+	int x;
+	int y;
+	
+	x = get_position(map, 'x');
+	y = get_position(map, 'y');
+	mlx_image_to_window(mlx, g_images.image_character, x * g_pixels, y * g_pixels);
+}
+
 void	display_map(t_map map, mlx_t *mlx)
 {
-	image_package_t	images;
 	int				y;
 	int				x;
 
-	images = init_image_package(mlx);
-	mlx_resize_image(images.image_background, g_pixels, g_pixels);
-	mlx_resize_image(images.image_wall, g_pixels, g_pixels);
-	mlx_resize_image(images.image_collectible, g_pixels, g_pixels);
-	mlx_resize_image(images.image_exit, g_pixels, g_pixels);
-	mlx_resize_image(images.image_character, g_pixels, g_pixels);
+	g_images = init_image_package(mlx);
 
+	mlx_resize_image(g_images.image_background, g_pixels, g_pixels);
+	mlx_resize_image(g_images.image_wall, g_pixels, g_pixels);
+	mlx_resize_image(g_images.image_collectible, g_pixels, g_pixels);
+	mlx_resize_image(g_images.image_exit, g_pixels, g_pixels);
+	mlx_resize_image(g_images.image_character, g_pixels, g_pixels);
+	
 	y = 0;
 	while (y < map.y)
 	{
 		x = 0;
 		while (x < map.x)
 		{
-			mlx_image_to_window(mlx, images.image_background, x * g_pixels, y * g_pixels);
+			mlx_image_to_window(mlx, g_images.image_background, x * g_pixels, y * g_pixels);
 			if (map.tab[y][x] == '1')
-				mlx_image_to_window(mlx, images.image_wall, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, g_images.image_wall, x * g_pixels, y * g_pixels);
 			else if (map.tab[y][x] == 'C')
-				mlx_image_to_window(mlx, images.image_collectible, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, g_images.image_collectible, x * g_pixels, y * g_pixels);
 			else if (map.tab[y][x] == 'E')
-				mlx_image_to_window(mlx, images.image_exit, x * g_pixels, y * g_pixels);
-			else if (map.tab[y][x] == 'P')
-				mlx_image_to_window(mlx, images.image_character, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, g_images.image_exit, x * g_pixels, y * g_pixels);
 			x++;
 		}
 		y++;
 	}
-	printf ("%d\n", images.texture_background->width);
-	printf ("%d\n", images.texture_background->height);
-	printf ("%d\n", images.texture_background->bytes_per_pixel);
+	display_character(map, mlx);
 }
 
 void	hook(void *param)
@@ -122,14 +131,17 @@ void	hook(void *param)
 	mlx = param;
 	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
 		mlx_close_window(param);
-	/*if (mlx_is_key_down(param, MLX_KEY_UP))
-		g_img->instances[0].y -= 5;
-	/*if (mlx_is_key_down(param, MLX_KEY_DOWN))
-		g_img->instances[0].y += 5;
-	if (mlx_is_key_down(param, MLX_KEY_LEFT))
-		g_img->instances[0].x -= 5;
-	if (mlx_is_key_down(param, MLX_KEY_RIGHT))
-		g_img->instances[0].x += 5;*/
+	if (mlx_is_key_down(param, MLX_KEY_W))
+	{
+		printf ("%d\n%d\n", mlx->width, mlx->height);
+		g_images.image_character->instances->y -= 16;
+	}
+	if (mlx_is_key_down(param, MLX_KEY_S))
+		g_images.image_character->instances->y += 16;
+	if (mlx_is_key_down(param, MLX_KEY_A))
+		g_images.image_character->instances->x -= 16;
+	if (mlx_is_key_down(param, MLX_KEY_D))
+		g_images.image_character->instances->x += 16;
 }
 
 int	so_long(char *path_map)
