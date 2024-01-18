@@ -6,15 +6,49 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 11:32:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 12:59:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-char	*g_map_name = "../maps/map";
-char	*g_map_extension = ".ber";
-int		g_pixels = 124;
+char			*g_map_name = "../maps/map";
+char			*g_map_extension = ".ber";
+int				g_pixels = 124;
+
+typedef struct	image_package
+{
+	mlx_texture_t	*texture_background;
+	mlx_texture_t	*texture_wall;
+	mlx_texture_t	*texture_collectible;
+	mlx_texture_t	*texture_exit;
+	mlx_texture_t	*texture_character;
+
+	mlx_image_t		*image_background;
+	mlx_image_t		*image_wall;
+	mlx_image_t		*image_collectible;
+	mlx_image_t		*image_exit;
+	mlx_image_t		*image_character;
+}					image_package_t;
+
+image_package_t	init_image_package(mlx_t *mlx)
+{
+	image_package_t images;
+
+	images.texture_background = mlx_load_png("../assets/grass.png");
+	images.texture_wall = mlx_load_png("../assets/tree.png");
+	images.texture_collectible = mlx_load_png("../assets/key.png");
+	images.texture_exit = mlx_load_png("../assets/chest.png");
+	images.texture_character = mlx_load_png("../assets/character.png");
+	
+	images.image_background = mlx_texture_to_image(mlx, images.texture_background);
+	images.image_wall = mlx_texture_to_image(mlx, images.texture_wall);
+	images.image_collectible = mlx_texture_to_image(mlx, images.texture_collectible);
+	images.image_exit = mlx_texture_to_image(mlx, images.texture_exit);
+	images.image_character = mlx_texture_to_image(mlx, images.texture_character);
+
+	return (images);
+}
 
 /*mlx_texture_t	*init_texture(void)
 {
@@ -46,40 +80,16 @@ int		g_pixels = 124;
 
 void	display_map(t_map map, mlx_t *mlx)
 {
-	mlx_texture_t	*texture_background;
-	mlx_texture_t	*texture_wall;
-	mlx_texture_t	*texture_collectible;
-	mlx_texture_t	*texture_exit;
-	mlx_texture_t	*texture_character;
+	image_package_t	images;
+	int				y;
+	int				x;
 
-	mlx_image_t		*image_background;
-	mlx_image_t		*image_wall;
-	mlx_image_t		*image_collectible;
-	mlx_image_t		*image_exit;
-	mlx_image_t		*image_character;
-
-	int y;
-	int x;
-
-	texture_background = mlx_load_png("../assets/grass.png");
-	image_background = mlx_texture_to_image(mlx, texture_background);
-	mlx_resize_image(image_background, g_pixels, g_pixels);
-
-	texture_wall = mlx_load_png("../assets/tree.png");
-	image_wall = mlx_texture_to_image(mlx, texture_wall);
-	mlx_resize_image(image_wall, g_pixels, g_pixels);
-
-	texture_collectible = mlx_load_png("../assets/key.png");
-	image_collectible = mlx_texture_to_image(mlx, texture_collectible);
-	mlx_resize_image(image_collectible, g_pixels, g_pixels);
-
-	texture_exit = mlx_load_png("../assets/chest.png");
-	image_exit = mlx_texture_to_image(mlx, texture_exit);
-	mlx_resize_image(image_exit, g_pixels, g_pixels);
-
-	texture_character = mlx_load_png("../assets/character.png");
-	image_character = mlx_texture_to_image(mlx, texture_character);
-	mlx_resize_image(image_character, g_pixels, g_pixels);
+	images = init_image_package(mlx);
+	mlx_resize_image(images.image_background, g_pixels, g_pixels);
+	mlx_resize_image(images.image_wall, g_pixels, g_pixels);
+	mlx_resize_image(images.image_collectible, g_pixels, g_pixels);
+	mlx_resize_image(images.image_exit, g_pixels, g_pixels);
+	mlx_resize_image(images.image_character, g_pixels, g_pixels);
 
 	y = 0;
 	while (y < map.y)
@@ -87,19 +97,39 @@ void	display_map(t_map map, mlx_t *mlx)
 		x = 0;
 		while (x < map.x)
 		{
-			mlx_image_to_window(mlx, image_background, x * g_pixels, y * g_pixels);
+			mlx_image_to_window(mlx, images.image_background, x * g_pixels, y * g_pixels);
 			if (map.tab[y][x] == '1')
-				mlx_image_to_window(mlx, image_wall, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, images.image_wall, x * g_pixels, y * g_pixels);
 			else if (map.tab[y][x] == 'C')
-				mlx_image_to_window(mlx, image_collectible, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, images.image_collectible, x * g_pixels, y * g_pixels);
 			else if (map.tab[y][x] == 'E')
-				mlx_image_to_window(mlx, image_exit, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, images.image_exit, x * g_pixels, y * g_pixels);
 			else if (map.tab[y][x] == 'P')
-				mlx_image_to_window(mlx, image_character, x * g_pixels, y * g_pixels);
+				mlx_image_to_window(mlx, images.image_character, x * g_pixels, y * g_pixels);
 			x++;
 		}
 		y++;
 	}
+	printf ("%d\n", images.texture_background->width);
+	printf ("%d\n", images.texture_background->height);
+	printf ("%d\n", images.texture_background->bytes_per_pixel);
+}
+
+void	hook(void *param)
+{
+	mlx_t	*mlx;
+
+	mlx = param;
+	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+		mlx_close_window(param);
+	/*if (mlx_is_key_down(param, MLX_KEY_UP))
+		g_img->instances[0].y -= 5;
+	/*if (mlx_is_key_down(param, MLX_KEY_DOWN))
+		g_img->instances[0].y += 5;
+	if (mlx_is_key_down(param, MLX_KEY_LEFT))
+		g_img->instances[0].x -= 5;
+	if (mlx_is_key_down(param, MLX_KEY_RIGHT))
+		g_img->instances[0].x += 5;*/
 }
 
 int	so_long(char *path_map)
@@ -121,10 +151,9 @@ int	so_long(char *path_map)
 
 	display_map(map, mlx);
 
+	mlx_loop_hook(mlx, hook, mlx);
 	mlx_loop(mlx);
-
-	//mlx_delete_image(mlx_ptr, img_ptr);
-	//mlx_delete_texture(texture_ptr);
+	
 	free_map(map);
 	mlx_terminate(mlx);
 	return (1);
