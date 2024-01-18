@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 09:59:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/18 14:07:55 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	fill_map(t_map *map, char *path_map);
 void	path_is_valid(t_map *map);
 int	ft_strchr(char *str, char to_find);
 char *ft_strcat(char *s1, char *s2);
+int	get_position(t_map flooded_map, char c);
 
 #endif
