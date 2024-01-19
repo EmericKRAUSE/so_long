@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:58:33 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:23:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /****
 * Verifie que le contenue du tableau de tableau
-* et leurs nombres sont corrects */
+* et leurs nombres sont corrects
+*/
 static	int	map_component_is_valid(t_map *map)
 {
 	char	*component;
@@ -44,7 +45,8 @@ static	int	map_component_is_valid(t_map *map)
 }
 
 /****
-* Verifie que le tableau de tableau est bien entoure de '1' */
+* Verifie que le tableau de tableau est bien entoure de '1'
+*/
 static	void	map_wall_is_valid(t_map *map)
 {
 	int	y;
@@ -69,7 +71,8 @@ static	void	map_wall_is_valid(t_map *map)
 }
 
 /****
-* Parsing de la map */
+* Parsing de la map
+*/
 t_map	map_parser(char *file)
 {
 	t_map	map;

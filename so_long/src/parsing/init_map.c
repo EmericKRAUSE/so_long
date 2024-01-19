@@ -6,14 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:57:54 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:13:42 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:52 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Initialise la t_map avec les valeurs par defaut */
+* Initialise la t_map avec les valeurs par defaut
+*/
 t_map	init_map(void)
 {
 	t_map	map;

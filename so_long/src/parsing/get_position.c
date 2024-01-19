@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:02:35 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:11:36 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:49 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /****
 * Renvoie les coordonnees x et y corespondant
-* a la position de depart du personnage */
+* a la position de depart du personnage
+*/
 int	get_position(t_map flooded_map, char c)
 {
 	int	y;

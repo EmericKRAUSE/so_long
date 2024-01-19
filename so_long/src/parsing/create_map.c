@@ -6,14 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:06:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:22 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Malloc le tableau de tableau en fonction de x et y */
+* Malloc le tableau de tableau en fonction de x et y
+*/
 void	create_map(t_map *map)
 {
 	int		y;

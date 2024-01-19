@@ -6,14 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:18:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:44 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Renvoie la taille x du tableau de tableau */
+* Renvoie la taille x du tableau de tableau
+*/
 static	int	get_map_width(int fd)
 {
 	int		readed;
@@ -33,7 +34,8 @@ static	int	get_map_width(int fd)
 }
 
 /****
-* Renvoie la taille y du tableau de tableau */
+* Renvoie la taille y du tableau de tableau
+*/
 static	int	get_map_height(int fd, int map_x)
 {
 	int		readed;
@@ -63,7 +65,8 @@ static	int	get_map_height(int fd, int map_x)
 
 /****
 * Attribut la taille x et y a la t_map
-* et verifie si elle est bien rectangulaire */
+* et verifie si elle est bien rectangulaire
+*/
 void	get_map_size(t_map *map, char *file)
 {
 	int	fd;

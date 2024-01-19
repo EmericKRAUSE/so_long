@@ -6,14 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:58:20 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:44:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:22:31 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Free le tableau de tableau */
+* Free le tableau de tableau
+*/
 void	free_map(t_map map)
 {
 	int	y;

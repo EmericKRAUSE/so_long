@@ -6,14 +6,15 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:48:36 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:23:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Alogithme flood fill en incrementant les variables collectible et exit */
+* Alogithme flood fill en incrementant les variables collectible et exit
+*/
 static	void	flood_fill(t_map *flooded_map, int y, int x)
 {
 	if (y < 0 || y >= flooded_map->y || x < 0 || x >= flooded_map->x)
@@ -32,7 +33,8 @@ static	void	flood_fill(t_map *flooded_map, int y, int x)
 }
 
 /****
-* Duplique le tableau de tableau et les coordonees x et y */
+* Duplique le tableau de tableau et les coordonees x et y
+*/
 static	t_map	map_dup(t_map *map)
 {
 	t_map	map_dup;
@@ -59,7 +61,8 @@ static	t_map	map_dup(t_map *map)
 }
 
 /****
-* Verifie que le chemin vers la sortie est valide */
+* Verifie que le chemin vers la sortie est valide
+*/
 void	path_is_valid(t_map *map)
 {
 	t_map	flooded_map;
