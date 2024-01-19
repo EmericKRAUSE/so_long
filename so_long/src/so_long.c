@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:21:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:05:22 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,13 @@ void	display_map(t_map map, mlx_t *mlx)
 	display_character(map, mlx);
 }
 
-void	event_movement(void *param)
+void	event(int key, void *param)
 {
 	mlx_t	*mlx;
-
+	
 	mlx = param;
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-		mlx_close_window(param);
-	if (mlx_is_key_down(param, MLX_KEY_W))
-		g_images.image_character->instances->y -= 16;
-	if (mlx_is_key_down(param, MLX_KEY_S))
-		g_images.image_character->instances->y += 16;
-	if (mlx_is_key_down(param, MLX_KEY_A))
-		g_images.image_character->instances->x -= 16;
-	if (mlx_is_key_down(param, MLX_KEY_D))
-		g_images.image_character->instances->x += 16;
+	if (key == MLX_KEY_ESCAPE)
+		printf ("test");
 }
 
 int	so_long(char *file)
@@ -105,11 +97,11 @@ int	so_long(char *file)
 	while (y < map.y)
 		printf("%s\n", map.tab[y++]);
 	mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
+	
+	display_map(map, mlx);
 
-	//display_map(map, mlx);
-
-	//mlx_loop_hook(mlx, event_movement, mlx);
-	//mlx_loop(mlx);
+	mlx_key_hook(mlx, event, mlx);
+	mlx_loop(mlx);
 	
 	free_map(map);
 	mlx_terminate(mlx);
