@@ -6,15 +6,14 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:20:35 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:21:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int				g_pixels = 124;
-
 t_image_package	g_images;
+int				g_pixels = 124;
 
 t_image_package	init_image_package(mlx_t *mlx)
 {
