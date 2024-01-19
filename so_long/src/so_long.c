@@ -6,37 +6,19 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 14:52:01 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 14:05:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-char			*g_map_name = "../maps/map";
-char			*g_map_extension = ".ber";
 int				g_pixels = 124;
 
+t_image_package	g_images;
 
-typedef struct	image_package
+t_image_package	init_image_package(mlx_t *mlx)
 {
-	mlx_texture_t	*texture_background;
-	mlx_texture_t	*texture_wall;
-	mlx_texture_t	*texture_collectible;
-	mlx_texture_t	*texture_exit;
-	mlx_texture_t	*texture_character;
-
-	mlx_image_t		*image_background;
-	mlx_image_t		*image_wall;
-	mlx_image_t		*image_collectible;
-	mlx_image_t		*image_exit;
-	mlx_image_t		*image_character;
-}					image_package_t;
-
-image_package_t	g_images;
-
-image_package_t	init_image_package(mlx_t *mlx)
-{
-	image_package_t images;
+	t_image_package images;
 	
 	images.texture_background = mlx_load_png("../assets/grass.png");
 	images.texture_wall = mlx_load_png("../assets/tree.png");
@@ -96,7 +78,7 @@ void	display_map(t_map map, mlx_t *mlx)
 	display_character(map, mlx);
 }
 
-void	hook(void *param)
+void	event_movement(void *param)
 {
 	mlx_t	*mlx;
 
@@ -113,43 +95,52 @@ void	hook(void *param)
 		g_images.image_character->instances->x += 16;
 }
 
-int	so_long(char *path_map)
+int	so_long(char *file)
 {
 	t_map		map;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	map = map_parser(path_map);
-	if (!map.is_valid)
-	{
-		free_map(map);
-		return (0);
-	}
-	
-	mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
-	if (!mlx)
-		return (0);
+	map = map_parser(file);
+	int y = 0;
+	while (y < map.y)
+		printf("%s\n", map.tab[y++]);
+	/*mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
 
 	display_map(map, mlx);
 
-	mlx_loop_hook(mlx, hook, mlx);
+	mlx_loop_hook(mlx, event_movement, mlx);
 	mlx_loop(mlx);
-	
+	*/
 	free_map(map);
-	mlx_terminate(mlx);
+	//mlx_terminate(mlx);
 	return (1);
 }
 
-int	main(void)
+int	is_ber(char *file)
 {
-	char	*path_map;
+	int	len;
 
-	path_map = ft_strcat(g_map_name, g_map_extension);
-	if (!so_long(path_map))
-	{
-		free (path_map);
-		return (1);
-	}
-	free (path_map);
+	if (!file)
+		return (0);
+	len = ft_strlen(file);
+	if (len < 5)
+		return (0);
+	if (!ft_strcmp(file + len - 4, ".ber"))
+		return (0);
+	return 1;
+}
+
+int	main(int argc, char **argv)
+{
+	char	*file;
+
+	if (argc != 2)
+		ft_error("please put one argument");
+	file = argv[1];
+	if (!is_ber(file))
+		ft_error("please put a valid file");
+	file = argv[1];
+	so_long(file);
 	return (0);
 }

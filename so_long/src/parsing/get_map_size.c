@@ -6,14 +6,14 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 11:33:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 13:18:49 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-// Renvoie la taille x du tableau de tableau //
-
+/****
+* Renvoie la taille x du tableau de tableau */
 static	int	get_map_width(int fd)
 {
 	int		readed;
@@ -32,8 +32,8 @@ static	int	get_map_width(int fd)
 	return (x);
 }
 
-// Renvoie la taille y du tableau de tableau //
-
+/****
+* Renvoie la taille y du tableau de tableau */
 static	int	get_map_height(int fd, int map_x)
 {
 	int		readed;
@@ -51,7 +51,7 @@ static	int	get_map_height(int fd, int map_x)
 		if (buf == '\n' || readed == 0)
 		{
 			if (x != map_x)
-				return (-1);
+				ft_error("map is not a rectangle");
 			y++;
 			x = 0;
 		}
@@ -61,19 +61,19 @@ static	int	get_map_height(int fd, int map_x)
 	return (y);
 }
 
-// Attribut la taille x et y a la t_map //
-// et verifie si elle est bien rectangulaire //
-
-void	get_map_size(t_map *map, char *path_map)
+/****
+* Attribut la taille x et y a la t_map
+* et verifie si elle est bien rectangulaire */
+void	get_map_size(t_map *map, char *file)
 {
 	int	fd;
 
-	fd = open(path_map, O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		ft_map_error();
+		ft_error("fd is invalid");
 	map->x = get_map_width(fd);
 	map->y = get_map_height(fd, map->x) + 1;
-	if (map->y == 0 || map->y == map->x)
-		ft_map_error();
+	if (map->y == map->x)
+		ft_error("map is not a rectangle");
 	close(fd);
 }

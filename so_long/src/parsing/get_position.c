@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_map.c                                       :+:      :+:    :+:   */
+/*   get_position.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:06:05 by ekrause          ###   ########.fr       */
+/*   Created: 2024/01/19 13:02:35 by ekrause           #+#    #+#             */
+/*   Updated: 2024/01/19 13:11:36 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Malloc le tableau de tableau en fonction de x et y */
-void	create_map(t_map *map)
+* Renvoie les coordonnees x et y corespondant
+* a la position de depart du personnage */
+int	get_position(t_map flooded_map, char c)
 {
-	int		y;
+	int	y;
+	int	x;
 
-	map->tab = malloc(sizeof(char *) * (map->y));
-	if (!map->tab)
-		ft_error("malloc failed");
 	y = 0;
-	while (y < map->y)
+	while (y < flooded_map.y)
 	{
-		map->tab[y] = malloc(sizeof(char) * (map->x + 1));
-		if (!map->tab[y])
+		x = 0;
+		while (x < flooded_map.x)
 		{
-			free_map(*map);
-			ft_error("malloc failed");
+			if (flooded_map.tab[y][x] == 'P')
+			{
+				if (c == 'y')
+					return (y);
+				else if (c == 'x')
+					return (x);
+			}
+			x++;
 		}
 		y++;
 	}
+	return (0);
 }

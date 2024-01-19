@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_map.c                                       :+:      :+:    :+:   */
+/*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:06:05 by ekrause          ###   ########.fr       */
+/*   Created: 2024/01/19 12:56:28 by ekrause           #+#    #+#             */
+/*   Updated: 2024/01/19 13:11:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Malloc le tableau de tableau en fonction de x et y */
-void	create_map(t_map *map)
+* Remplie le tableau de tableau
+* avec le contenue du fichier passe en argument */
+void	fill_map(t_map *map, char *file)
 {
+	int		fd;
+	int		readed;
+	char	buf;
 	int		y;
+	int		x;
 
-	map->tab = malloc(sizeof(char *) * (map->y));
-	if (!map->tab)
-		ft_error("malloc failed");
+	fd = open(file, O_RDONLY);
+	readed = 1;
+	buf = ' ';
 	y = 0;
+	x = 0;
 	while (y < map->y)
 	{
-		map->tab[y] = malloc(sizeof(char) * (map->x + 1));
-		if (!map->tab[y])
+		readed = read(fd, &buf, 1);
+		if (buf == '\n' || readed == 0)
 		{
-			free_map(*map);
-			ft_error("malloc failed");
+			map->tab[y++][x] = '\0';
+			x = 0;
 		}
-		y++;
+		else
+			map->tab[y][x++] = buf;
 	}
+	close (fd);
 }

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_map.c                                       :+:      :+:    :+:   */
+/*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:06:05 by ekrause          ###   ########.fr       */
+/*   Created: 2024/01/19 12:57:54 by ekrause           #+#    #+#             */
+/*   Updated: 2024/01/19 13:13:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
 /****
-* Malloc le tableau de tableau en fonction de x et y */
-void	create_map(t_map *map)
+* Initialise la t_map avec les valeurs par defaut */
+t_map	init_map(void)
 {
-	int		y;
+	t_map	map;
 
-	map->tab = malloc(sizeof(char *) * (map->y));
-	if (!map->tab)
-		ft_error("malloc failed");
-	y = 0;
-	while (y < map->y)
-	{
-		map->tab[y] = malloc(sizeof(char) * (map->x + 1));
-		if (!map->tab[y])
-		{
-			free_map(*map);
-			ft_error("malloc failed");
-		}
-		y++;
-	}
+	map.tab = NULL;
+	map.x = 0;
+	map.y = 0;
+	map.collectible = 0;
+	map.exit = 0;
+	map.position = 0;
+	return (map);
 }
