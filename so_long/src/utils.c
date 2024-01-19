@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_includes.c                                 :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/17 13:53:38 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:34:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+void	ft_map_error(void)
+{
+	printf("Error\nMap is not valid\n");
+	exit(EXIT_FAILURE);
+}
+
+void	ft_malloc_error(void)
+{
+	printf("Error\nMalloc failed\n");
+	exit(EXIT_FAILURE);
+}
+
 
 int	ft_strchr(char *str, char to_find)
 {

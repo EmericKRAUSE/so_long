@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 09:45:00 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:33:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,10 @@ void	get_map_size(t_map *map, char *path_map)
 
 	fd = open(path_map, O_RDONLY);
 	if (fd == -1)
-	{
-		map->is_valid = 0;
-		return ;
-	}
+		ft_map_error();
 	map->x = get_map_width(fd);
 	map->y = get_map_height(fd, map->x) + 1;
-	if (map->y == -1 || map->y == map->x)
-		map->is_valid = 0;
+	if (map->y == 0 || map->y == map->x)
+		ft_map_error();
 	close(fd);
 }

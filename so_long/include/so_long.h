@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 14:07:55 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:34:26 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct map
 	int			is_valid;
 }				t_map;
 
+void	ft_map_error(void);
+void	ft_malloc_error(void);
 t_map	map_parser(char *path_map);
 void	free_map(t_map map);
 void	get_map_size(t_map *map, char *path_map);
@@ -38,8 +40,8 @@ t_map	init_map(void);
 void	create_map(t_map *map);
 void	fill_map(t_map *map, char *path_map);
 void	path_is_valid(t_map *map);
-int	ft_strchr(char *str, char to_find);
-char *ft_strcat(char *s1, char *s2);
-int	get_position(t_map flooded_map, char c);
+int		ft_strchr(char *str, char to_find);
+char	*ft_strcat(char *s1, char *s2);
+int		get_position(t_map flooded_map, char c);
 
 #endif

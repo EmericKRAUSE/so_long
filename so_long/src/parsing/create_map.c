@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 09:43:10 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:35:09 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ void	create_map(t_map *map)
 
 	map->tab = malloc(sizeof(char *) * (map->y));
 	if (!map->tab)
-	{
-		map->is_valid = 0;
-		return ;
-	}
+		ft_malloc_error();
 	y = 0;
 	while (y < map->y)
 	{
@@ -94,8 +91,7 @@ void	create_map(t_map *map)
 		if (!map->tab[y])
 		{
 			free_map(*map);
-			map->is_valid = 0;
-			return ;
+			ft_malloc_error();
 		}
 		y++;
 	}

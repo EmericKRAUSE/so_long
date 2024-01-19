@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/18 14:16:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 11:37:38 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ t_map	map_dup(t_map *map)
 	map_dup.x = map->x;
 	map_dup.y = map->y;
 	create_map(&map_dup);
-	if (!map_dup.is_valid)
-		return (map_dup);
 	y = 0;
 	while (y < map_dup.y)
 	{
@@ -99,6 +97,6 @@ void	path_is_valid(t_map *map)
 	get_position(flooded_map, 'x'));
 	if (flooded_map.collectible != map->collectible || \
 	flooded_map.exit != map->exit)
-		map->is_valid = 0;
+		ft_map_error();
 	free_map(flooded_map);
 }
