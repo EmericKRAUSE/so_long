@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:46:21 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:23:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:35:33 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static	t_map	map_dup(t_map *map)
 /****
 * Verifie que le chemin vers la sortie est valide
 */
-void	path_is_valid(t_map *map)
+int	path_is_valid(t_map *map)
 {
 	t_map	flooded_map;
 
@@ -75,7 +75,8 @@ void	path_is_valid(t_map *map)
 	{
 		free_map(*map);
 		free_map(flooded_map);
-		ft_error("path is not valid");
+		return (0);
 	}
 	free_map(flooded_map);
+	return (1);
 }

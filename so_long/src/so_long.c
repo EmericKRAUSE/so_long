@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 15:07:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:06:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,16 @@ int	so_long(char *file)
 	int y = 0;
 	while (y < map.y)
 		printf("%s\n", map.tab[y++]);
-	mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
+	//mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
 	
-	display_map(map, mlx);
+	//display_map(map, mlx);
 
 	//mlx_key_hook(mlx, event, mlx);
-	mlx_key_hook(mlx, (void (*)(int, void *))event, mlx);
-	mlx_loop(mlx);
+	//mlx_key_hook(mlx, (void (*)(int, void *))event, mlx);
+	//mlx_loop(mlx);
 	
 	free_map(map);
-	mlx_terminate(mlx);
+	//mlx_terminate(mlx);
 	return (1);
 }
 

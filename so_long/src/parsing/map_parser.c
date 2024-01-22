@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/22 09:51:35 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:38:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,16 @@
 */
 static	int	map_component_is_valid(t_map *map)
 {
-	char	*component;
 	int		y;
 	int		x;
 
-	component = "10CEP";
 	y = 0;
 	while (y < map->y)
 	{
 		x = 0;
 		while (map->tab[y][x])
 		{
-			if (!ft_strchr(component, map->tab[y][x]))
+			if (!ft_strchr(map->component, map->tab[y][x]))
 				return (0);
 			if (map->tab[y][x] == 'C')
 				map->collectible++;
@@ -41,7 +39,7 @@ static	int	map_component_is_valid(t_map *map)
 		}
 		y++;
 	}
-	return (1);
+	return (map->collectible > 0 && map->exit == 1 && map->position == 1);
 }
 
 /****
@@ -80,17 +78,18 @@ t_map	map_parser(char *file)
 
 	map = init_map();
 	if (!get_map_size(&map, file))
-		ft_error("not valid");
-	if (!create_map(&map));
-		ft_error("not valid")
+		ft_error("size is not valid");
+	if (!create_map(&map))
+		ft_error("malloc failed");
 	fill_map(&map, file);
-	if (!map_component_is_valid(&map) || map.collectible <= 0 \
-	|| map.exit != 1 || map.position != 1)
+	if (!map_component_is_valid(&map))
 	{
 		free_map(map);
 		ft_error("components are not valid");
 	}
-	map_wall_is_valid(&map);
-	path_is_valid(&map);
+	if (!map_wall_is_valid(&map))
+		ft_error("map is not surrounded by walls");
+	if (!path_is_valid(&map))
+		ft_error("path is not valid");
 	return (map);
 }

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/22 09:47:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:05:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	get_map_size(t_map *map, char *file)
 		return (0);
 	map->x = get_map_width(fd);
 	map->y = get_map_height(fd, map->x);
-	if (map-> == 0 || map->y == map->x)
+	if (map->y == 0 || map->y == map->x)
 		return (0);
 	map->y++;
 	close(fd);
