@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/22 09:47:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:05:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct map
 	int			collectible;
 	int			exit;
 	int			position;
+	char		*component;
 }				t_map;
 
 typedef struct image_package
@@ -49,14 +50,14 @@ typedef struct image_package
 
 /****
 * PARSING */
-void	create_map(t_map *map);
+int	create_map(t_map *map);
 void	fill_map(t_map *map, char *file);
 void	free_map(t_map map);
-void	get_map_size(t_map *map, char *file);
+int	get_map_size(t_map *map, char *file);
 int		get_position(t_map flooded_map, char c);
 t_map	init_map(void);
 t_map	map_parser(char *file);
-void	path_is_valid(t_map *map);
+int	path_is_valid(t_map *map);
 
 /****
 * UTILS */
