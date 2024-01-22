@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/22 10:05:14 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 11:35:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct image_package
 	mlx_image_t		*image_exit;
 	mlx_image_t		*image_character;
 }					t_image_package;
+
+typedef struct player
+{
+	int	y;
+	int x;
+}		t_player;
 
 /****
 * PARSING */

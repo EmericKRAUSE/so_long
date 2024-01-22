@@ -6,13 +6,14 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/22 10:06:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 15:17:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
 t_image_package	g_images;
+t_map			g_map;
 int				g_pixels = 124;
 
 t_image_package	init_image_package(mlx_t *mlx)
@@ -20,10 +21,10 @@ t_image_package	init_image_package(mlx_t *mlx)
 	t_image_package images;
 	
 	images.texture_background = mlx_load_png("../assets/grass.png");
-	images.texture_wall = mlx_load_png("../assets/tree.png");
-	images.texture_collectible = mlx_load_png("../assets/key.png");
-	images.texture_exit = mlx_load_png("../assets/chest.png");
-	images.texture_character = mlx_load_png("../assets/character.png");
+	images.texture_wall = mlx_load_png("../assets/log.png");
+	images.texture_collectible = mlx_load_png("../assets/egg.png");
+	images.texture_exit = mlx_load_png("../assets/chicken-house.png");
+	images.texture_character = mlx_load_png("../assets/chicken.png");
 	
 	images.image_background = mlx_texture_to_image(mlx, images.texture_background);
 	images.image_wall = mlx_texture_to_image(mlx, images.texture_wall);
@@ -34,21 +35,23 @@ t_image_package	init_image_package(mlx_t *mlx)
 	return (images);
 }
 
-void	display_character(t_map map, mlx_t *mlx)
+void	display_character(mlx_t *mlx)
 {
-	int x;
-	int y;
-	
-	x = get_position(map, 'x');
-	y = get_position(map, 'y');
+	int	y;
+	int	x;
+
+	y = get_position(g_map, 'y');
+	x = get_position(g_map, 'x');
 	mlx_image_to_window(mlx, g_images.image_character, x * g_pixels, y * g_pixels);
 }
 
-void	display_map(t_map map, mlx_t *mlx)
+void	display_map(void *param)
 {
-	int				y;
-	int				x;
+	mlx_t	*mlx;
+	int		y;
+	int		x;
 
+	mlx = param;
 	g_images = init_image_package(mlx);
 
 	mlx_resize_image(g_images.image_background, g_pixels, g_pixels);
@@ -58,54 +61,88 @@ void	display_map(t_map map, mlx_t *mlx)
 	mlx_resize_image(g_images.image_character, g_pixels, g_pixels);
 	
 	y = 0;
-	while (y < map.y)
+	while (y < g_map.y)
 	{
 		x = 0;
-		while (x < map.x)
+		while (x < g_map.x)
 		{
 			mlx_image_to_window(mlx, g_images.image_background, x * g_pixels, y * g_pixels);
-			if (map.tab[y][x] == '1')
+			if (g_map.tab[y][x] == '1')
 				mlx_image_to_window(mlx, g_images.image_wall, x * g_pixels, y * g_pixels);
-			else if (map.tab[y][x] == 'C')
+			else if (g_map.tab[y][x] == 'C')
 				mlx_image_to_window(mlx, g_images.image_collectible, x * g_pixels, y * g_pixels);
-			else if (map.tab[y][x] == 'E')
+			else if (g_map.tab[y][x] == 'E')
 				mlx_image_to_window(mlx, g_images.image_exit, x * g_pixels, y * g_pixels);
+			else if (g_map.tab[y][x] == 'P')
+				mlx_image_to_window(mlx, g_images.image_character, x * g_pixels, y * g_pixels);
 			x++;
 		}
 		y++;
 	}
-	display_character(map, mlx);
+	//display_character(mlx);
 }
 
-void	event(int key, void *param)
+void	delete_map(mlx_t *mlx)
 {
-	mlx_t	*mlx;
-	
+	mlx_delete_image(mlx, g_images.image_background);
+	mlx_delete_image(mlx, g_images.image_wall);
+	mlx_delete_image(mlx, g_images.image_collectible);
+	mlx_delete_image(mlx, g_images.image_exit);
+	mlx_delete_image(mlx, g_images.image_character);
+}
+
+void	key_event(mlx_t *mlx, int y, int x)
+{
+		g_map.tab[y][x] = 'P';
+		delete_map(mlx);
+		display_map(mlx);
+}
+
+void	key_hook(mlx_key_data_t keydata, void *param)
+{
+	mlx_t *mlx;
+
+	int y = g_images.image_character->instances->y / g_pixels;
+	int x = g_images.image_character->instances->x / g_pixels;
+
 	mlx = param;
-	if (key == MLX_KEY_ESCAPE)
-		printf ("test");
+	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && g_map.tab[y - 1][x] != '1')
+	{
+		g_map.tab[y][x] = '0';
+		key_event(mlx, y - 1, x);
+	}
+	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && g_map.tab[y + 1][x] != '1')
+	{
+		g_map.tab[y][x] = '0';
+		key_event(mlx, y + 1, x);
+	}
+	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && g_map.tab[y][x - 1] != '1')
+	{
+		g_map.tab[y][x] = '0';
+		key_event(mlx, y, x - 1);
+	}
+	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && g_map.tab[y][x + 1] != '1')
+	{
+		g_map.tab[y][x] = '0';
+		key_event(mlx, y, x + 1);
+	}
+		
 }
 
 int	so_long(char *file)
 {
-	t_map		map;
 	mlx_t		*mlx;
-	mlx_image_t	*img;
 
-	map = map_parser(file);
-	int y = 0;
-	while (y < map.y)
-		printf("%s\n", map.tab[y++]);
-	//mlx = mlx_init(map.x * g_pixels, map.y * g_pixels, "game", true);
+	g_map = map_parser(file);
+	mlx = mlx_init(g_map.x * g_pixels, g_map.y * g_pixels, "game", true);
 	
-	//display_map(map, mlx);
+	display_map(mlx);
 
-	//mlx_key_hook(mlx, event, mlx);
-	//mlx_key_hook(mlx, (void (*)(int, void *))event, mlx);
-	//mlx_loop(mlx);
+	mlx_key_hook(mlx, &key_hook, mlx);
+	mlx_loop(mlx);
 	
-	free_map(map);
-	//mlx_terminate(mlx);
+	free_map(g_map);
+	mlx_terminate(mlx);
 	return (1);
 }
 
