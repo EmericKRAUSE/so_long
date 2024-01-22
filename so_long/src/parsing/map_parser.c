@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:23:03 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:51:35 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static	int	map_component_is_valid(t_map *map)
 /****
 * Verifie que le tableau de tableau est bien entoure de '1'
 */
-static	void	map_wall_is_valid(t_map *map)
+static	int	map_wall_is_valid(t_map *map)
 {
 	int	y;
 	int	x;
@@ -62,12 +62,13 @@ static	void	map_wall_is_valid(t_map *map)
 			x == 0 || x == map->x - 1) && map->tab[y][x] != '1')
 			{
 				free_map(*map);
-				ft_error("walls are not valid");
+				return (0);
 			}
 			x++;
 		}
 		y++;
 	}
+	return (1);
 }
 
 /****
@@ -78,8 +79,10 @@ t_map	map_parser(char *file)
 	t_map	map;
 
 	map = init_map();
-	get_map_size(&map, file);
-	create_map(&map);
+	if (!get_map_size(&map, file))
+		ft_error("not valid");
+	if (!create_map(&map));
+		ft_error("not valid")
 	fill_map(&map, file);
 	if (!map_component_is_valid(&map) || map.collectible <= 0 \
 	|| map.exit != 1 || map.position != 1)

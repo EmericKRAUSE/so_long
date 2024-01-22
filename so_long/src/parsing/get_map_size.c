@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:12:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:22:44 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:47:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static	int	get_map_height(int fd, int map_x)
 		if (buf == '\n' || readed == 0)
 		{
 			if (x != map_x)
-				ft_error("map is not a rectangle");
+				return (0);
 			y++;
 			x = 0;
 		}
@@ -67,16 +67,18 @@ static	int	get_map_height(int fd, int map_x)
 * Attribut la taille x et y a la t_map
 * et verifie si elle est bien rectangulaire
 */
-void	get_map_size(t_map *map, char *file)
+int	get_map_size(t_map *map, char *file)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		ft_error("fd is invalid");
+		return (0);
 	map->x = get_map_width(fd);
-	map->y = get_map_height(fd, map->x) + 1;
-	if (map->y == map->x)
-		ft_error("map is not a rectangle");
+	map->y = get_map_height(fd, map->x);
+	if (map-> == 0 || map->y == map->x)
+		return (0);
+	map->y++;
 	close(fd);
+	return (1);
 }

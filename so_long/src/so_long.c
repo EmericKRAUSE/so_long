@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 15:05:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:07:30 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int	so_long(char *file)
 	
 	display_map(map, mlx);
 
-	mlx_key_hook(mlx, event, mlx);
+	//mlx_key_hook(mlx, event, mlx);
+	mlx_key_hook(mlx, (void (*)(int, void *))event, mlx);
 	mlx_loop(mlx);
 	
 	free_map(map);

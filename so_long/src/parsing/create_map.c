@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:33:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:22:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:48:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /****
 * Malloc le tableau de tableau en fonction de x et y
 */
-void	create_map(t_map *map)
+int	create_map(t_map *map)
 {
 	int		y;
 
 	map->tab = malloc(sizeof(char *) * (map->y));
 	if (!map->tab)
-		ft_error("malloc failed");
+		return (0);
 	y = 0;
 	while (y < map->y)
 	{
@@ -29,8 +29,9 @@ void	create_map(t_map *map)
 		if (!map->tab[y])
 		{
 			free_map(*map);
-			ft_error("malloc failed");
+			return (0);
 		}
 		y++;
 	}
+	return (1);
 }

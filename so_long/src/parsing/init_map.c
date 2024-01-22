@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 12:57:54 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 14:22:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:41:53 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ t_map	init_map(void)
 	map.collectible = 0;
 	map.exit = 0;
 	map.position = 0;
+	map.is_valid = 1;
 	return (map);
 }
