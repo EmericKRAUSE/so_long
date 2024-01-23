@@ -6,38 +6,14 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/23 15:01:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/23 16:45:34 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
 t_game			g_game;
-int				g_pixels = 124;
-
-t_images	init_images(mlx_t *mlx)
-{
-	t_images	images;
-	
-	images.texture_background = mlx_load_png("../assets/grass.png");
-	images.texture_wall = mlx_load_png("../assets/log.png");
-	images.texture_collectible = mlx_load_png("../assets/egg.png");
-	images.texture_exit = mlx_load_png("../assets/chicken-house.png");
-	images.texture_trap = mlx_load_png("../assets/trap.png");
-	images.texture_lifebar_empty = mlx_load_png("../assets/lifebar1.png");
-	images.texture_lifebar_full = mlx_load_png("../assets/lifebar2.png");
-	images.texture_character = mlx_load_png("../assets/chicken.png");
-	
-	images.image_background = mlx_texture_to_image(mlx, images.texture_background);
-	images.image_wall = mlx_texture_to_image(mlx, images.texture_wall);
-	images.image_collectible = mlx_texture_to_image(mlx, images.texture_collectible);
-	images.image_exit = mlx_texture_to_image(mlx, images.texture_exit);
-	images.image_trap = mlx_texture_to_image(mlx, images.texture_trap);
-	images.image_lifebar_empty = mlx_texture_to_image(mlx, images.texture_lifebar_empty);
-	images.image_lifebar_full = mlx_texture_to_image(mlx, images.texture_lifebar_full);
-	images.image_character = mlx_texture_to_image(mlx, images.texture_character);
-	return (images);
-}
+int				g_pixels = 128;
 
 t_player	init_player(mlx_t *mlx)
 {
@@ -49,51 +25,7 @@ t_player	init_player(mlx_t *mlx)
 	return (player);
 }
 
-void	display_character(mlx_t *mlx, int y, int x)
-{
-	mlx_resize_image(g_game.images.image_character, g_pixels, g_pixels);
-	mlx_image_to_window(mlx, g_game.images.image_character, x * g_pixels, y * g_pixels);
-}
-
-void	display_map(mlx_t *mlx)
-{
-	int		y;
-	int		x;
-
-	g_game.images = init_images(mlx);
-
-	mlx_resize_image(g_game.images.image_background, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_wall, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_collectible, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_exit, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_trap, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_lifebar_empty, g_pixels, g_pixels);
-	mlx_resize_image(g_game.images.image_lifebar_full, g_pixels, g_pixels);
-	
-	y = 0;
-	while (y < g_game.map.y)
-	{
-		x = 0;
-		while (x < g_game.map.x)
-		{
-			mlx_image_to_window(mlx, g_game.images.image_background, x * g_pixels, y * g_pixels);
-			if (g_game.map.tab[y][x] == '1')
-				mlx_image_to_window(mlx, g_game.images.image_wall, x * g_pixels, y * g_pixels);
-			else if (g_game.map.tab[y][x] == 'C')
-				mlx_image_to_window(mlx, g_game.images.image_collectible, x * g_pixels, y * g_pixels);
-			else if (g_game.map.tab[y][x] == 'E')
-				mlx_image_to_window(mlx, g_game.images.image_exit, x * g_pixels, y * g_pixels);
-			else if (g_game.map.tab[y][x] == 'T')
-				mlx_image_to_window(mlx, g_game.images.image_trap, x * g_pixels, y * g_pixels);
-			x++;
-		}
-		y++;
-	}
-	//mlx_image_to_window(mlx, g_game.images.image_lifebar_empty, 0, 0);
-	mlx_image_to_window(mlx, g_game.images.image_lifebar_full, 0, g_game.map.y * g_pixels - g_pixels);
-}
-
-void	delete_image_map(mlx_t *mlx)
+/*void	delete_image_map(mlx_t *mlx)
 {
 	mlx_delete_image(mlx, g_game.images.image_background);
 	mlx_delete_image(mlx, g_game.images.image_wall);
@@ -173,7 +105,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		is_trap(mlx, y, x + 1);
 	}
 		
-}
+}*/
 
 // SO LONG //
 
@@ -185,10 +117,10 @@ static	void	so_long(char *file)
 	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
 	g_game.player = init_player(mlx);
 
-	display_map(mlx);
-	display_character(mlx, g_game.player.y, g_game.player.x);
+	display_map(mlx, g_game);
+	display_character(mlx, g_game, g_game.player.y, g_game.player.x);
 
-	mlx_key_hook(mlx, &key_hook, mlx);
+	//mlx_key_hook(mlx, &key_hook, mlx);
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);
