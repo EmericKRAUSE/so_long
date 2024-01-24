@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/23 16:45:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:25:49 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,89 +25,112 @@ t_player	init_player(mlx_t *mlx)
 	return (player);
 }
 
-/*void	delete_image_map(mlx_t *mlx)
-{
-	mlx_delete_image(mlx, g_game.images.image_background);
-	mlx_delete_image(mlx, g_game.images.image_wall);
-	mlx_delete_image(mlx, g_game.images.image_collectible);
-	mlx_delete_image(mlx, g_game.images.image_exit);
-	mlx_delete_image(mlx, g_game.images.image_character);
-	mlx_delete_image(mlx, g_game.images.image_trap);
-}
+// void	delete_image_map(mlx_t *mlx)
+// {
+// 	mlx_delete_image(mlx, g_game.image_map.image_background);
+// 	mlx_delete_image(mlx, g_game.image_map.image_wall);
+// 	mlx_delete_image(mlx, g_game.image_map.image_collectible);
+// 	mlx_delete_image(mlx, g_game.image_map.image_exit);
+// 	mlx_delete_image(mlx, g_game.image_map.image_trap);
+// 	mlx_delete_image(mlx, g_game.image_character.image_character);
+// }
 
-void	is_collectible(mlx_t *mlx, int y, int x)
-{
-		if (g_game.map.tab[y][x] == 'C')
-		{
-			g_game.map.tab[y][x] = '0';
-			delete_image_map(mlx);
-			display_map(mlx);
-			display_character(mlx, y, x);
-			g_game.player.collectible++;
-		}
-}
+// void	is_collectible(mlx_t *mlx, int y, int x)
+// {
+// 		if (g_game.map.tab[y][x] == 'C')
+// 		{
+// 			g_game.map.tab[y][x] = '0';
+// 			delete_image_map(mlx);
+// 			display_map(mlx, g_game);
+// 			display_character(mlx, g_game, y, x);
+// 			g_game.player.collectible++;
+// 		}
+// }
 
-void	is_exit(mlx_t *mlx, int y, int x)
-{
-	if (g_game.map.tab[y][x] == 'E' && g_game.player.collectible == g_game.map.collectible)
-	{
-		mlx_texture_t *win_texture = mlx_load_png("../assets/win2.png");
-		mlx_image_t *win_image = mlx_texture_to_image(mlx, win_texture);
-		mlx_resize_image(win_image, 1920 / 2, 1080 / 2);
-		mlx_image_to_window(mlx, win_image, 1920 / 2, 1080 / 2);
-	}
-}
+// void	is_exit(mlx_t *mlx, int y, int x)
+// {
+// 	if (g_game.map.tab[y][x] == 'E' && g_game.player.collectible == g_game.map.collectible)
+// 	{
+// 		mlx_texture_t *win_texture = mlx_load_png("../assets/win2.png");
+// 		mlx_image_t *win_image = mlx_texture_to_image(mlx, win_texture);
+// 		mlx_resize_image(win_image, 1920 / 2, 1080 / 2);
+// 		mlx_image_to_window(mlx, win_image, 1920 / 2, 1080 / 2);
+// 	}
+// }
 
-void	is_trap(mlx_t *mlx, int y, int x)
-{
-	char *str = "loose";
-	if (g_game.map.tab[y][x] == 'T')
-	{
-		mlx_delete_image(mlx, g_game.images.image_lifebar_full);
-		mlx_image_to_window(mlx, g_game.images.image_lifebar_empty, 0, g_game.map.y * g_pixels - g_pixels);
-	}
-}
+// void	is_trap(mlx_t *mlx, int y, int x)
+// {
+// 	char *str = "loose";
+// 	if (g_game.map.tab[y][x] == 'T')
+// 	{
+// 		//mlx_delete_image(mlx, g_game.images.image_lifebar_full);
+// 		//mlx_image_to_window(mlx, g_game.images.image_lifebar_empty, 0, g_game.map.y * g_pixels - g_pixels);
+// 	}
+// }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
-{
-	mlx_t *mlx;
+// void	key_hook(mlx_key_data_t keydata, void *param)
+// {
+// 	mlx_t *mlx;
 
-	int	y = g_game.images.image_character->instances->y / g_pixels;
-	int x = g_game.images.image_character->instances->x / g_pixels;
+// 	int	y = g_game.image_character.image_character->instances->y / g_pixels;
+// 	int x = g_game.image_character.image_character->instances->x / g_pixels;
 
-	mlx = param;
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && g_game.map.tab[y - 1][x] != '1')
-	{
-		g_game.images.image_character->instances->y -= g_pixels;
-		is_collectible(mlx, y - 1, x);
-		is_exit(mlx, y - 1, x);
-		is_trap(mlx, y - 1, x);
-	}
-	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && g_game.map.tab[y + 1][x] != '1')
-	{
-		g_game.images.image_character->instances->y += g_pixels;
-		is_collectible(mlx, y + 1, x);
-		is_exit(mlx, y + 1, x);
-		is_trap(mlx, y + 1, x);
-	}
-	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && g_game.map.tab[y][x - 1] != '1')
-	{
-		g_game.images.image_character->instances->x -= g_pixels;
-		is_collectible(mlx, y, x - 1);
-		is_exit(mlx, y, x - 1);
-		is_trap(mlx, y, x - 1);
-	}
-	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && g_game.map.tab[y][x + 1] != '1')
-	{
-		g_game.images.image_character->instances->x += g_pixels;
-		is_collectible(mlx, y, x + 1);
-		is_exit(mlx, y, x + 1);
-		is_trap(mlx, y, x + 1);
-	}
+// 	mlx = param;
+// 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && g_game.map.tab[y - 1][x] != '1')
+// 	{
+// 		g_game.image_character.image_character->instances->y -= g_pixels;
+// 		// is_collectible(mlx, y - 1, x);
+// 		// is_exit(mlx, y - 1, x);
+// 		// is_trap(mlx, y - 1, x);
+// 	}
+// 	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && g_game.map.tab[y + 1][x] != '1')
+// 	{
+// 		g_game.image_character.image_character->instances->y += g_pixels;
+// 		// is_collectible(mlx, y + 1, x);
+// 		// is_exit(mlx, y + 1, x);
+// 		// is_trap(mlx, y + 1, x);
+// 	}
+// 	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && g_game.map.tab[y][x - 1] != '1')
+// 	{
+// 		g_game.image_character.image_character->instances->x -= g_pixels;
+// 		// is_collectible(mlx, y, x - 1);
+// 		// is_exit(mlx, y, x - 1);
+// 		// is_trap(mlx, y, x - 1);
+// 	}
+// 	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && g_game.map.tab[y][x + 1] != '1')
+// 	{
+// 		g_game.image_character.image_character->instances->x += g_pixels;
+// 		// is_collectible(mlx, y, x + 1);
+// 		// is_exit(mlx, y, x + 1);
+// 		// is_trap(mlx, y, x + 1);
+// 	}
 		
-}*/
+// }
 
 // SO LONG //
+
+void hook(void* param)
+{
+    mlx_t* mlx;
+    mlx = param;
+
+    if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+        mlx_close_window(param);
+
+	int left_x =	(g_game.image_character.image_character->instances[0].x + 8) / g_pixels;
+    int right_x =	(g_game.image_character.image_character->instances[0].x - 8 + g_pixels) / g_pixels;
+    int top_y =		(g_game.image_character.image_character->instances[0].y + 8) / g_pixels;
+    int bottom_y =	(g_game.image_character.image_character->instances[0].y - 8 + g_pixels) / g_pixels;
+
+    if (mlx_is_key_down(param, MLX_KEY_W) && g_game.map.tab[bottom_y - 1][left_x] != '1' && g_game.map.tab[bottom_y - 1][right_x] != '1')
+		g_game.image_character.image_character->instances[0].y -= 16;
+    if (mlx_is_key_down(param, MLX_KEY_S) && g_game.map.tab[top_y + 1][left_x] != '1'&& g_game.map.tab[top_y + 1][right_x] != '1')
+        g_game.image_character.image_character->instances[0].y += 16;
+    if (mlx_is_key_down(param, MLX_KEY_A) && g_game.map.tab[top_y][right_x - 1] != '1' && g_game.map.tab[bottom_y][right_x - 1] != '1')
+        g_game.image_character.image_character->instances[0].x -= 16;
+    if (mlx_is_key_down(param, MLX_KEY_D) && g_game.map.tab[top_y][left_x + 1] != '1' && g_game.map.tab[bottom_y][left_x + 1] != '1')
+        g_game.image_character.image_character->instances[0].x += 16;
+}
 
 static	void	so_long(char *file)
 {
@@ -117,9 +140,10 @@ static	void	so_long(char *file)
 	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
 	g_game.player = init_player(mlx);
 
-	display_map(mlx, g_game);
-	display_character(mlx, g_game, g_game.player.y, g_game.player.x);
+	display_map(mlx, &g_game);
+	display_character(mlx, &g_game, g_game.player.y, g_game.player.x);
 
+	mlx_loop_hook(mlx, &hook, mlx);
 	//mlx_key_hook(mlx, &key_hook, mlx);
 	mlx_loop(mlx);
 	

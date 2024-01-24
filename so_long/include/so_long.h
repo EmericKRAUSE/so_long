@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/23 16:44:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/24 10:38:22 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ t_image_map			init_image_map(mlx_t *mlx);
 
 /****
 * DISPLAY IMAGES */
-void	display_character(mlx_t *mlx, t_game g_game, int y, int x);
-void	display_map(mlx_t *mlx, t_game g_game);
+void	display_character(mlx_t *mlx, t_game *g_game, int y, int x);
+void	display_map(mlx_t *mlx, t_game *g_game);
 
 /****
 * UTILS */
