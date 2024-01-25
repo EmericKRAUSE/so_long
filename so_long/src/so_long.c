@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 13:44:43 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 14:37:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,14 @@ int	check_hitbox(int y, int x)
 
 	temp = g_game.list_wall;
 
-	// printf ("%d / %d\n", temp->y, y);
-	// printf ("%d / %d\n", temp->x, x);
 	while (temp)
 	{
-		printf ("%d / %d\n", temp->y, temp->x);
-		printf ("\n%d / %d\n", x, y);
-		if (temp->y == y && temp->x == x)
-			return (0);
+		if (!(y + g_pixels <= temp->y || y >= temp->y + g_pixels || 
+		x + g_pixels <= temp->x || x >= temp->x + g_pixels))
+			return (1);
 		temp = temp->next;
 	}
-	return (1);
+	return (0);
 }
 
 void hook(void* param)
@@ -139,17 +136,14 @@ void hook(void* param)
 	int y = g_game.image_character.image_character->instances[0].y;
 	int	x = g_game.image_character.image_character->instances[0].x;
 
-    if (mlx_is_key_down(param, MLX_KEY_W))
-	{
-		if (check_hitbox(y, x))
-			g_game.image_character.image_character->instances[0].y -= 8;
-	}
-    // if (mlx_is_key_down(param, MLX_KEY_S) && g_game.map.tab[bottom_y][left] != '1'&& g_game.map.tab[bottom_y][right] != '1')
-    //     g_game.image_character.image_character->instances[0].y += 8;
-    // if (mlx_is_key_down(param, MLX_KEY_A) && g_game.map.tab[top][left_x] != '1' && g_game.map.tab[bottom][left_x] != '1')
-    //     g_game.image_character.image_character->instances[0].x -= 8;
-    // if (mlx_is_key_down(param, MLX_KEY_D) && g_game.map.tab[top][right_x] != '1' && g_game.map.tab[bottom][right_x] != '1')
-    //     g_game.image_character.image_character->instances[0].x += 8;
+    if (mlx_is_key_down(param, MLX_KEY_W) && !check_hitbox(y - 8, x))
+		g_game.image_character.image_character->instances[0].y -= 8;
+    if (mlx_is_key_down(param, MLX_KEY_S) && !check_hitbox(y + 8, x))
+        g_game.image_character.image_character->instances[0].y += 8;
+    if (mlx_is_key_down(param, MLX_KEY_A) && !check_hitbox(y, x - 8))
+        g_game.image_character.image_character->instances[0].x -= 8;
+    if (mlx_is_key_down(param, MLX_KEY_D) && !check_hitbox(y, x + 8))
+        g_game.image_character.image_character->instances[0].x += 8;
 }
 
 static	void	so_long(char *file)
