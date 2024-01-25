@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/19 13:20:32 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:23:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,76 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (1);
+}
+
+// t_list_wall	*ft_lstlast(t_list_wall	*lst)
+// {
+// 	t_list_wall	*temp;
+
+// 	temp = NULL;
+// 	if (lst != NULL)
+// 	{
+// 		temp = lst;
+// 		while (temp-> next)
+// 		{
+// 			temp = temp-> next;
+// 		}
+// 	}
+// 	return (temp);
+// }
+
+// void	ft_lstadd_back(t_list_wall **head, t_list_wall *node)
+// {
+// 	t_list_wall *last;
+	
+// 	if (!(*head))
+// 		*head = node;
+// 	else
+// 	{
+// 		last = ft_lstlast(*lst);
+// 		last->next = node;
+// 	}
+// }
+
+void	free_list(t_list_wall **head)
+{
+	t_list_wall	*previous;
+	while (*head)
+	{
+		previous = *head;
+		*head = (*head)->next;
+		free (previous);
+	}
+}
+
+void	print_list(t_list_wall *head)
+{
+	while (head)
+	{
+		printf ("%d / %d\n", head->y, head->x);
+		head = head->next;
+	}
+}
+
+t_list_wall	*create_node(t_list_wall *head, int y, int x)
+{
+	t_list_wall	*node;
+	t_list_wall *current;
+
+	node = malloc(sizeof(t_list_wall));
+	if (!node)
+		return NULL;
+	node->y = y;
+	node->x = x;
+	node->next = NULL;
+	if (!head)
+		head = node;
+	else
+	{
+		current = head;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = node;
+	}
+	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:07:33 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/24 10:37:53 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 10:47:42 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	display_character(mlx_t *mlx, t_game *g_game, int y, int x)
 {
 	int	pixels;
 
-	pixels = 128;
+	pixels = 112;
 	g_game->image_character = init_image_character(mlx);
 
 	mlx_resize_image(g_game->image_character.image_character, pixels, pixels);

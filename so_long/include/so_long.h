@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/24 10:38:22 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:29:05 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ typedef struct image_ui
 
 // ************************************** //
 
+typedef struct list_wall
+{
+	int					y;
+	int					x;
+	struct list_wall	*next;
+}						t_list_wall;
+
 typedef struct map
 {
 	char		**tab;
@@ -80,6 +87,7 @@ typedef	struct game
 	t_image_map			image_map;
 	t_image_character	image_character;
 	t_image_ui			image_ui;
+	t_list_wall			*list_wall;
 }						t_game;
 
 /****
@@ -109,5 +117,8 @@ void	ft_error(char *str);
 int		ft_strchr(char *str, char to_find);
 int		ft_strlen(char *str);
 int		ft_strcmp(char *s1, char *s2);
+t_list_wall	*create_node(t_list_wall *head, int y, int x);
+void	print_list(t_list_wall *head);
+void	free_list(t_list_wall **head);
 
 #endif

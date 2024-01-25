@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:05:29 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/24 10:37:39 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 13:29:24 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	display_map(mlx_t *mlx, t_game *g_game)
 		{
 			mlx_image_to_window(mlx, g_game->image_map.image_background, x * pixels, y * pixels);
 			if (g_game->map.tab[y][x] == '1')
+			{
 				mlx_image_to_window(mlx, g_game->image_map.image_wall, x * pixels, y * pixels);
+				g_game->list_wall = create_node(g_game->list_wall, y * pixels, x * pixels);
+			}
 			else if (g_game->map.tab[y][x] == 'C')
 				mlx_image_to_window(mlx, g_game->image_map.image_collectible, x * pixels, y * pixels);
 			else if (g_game->map.tab[y][x] == 'E')
