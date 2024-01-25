@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 14:45:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 17:02:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,10 @@ int	check_hitbox(int y, int x)
 
 	while (temp)
 	{
-		if (!(y + g_pixels <= temp->y || y >= temp->y + g_pixels || 
-		x + g_pixels <= temp->x || x >= temp->x + g_pixels))
+		if (!(y + 112 <= temp->y 
+		|| y >= temp->y + g_pixels 
+		|| x + 56 <= temp->x 
+		|| x >= temp->x + g_pixels))
 			return (1);
 		temp = temp->next;
 	}
