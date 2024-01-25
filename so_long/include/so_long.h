@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 13:29:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 15:09:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ typedef struct image_character
 
 typedef struct image_ui
 {
-	mlx_texture_t	*texture_lifebar_empty;
-	mlx_texture_t	*texture_lifebar_full;
+	mlx_texture_t	*texture_heart_1;
+	mlx_texture_t	*texture_heart_2;
+	mlx_texture_t	*texture_inventory;
+	mlx_texture_t	*texture_slot;
 
-	mlx_image_t		*image_lifebar_empty;
-	mlx_image_t		*image_lifebar_full;
+	mlx_image_t		*image_heart_1;
+	mlx_image_t		*image_heart_2;
+	mlx_image_t		*image_inventory;
+	mlx_image_t		*image_slot;
 }					t_image_ui;
 
 // ************************************** //
@@ -105,11 +109,13 @@ int		path_is_valid(t_map *map);
 * INIT IMAGES */
 t_image_character	init_image_character(mlx_t *mlx);
 t_image_map			init_image_map(mlx_t *mlx);
+t_image_ui			init_image_ui(mlx_t *mlx);
 
 /****
 * DISPLAY IMAGES */
 void	display_character(mlx_t *mlx, t_game *g_game, int y, int x);
 void	display_map(mlx_t *mlx, t_game *g_game);
+void	display_ui(mlx_t *mlx, t_game *game);
 
 /****
 * UTILS */

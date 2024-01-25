@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 14:37:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/25 14:45:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,10 @@ static	void	so_long(char *file)
 	g_game.player = init_player(mlx);
 
 	display_map(mlx, &g_game);
-	//print_list(g_game.list_wall);
 	display_character(mlx, &g_game, g_game.player.y, g_game.player.x);
+	display_ui(mlx, &g_game);
 
 	mlx_loop_hook(mlx, &hook, mlx);
-	//mlx_key_hook(mlx, &key_hook, mlx);
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);
