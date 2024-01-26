@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 17:02:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/26 15:37:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ int	check_hitbox(int y, int x)
 
 	while (temp)
 	{
-		if (!(y + 112 <= temp->y 
+		if (!(y + g_game.image_player.image_character->height <= temp->y 
 		|| y >= temp->y + g_pixels 
-		|| x + 56 <= temp->x 
+		|| x + g_game.image_player.image_character->width <= temp->x 
 		|| x >= temp->x + g_pixels))
 			return (1);
 		temp = temp->next;
@@ -127,25 +127,41 @@ int	check_hitbox(int y, int x)
 	return (0);
 }
 
+void	attack(mlx_t *mlx)
+{
+	g_game.image_player.image_character->enabled = false;
+	for (int i = 13; i <= 18; i++)
+	{
+		char file_path[100];
+    	sprintf(file_path, "../assets/character/petite_image_%d.png", i);
+		mlx_image_t *img = mlx_texture_to_image(mlx, mlx_load_png(file_path));
+		mlx_image_to_window(mlx, img, g_game.image_player.image_character->instances[0].x,  g_game.image_player.image_character->instances[0].y);
+		if (i = 14)
+			img->enabled = false;
+	}
+	g_game.image_player.image_character->enabled = true;
+}
+
 void hook(void* param)
 {
-    mlx_t* mlx;
-    mlx = param;
+	int y;
+	int	x;
 
+	y = g_game.image_player.image_character->instances[0].y;
+	x = g_game.image_player.image_character->instances[0].x;
+
+	if (mlx_is_key_down(param, MLX_KEY_SPACE))
+        attack(param);
     if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
         mlx_close_window(param);
-
-	int y = g_game.image_character.image_character->instances[0].y;
-	int	x = g_game.image_character.image_character->instances[0].x;
-
     if (mlx_is_key_down(param, MLX_KEY_W) && !check_hitbox(y - 8, x))
-		g_game.image_character.image_character->instances[0].y -= 8;
+		g_game.image_player.image_character->instances[0].y -= 8;
     if (mlx_is_key_down(param, MLX_KEY_S) && !check_hitbox(y + 8, x))
-        g_game.image_character.image_character->instances[0].y += 8;
+        g_game.image_player.image_character->instances[0].y += 8;
     if (mlx_is_key_down(param, MLX_KEY_A) && !check_hitbox(y, x - 8))
-        g_game.image_character.image_character->instances[0].x -= 8;
+        g_game.image_player.image_character->instances[0].x -= 8;
     if (mlx_is_key_down(param, MLX_KEY_D) && !check_hitbox(y, x + 8))
-        g_game.image_character.image_character->instances[0].x += 8;
+        g_game.image_player.image_character->instances[0].x += 8;
 }
 
 static	void	so_long(char *file)
@@ -157,7 +173,7 @@ static	void	so_long(char *file)
 	g_game.player = init_player(mlx);
 
 	display_map(mlx, &g_game);
-	display_character(mlx, &g_game, g_game.player.y, g_game.player.x);
+	display_player(mlx, &g_game, g_game.player.y, g_game.player.x);
 	display_ui(mlx, &g_game);
 
 	mlx_loop_hook(mlx, &hook, mlx);

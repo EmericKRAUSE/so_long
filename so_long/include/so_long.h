@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 15:09:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/26 10:53:26 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ typedef struct image_map
 	mlx_image_t		*image_trap;
 }					t_image_map;
 
-typedef struct image_character
+typedef struct image_player
 {
 	mlx_texture_t	*texture_character;
+	mlx_texture_t	*texture_sword;
 
 	mlx_image_t		*image_character;
-}					t_image_character;
+	mlx_image_t		*image_sword;
+}					t_image_player;
 
 typedef struct image_ui
 {
@@ -89,7 +91,7 @@ typedef	struct game
 	t_map				map;
 	t_player			player;
 	t_image_map			image_map;
-	t_image_character	image_character;
+	t_image_player		image_player;
 	t_image_ui			image_ui;
 	t_list_wall			*list_wall;
 }						t_game;
@@ -107,13 +109,13 @@ int		path_is_valid(t_map *map);
 
 /****
 * INIT IMAGES */
-t_image_character	init_image_character(mlx_t *mlx);
+t_image_player		init_image_player(mlx_t *mlx);
 t_image_map			init_image_map(mlx_t *mlx);
 t_image_ui			init_image_ui(mlx_t *mlx);
 
 /****
 * DISPLAY IMAGES */
-void	display_character(mlx_t *mlx, t_game *g_game, int y, int x);
+void	display_player(mlx_t *mlx, t_game *g_game, int y, int x);
 void	display_map(mlx_t *mlx, t_game *g_game);
 void	display_ui(mlx_t *mlx, t_game *game);
 

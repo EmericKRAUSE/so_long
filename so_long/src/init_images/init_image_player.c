@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_character.c                                :+:      :+:    :+:   */
+/*   init_image_player.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 16:07:33 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 17:01:18 by ekrause          ###   ########.fr       */
+/*   Created: 2024/01/23 15:55:22 by ekrause           #+#    #+#             */
+/*   Updated: 2024/01/26 15:29:02 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	display_character(mlx_t *mlx, t_game *g_game, int y, int x)
+t_image_player	init_image_player(mlx_t *mlx)
 {
-	int	pixels;
+	t_image_player	images;
 
-	pixels = 128;
-	g_game->image_character = init_image_character(mlx);
+	images.texture_character = mlx_load_png("../assets/character/petite_image_1.png");
+	images.texture_sword = mlx_load_png("../assets/character/sword.png");
 
-	mlx_resize_image(g_game->image_character.image_character, 56, 112);
-	
-	mlx_image_to_window(mlx, g_game->image_character.image_character, x * pixels, y * pixels);
+	images.image_character = mlx_texture_to_image(mlx, images.texture_character);
+	images.image_sword = mlx_texture_to_image(mlx, images.texture_sword);
+	return (images);
 }
