@@ -1,32 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_map.c                                      :+:      :+:    :+:   */
+/*   display_images.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:05:29 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 11:19:15 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:20:31 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	add_data_to_node(t_game *game)
+void	display_ui(mlx_t *mlx, t_game *game)
 {
-	t_list_component	*temp;
-	int	c;
+	int	pixels;
+	int	x;
 
-	temp = game->list_component;
-	c = 0;
-	while (temp)
+	pixels = 128;
+	x = 0;
+	mlx_image_to_window(mlx, game->image_ui.image_heart_1, \
+	0, game->map.y * pixels - pixels * 2);
+	while (x < 4)
 	{
-		if (temp->type == 'C')
-			temp->nb = c++;
-		else
-			temp->nb = 0;
-		temp = temp->next;
+		mlx_image_to_window(mlx, game->image_ui.image_slot, \
+		x * pixels, game->map.y * pixels - pixels);
+		x++;
 	}
+}
+
+void	display_player(mlx_t *mlx, t_game *game, int y, int x)
+{
+	int	pixels;
+
+	pixels = 128;
+	mlx_image_to_window(mlx, game->image_player.image_character[0], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_character[1], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_character[2], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_character[3], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_character[4], \
+	x * pixels, y * pixels);
+	game->image_player.image_character[1]->instances[0].enabled = false;
+	game->image_player.image_character[2]->instances[0].enabled = false;
+	game->image_player.image_character[3]->instances[0].enabled = false;
+	game->image_player.image_character[4]->instances[0].enabled = false;
 }
 
 void	display_map(mlx_t *mlx, t_game *g_game)
@@ -34,17 +55,8 @@ void	display_map(mlx_t *mlx, t_game *g_game)
 	int		pixels;
 	int		y;
 	int		x;
-	int		i = 0;
 
 	pixels = 128;
-	g_game->image_map = init_image_map(mlx);
-
-	mlx_resize_image(g_game->image_map.image_background, pixels, pixels);
-	mlx_resize_image(g_game->image_map.image_wall, pixels, pixels);
-	mlx_resize_image(g_game->image_map.image_collectible, pixels, pixels);
-	mlx_resize_image(g_game->image_map.image_exit, pixels, pixels);
-	mlx_resize_image(g_game->image_map.image_trap, pixels, pixels);
-	
 	y = 0;
 	while (y < g_game->map.y)
 	{
@@ -67,11 +79,16 @@ void	display_map(mlx_t *mlx, t_game *g_game)
 				mlx_image_to_window(mlx, g_game->image_map.image_exit, x * pixels, y * pixels);
 				g_game->list_component = create_node(g_game->list_component, y * pixels, x * pixels, 'E');
 			}
-			else if (g_game->map.tab[y][x] == 'T')
-				mlx_image_to_window(mlx, g_game->image_map.image_trap, x * pixels, y * pixels);
 			x++;
 		}
 		y++;
 	}
 	add_data_to_node(g_game);
+}
+
+void	display_images(mlx_t *mlx, t_game *game)
+{
+	display_map(mlx, game);
+	display_player(mlx, game, game->player.y, game->player.x);
+	//display_ui(mlx, game);
 }

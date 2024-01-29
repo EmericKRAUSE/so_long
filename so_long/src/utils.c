@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 11:07:10 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:02:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,22 @@ t_list_component	*create_node(t_list_component *head, int y, int x, char type)
 		current->next = node;
 	}
 	return (head);
+}
+
+void	add_data_to_node(t_game *game)
+{
+	t_list_component	*temp;
+	int	c;
+
+	temp = game->list_component;
+	c = 0;
+	while (temp)
+	{
+		if (temp->type == 'C')
+			temp->nb = c++;
+		else
+			temp->nb = 0;
+		temp = temp->next;
+	}
 }
 

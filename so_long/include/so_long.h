@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 11:06:52 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 15:10:45 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,26 @@ typedef struct image_map
 	mlx_texture_t	*texture_wall;
 	mlx_texture_t	*texture_collectible;
 	mlx_texture_t	*texture_exit;
-	mlx_texture_t	*texture_trap;
 
 	mlx_image_t		*image_background;
 	mlx_image_t		*image_wall;
 	mlx_image_t		*image_collectible;
 	mlx_image_t		*image_exit;
-	mlx_image_t		*image_trap;
 }					t_image_map;
 
 typedef struct image_player
 {
-	mlx_texture_t	*texture_character;
-	mlx_texture_t	*texture_sword;
-
-	mlx_image_t		*image_character;
-	mlx_image_t		*image_sword;
+	mlx_texture_t	*texture_character[5];
+	mlx_image_t		*image_character[5];
 }					t_image_player;
 
 typedef struct image_ui
 {
 	mlx_texture_t	*texture_heart_1;
-	mlx_texture_t	*texture_heart_2;
 	mlx_texture_t	*texture_inventory;
 	mlx_texture_t	*texture_slot;
 
 	mlx_image_t		*image_heart_1;
-	mlx_image_t		*image_heart_2;
 	mlx_image_t		*image_inventory;
 	mlx_image_t		*image_slot;
 }					t_image_ui;
@@ -111,15 +104,17 @@ int		path_is_valid(t_map *map);
 
 /****
 * INIT IMAGES */
-t_image_player		init_image_player(mlx_t *mlx);
-t_image_map			init_image_map(mlx_t *mlx);
-t_image_ui			init_image_ui(mlx_t *mlx);
+void	init_images(mlx_t *mlx, t_game *game);
 
 /****
 * DISPLAY IMAGES */
-void	display_player(mlx_t *mlx, t_game *g_game, int y, int x);
-void	display_map(mlx_t *mlx, t_game *g_game);
-void	display_ui(mlx_t *mlx, t_game *game);
+void	display_images(mlx_t *mlx, t_game *game);
+
+/****
+* RESIZE IMAGES */
+void	resize_image_map(mlx_t *mlx, t_game *game);
+void	resize_image_player(mlx_t *mlx, t_game *game);
+void	resize_image_ui(mlx_t *mlx, t_game *game);
 
 /****
 * UTILS */
@@ -130,5 +125,6 @@ int		ft_strcmp(char *s1, char *s2);
 t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
+void	add_data_to_node(t_game *game);
 
 #endif
