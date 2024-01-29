@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/25 13:23:14 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:07:10 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,9 @@ int	ft_strcmp(char *s1, char *s2)
 	return (1);
 }
 
-// t_list_wall	*ft_lstlast(t_list_wall	*lst)
-// {
-// 	t_list_wall	*temp;
-
-// 	temp = NULL;
-// 	if (lst != NULL)
-// 	{
-// 		temp = lst;
-// 		while (temp-> next)
-// 		{
-// 			temp = temp-> next;
-// 		}
-// 	}
-// 	return (temp);
-// }
-
-// void	ft_lstadd_back(t_list_wall **head, t_list_wall *node)
-// {
-// 	t_list_wall *last;
-	
-// 	if (!(*head))
-// 		*head = node;
-// 	else
-// 	{
-// 		last = ft_lstlast(*lst);
-// 		last->next = node;
-// 	}
-// }
-
-void	free_list(t_list_wall **head)
+void	free_list(t_list_component **head)
 {
-	t_list_wall	*previous;
+	t_list_component	*previous;
 	while (*head)
 	{
 		previous = *head;
@@ -98,26 +69,27 @@ void	free_list(t_list_wall **head)
 	}
 }
 
-void	print_list(t_list_wall *head)
+void	print_list(t_list_component	*head)
 {
 	while (head)
 	{
-		printf ("%d / %d\n", head->y, head->x);
+		printf ("%d / %c\n", head->nb, head->type);
 		head = head->next;
 	}
 }
 
-t_list_wall	*create_node(t_list_wall *head, int y, int x)
+t_list_component	*create_node(t_list_component *head, int y, int x, char type)
 {
-	t_list_wall	*node;
-	t_list_wall *current;
+	t_list_component	*node;
+	t_list_component	*current;
 
-	node = malloc(sizeof(t_list_wall));
+	node = malloc(sizeof(t_list_component));
 	if (!node)
 		return NULL;
+	node->next = NULL;
 	node->y = y;
 	node->x = x;
-	node->next = NULL;
+	node->type = type;
 	if (!head)
 		head = node;
 	else
@@ -129,3 +101,4 @@ t_list_wall	*create_node(t_list_wall *head, int y, int x)
 	}
 	return (head);
 }
+

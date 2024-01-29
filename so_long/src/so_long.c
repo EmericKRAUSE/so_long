@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/26 15:37:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 11:30:08 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,95 +25,27 @@ t_player	init_player(mlx_t *mlx)
 	return (player);
 }
 
-// void	delete_image_map(mlx_t *mlx)
-// {
-// 	mlx_delete_image(mlx, g_game.image_map.image_background);
-// 	mlx_delete_image(mlx, g_game.image_map.image_wall);
-// 	mlx_delete_image(mlx, g_game.image_map.image_collectible);
-// 	mlx_delete_image(mlx, g_game.image_map.image_exit);
-// 	mlx_delete_image(mlx, g_game.image_map.image_trap);
-// 	mlx_delete_image(mlx, g_game.image_character.image_character);
-// }
-
-// void	is_collectible(mlx_t *mlx, int y, int x)
-// {
-// 		if (g_game.map.tab[y][x] == 'C')
-// 		{
-// 			g_game.map.tab[y][x] = '0';
-// 			delete_image_map(mlx);
-// 			display_map(mlx, g_game);
-// 			display_character(mlx, g_game, y, x);
-// 			g_game.player.collectible++;
-// 		}
-// }
-
-// void	is_exit(mlx_t *mlx, int y, int x)
-// {
-// 	if (g_game.map.tab[y][x] == 'E' && g_game.player.collectible == g_game.map.collectible)
-// 	{
-// 		mlx_texture_t *win_texture = mlx_load_png("../assets/win2.png");
-// 		mlx_image_t *win_image = mlx_texture_to_image(mlx, win_texture);
-// 		mlx_resize_image(win_image, 1920 / 2, 1080 / 2);
-// 		mlx_image_to_window(mlx, win_image, 1920 / 2, 1080 / 2);
-// 	}
-// }
-
-// void	is_trap(mlx_t *mlx, int y, int x)
-// {
-// 	char *str = "loose";
-// 	if (g_game.map.tab[y][x] == 'T')
-// 	{
-// 		//mlx_delete_image(mlx, g_game.images.image_lifebar_full);
-// 		//mlx_image_to_window(mlx, g_game.images.image_lifebar_empty, 0, g_game.map.y * g_pixels - g_pixels);
-// 	}
-// }
-
-// void	key_hook(mlx_key_data_t keydata, void *param)
-// {
-// 	mlx_t *mlx;
-
-// 	int	y = g_game.image_character.image_character->instances->y / g_pixels;
-// 	int x = g_game.image_character.image_character->instances->x / g_pixels;
-
-// 	mlx = param;
-// 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && g_game.map.tab[y - 1][x] != '1')
-// 	{
-// 		g_game.image_character.image_character->instances->y -= g_pixels;
-// 		// is_collectible(mlx, y - 1, x);
-// 		// is_exit(mlx, y - 1, x);
-// 		// is_trap(mlx, y - 1, x);
-// 	}
-// 	else if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && g_game.map.tab[y + 1][x] != '1')
-// 	{
-// 		g_game.image_character.image_character->instances->y += g_pixels;
-// 		// is_collectible(mlx, y + 1, x);
-// 		// is_exit(mlx, y + 1, x);
-// 		// is_trap(mlx, y + 1, x);
-// 	}
-// 	else if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && g_game.map.tab[y][x - 1] != '1')
-// 	{
-// 		g_game.image_character.image_character->instances->x -= g_pixels;
-// 		// is_collectible(mlx, y, x - 1);
-// 		// is_exit(mlx, y, x - 1);
-// 		// is_trap(mlx, y, x - 1);
-// 	}
-// 	else if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && g_game.map.tab[y][x + 1] != '1')
-// 	{
-// 		g_game.image_character.image_character->instances->x += g_pixels;
-// 		// is_collectible(mlx, y, x + 1);
-// 		// is_exit(mlx, y, x + 1);
-// 		// is_trap(mlx, y, x + 1);
-// 	}
-		
-// }
-
 // SO LONG //
 
-int	check_hitbox(int y, int x)
+int	collision_event(t_list_component *temp)
 {
-	t_list_wall	*temp;
+	if (temp->type == '1')
+		return (0);
+	else if (temp->type == 'C' && g_game.image_map.image_collectible->instances[temp->nb].enabled == true)
+	{
+		g_game.image_map.image_collectible->instances[temp->nb].enabled = false;
+		g_game.player.collectible++;
+	}
+	else if (temp->type == 'E' && g_game.player.collectible == g_game.map.collectible)
+		g_game.image_player.image_character->instances[0].enabled = false;
+	return (1);
+}
 
-	temp = g_game.list_wall;
+int	check_collision(int y, int x)
+{
+	t_list_component	*temp;
+
+	temp = g_game.list_component;
 
 	while (temp)
 	{
@@ -121,25 +53,11 @@ int	check_hitbox(int y, int x)
 		|| y >= temp->y + g_pixels 
 		|| x + g_game.image_player.image_character->width <= temp->x 
 		|| x >= temp->x + g_pixels))
-			return (1);
+			if (!collision_event(temp))
+				return (1);
 		temp = temp->next;
 	}
 	return (0);
-}
-
-void	attack(mlx_t *mlx)
-{
-	g_game.image_player.image_character->enabled = false;
-	for (int i = 13; i <= 18; i++)
-	{
-		char file_path[100];
-    	sprintf(file_path, "../assets/character/petite_image_%d.png", i);
-		mlx_image_t *img = mlx_texture_to_image(mlx, mlx_load_png(file_path));
-		mlx_image_to_window(mlx, img, g_game.image_player.image_character->instances[0].x,  g_game.image_player.image_character->instances[0].y);
-		if (i = 14)
-			img->enabled = false;
-	}
-	g_game.image_player.image_character->enabled = true;
 }
 
 void hook(void* param)
@@ -150,17 +68,15 @@ void hook(void* param)
 	y = g_game.image_player.image_character->instances[0].y;
 	x = g_game.image_player.image_character->instances[0].x;
 
-	if (mlx_is_key_down(param, MLX_KEY_SPACE))
-        attack(param);
     if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
         mlx_close_window(param);
-    if (mlx_is_key_down(param, MLX_KEY_W) && !check_hitbox(y - 8, x))
+    if (mlx_is_key_down(param, MLX_KEY_W) && !check_collision(y - 8, x))
 		g_game.image_player.image_character->instances[0].y -= 8;
-    if (mlx_is_key_down(param, MLX_KEY_S) && !check_hitbox(y + 8, x))
+    if (mlx_is_key_down(param, MLX_KEY_S) && !check_collision(y + 8, x))
         g_game.image_player.image_character->instances[0].y += 8;
-    if (mlx_is_key_down(param, MLX_KEY_A) && !check_hitbox(y, x - 8))
+    if (mlx_is_key_down(param, MLX_KEY_A) && !check_collision(y, x - 8))
         g_game.image_player.image_character->instances[0].x -= 8;
-    if (mlx_is_key_down(param, MLX_KEY_D) && !check_hitbox(y, x + 8))
+    if (mlx_is_key_down(param, MLX_KEY_D) && !check_collision(y, x + 8))
         g_game.image_player.image_character->instances[0].x += 8;
 }
 
@@ -180,7 +96,7 @@ static	void	so_long(char *file)
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);
-	free_list(&g_game.list_wall);
+	free_list(&g_game.list_component);
 	mlx_terminate(mlx);
 }
 

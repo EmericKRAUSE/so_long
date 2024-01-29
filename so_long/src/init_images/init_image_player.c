@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:55:22 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/26 15:29:02 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/29 09:51:39 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_image_player	init_image_player(mlx_t *mlx)
 {
 	t_image_player	images;
 
-	images.texture_character = mlx_load_png("../assets/character/petite_image_1.png");
+	images.texture_character = mlx_load_png("../assets/character/character.png");
 	images.texture_sword = mlx_load_png("../assets/character/sword.png");
 
 	images.image_character = mlx_texture_to_image(mlx, images.texture_character);
