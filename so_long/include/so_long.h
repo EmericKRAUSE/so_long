@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 15:10:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 10:13:30 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ typedef struct image_map
 	mlx_texture_t	*texture_wall;
 	mlx_texture_t	*texture_collectible;
 	mlx_texture_t	*texture_exit;
+	mlx_texture_t	*texture_trap[5];
 
 	mlx_image_t		*image_background;
 	mlx_image_t		*image_wall;
 	mlx_image_t		*image_collectible;
 	mlx_image_t		*image_exit;
+	mlx_image_t		*image_trap[5];
 }					t_image_map;
 
 typedef struct image_player

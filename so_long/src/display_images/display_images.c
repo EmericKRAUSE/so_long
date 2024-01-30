@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:05:29 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 15:20:31 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 11:31:17 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,45 +50,104 @@ void	display_player(mlx_t *mlx, t_game *game, int y, int x)
 	game->image_player.image_character[4]->instances[0].enabled = false;
 }
 
-void	display_map(mlx_t *mlx, t_game *g_game)
+void	display_trap(mlx_t *mlx, t_game *game)
 {
-	int		pixels;
-	int		y;
-	int		x;
+	int	pixels;
+	int	y;
+	int	x;
 
 	pixels = 128;
-	y = 0;
-	while (y < g_game->map.y)
+	y = -1;
+	while (++y < game->map.y)
 	{
-		x = 0;
-		while (x < g_game->map.x)
+		x = -1;
+		while (++x < game->map.x)
 		{
-			mlx_image_to_window(mlx, g_game->image_map.image_background, x * pixels, y * pixels);
-			if (g_game->map.tab[y][x] == '1')
+			if (game->map.tab[y][x] == 'T')
 			{
-				mlx_image_to_window(mlx, g_game->image_map.image_wall, x * pixels, y * pixels);
-				g_game->list_component = create_node(g_game->list_component, y * pixels, x * pixels, '1');
+				mlx_image_to_window(mlx, game->image_map.image_trap[0], \
+				x * pixels, y * pixels);
+				mlx_image_to_window(mlx, game->image_map.image_trap[1], \
+				x * pixels, y * pixels);
+				mlx_image_to_window(mlx, game->image_map.image_trap[2], \
+				x * pixels, y * pixels);
+				mlx_image_to_window(mlx, game->image_map.image_trap[3], \
+				x * pixels, y * pixels);
+				mlx_image_to_window(mlx, game->image_map.image_trap[4], \
+				x * pixels, y * pixels);
 			}
-			else if (g_game->map.tab[y][x] == 'C')
-			{
-				mlx_image_to_window(mlx, g_game->image_map.image_collectible, x * pixels, y * pixels);
-				g_game->list_component = create_node(g_game->list_component, y * pixels, x * pixels, 'C');
-			}
-			else if (g_game->map.tab[y][x] == 'E')
-			{
-				mlx_image_to_window(mlx, g_game->image_map.image_exit, x * pixels, y * pixels);
-				g_game->list_component = create_node(g_game->list_component, y * pixels, x * pixels, 'E');
-			}
-			x++;
 		}
-		y++;
 	}
-	add_data_to_node(g_game);
+	game->image_map.image_trap[0]->instances->enabled = false;
+	game->image_map.image_trap[1]->instances->enabled = false;
+	game->image_map.image_trap[2]->instances->enabled = false;
+	game->image_map.image_trap[3]->instances->enabled = false;
+	game->image_map.image_trap[4]->instances->enabled = false;
+}
+
+void	display_map(mlx_t *mlx, t_game *game)
+{
+	int	pixels;
+	int	y;
+	int	x;
+
+	pixels = 128;
+	y = -1;
+	while (++y < game->map.y)
+	{
+		x = -1;
+		while (++x < game->map.x)
+		{
+			mlx_image_to_window(mlx, game->image_map.image_background, \
+			x * pixels, y * pixels);
+			if (game->map.tab[y][x] == '1')
+				mlx_image_to_window(mlx, game->image_map.image_wall, \
+				x * pixels, y * pixels);
+			else if (game->map.tab[y][x] == 'C')
+				mlx_image_to_window(mlx, game->image_map.image_collectible, \
+				x * pixels, y * pixels);
+			else if (game->map.tab[y][x] == 'E')
+				mlx_image_to_window(mlx, game->image_map.image_exit, \
+				x * pixels, y * pixels);
+		}
+	}
+}
+
+void	add_to_list(t_game *game)
+{
+	int	pixels;
+	int	y;
+	int	x;
+
+	pixels = 128;
+	y = -1;
+	while (++y < game->map.y)
+	{
+		x = -1;
+		while (++x < game->map.x)
+		{
+			if (game->map.tab[y][x] == '1')
+				game->list_component = create_node(game->list_component, \
+				y * pixels, x * pixels, '1');
+			else if (game->map.tab[y][x] == 'C')
+				game->list_component = create_node(game->list_component, \
+				y * pixels, x * pixels, 'C');
+			else if (game->map.tab[y][x] == 'E')
+				game->list_component = create_node(game->list_component, \
+				y * pixels, x * pixels, 'E');
+			else if (game->map.tab[y][x] == 'T')
+				game->list_component = create_node(game->list_component, \
+				y * pixels, x * pixels, 'T');
+		}
+	}
+	add_data_to_node(game);
 }
 
 void	display_images(mlx_t *mlx, t_game *game)
 {
 	display_map(mlx, game);
+	display_trap(mlx, game);
+	add_to_list(game);
 	display_player(mlx, game, game->player.y, game->player.x);
-	//display_ui(mlx, game);
+	display_ui(mlx, game);
 }
