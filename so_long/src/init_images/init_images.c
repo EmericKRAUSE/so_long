@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:41:20 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/30 10:33:24 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:22:25 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,62 @@ static	void	init_image_ui(mlx_t *mlx, t_image_ui *images)
 	images->image_slot = mlx_texture_to_image(mlx, images->texture_slot);
 }
 
+static	void	init_left_animation(mlx_t *mlx, t_image_player *images)
+{
+	images->texture_left_animation[0] = \
+	mlx_load_png("../assets/character/left1.png");
+	images->texture_left_animation[1] = \
+	mlx_load_png("../assets/character/left2.png");
+	images->texture_left_animation[2] = \
+	mlx_load_png("../assets/character/left3.png");
+	images->texture_left_animation[3] = \
+	mlx_load_png("../assets/character/left4.png");
+	images->texture_left_animation[4] = \
+	mlx_load_png("../assets/character/left5.png");
+	images->image_left_animation[0] = \
+	mlx_texture_to_image(mlx, images->texture_left_animation[0]);
+	images->image_left_animation[1] = \
+	mlx_texture_to_image(mlx, images->texture_left_animation[1]);
+	images->image_left_animation[2] = \
+	mlx_texture_to_image(mlx, images->texture_left_animation[2]);
+	images->image_left_animation[3] = \
+	mlx_texture_to_image(mlx, images->texture_left_animation[3]);
+	images->image_left_animation[4] = \
+	mlx_texture_to_image(mlx, images->texture_left_animation[4]);
+}
+
+static	void	init_right_animation(mlx_t *mlx, t_image_player *images)
+{
+	images->texture_right_animation[0] = \
+	mlx_load_png("../assets/character/right1.png");
+	images->texture_right_animation[1] = \
+	mlx_load_png("../assets/character/right2.png");
+	images->texture_right_animation[2] = \
+	mlx_load_png("../assets/character/right3.png");
+	images->texture_right_animation[3] = \
+	mlx_load_png("../assets/character/right4.png");
+	images->texture_right_animation[4] = \
+	mlx_load_png("../assets/character/right5.png");
+	images->image_right_animation[0] = \
+	mlx_texture_to_image(mlx, images->texture_right_animation[0]);
+	images->image_right_animation[1] = \
+	mlx_texture_to_image(mlx, images->texture_right_animation[1]);
+	images->image_right_animation[2] = \
+	mlx_texture_to_image(mlx, images->texture_right_animation[2]);
+	images->image_right_animation[3] = \
+	mlx_texture_to_image(mlx, images->texture_right_animation[3]);
+	images->image_right_animation[4] = \
+	mlx_texture_to_image(mlx, images->texture_right_animation[4]);
+}
+
 static	void	init_image_player(mlx_t *mlx, t_image_player *images)
 {
-	images->texture_character[0] = \
-	mlx_load_png("../assets/character/warrior1.png");
-	images->texture_character[1] = \
-	mlx_load_png("../assets/character/warrior2.png");
-	images->texture_character[2] = \
-	mlx_load_png("../assets/character/warrior3.png");
-	images->texture_character[3] = \
-	mlx_load_png("../assets/character/warrior4.png");
-	images->texture_character[4] = \
-	mlx_load_png("../assets/character/warrior5.png");
-	images->image_character[0] = \
-	mlx_texture_to_image(mlx, images->texture_character[0]);
-	images->image_character[1] = \
-	mlx_texture_to_image(mlx, images->texture_character[1]);
-	images->image_character[2] = \
-	mlx_texture_to_image(mlx, images->texture_character[2]);
-	images->image_character[3] = \
-	mlx_texture_to_image(mlx, images->texture_character[3]);
-	images->image_character[4] = \
-	mlx_texture_to_image(mlx, images->texture_character[4]);
+	images->texture_character = \
+	mlx_load_png("../assets/character/character.png");
+	images->image_character = \
+	mlx_texture_to_image(mlx, images->texture_character);
+	init_right_animation(mlx, images);
+	init_left_animation(mlx, images);
 }
 
 static	void	init_image_trap(mlx_t *mlx, t_image_map *images)

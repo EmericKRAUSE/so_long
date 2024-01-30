@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/29 15:02:01 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 12:44:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,17 @@ void	add_data_to_node(t_game *game)
 {
 	t_list_component	*temp;
 	int	c;
+	int t;
 
 	temp = game->list_component;
 	c = 0;
+	t = 0;
 	while (temp)
 	{
 		if (temp->type == 'C')
 			temp->nb = c++;
+		else if (temp->type == 'T')
+			temp->nb = t++;
 		else
 			temp->nb = 0;
 		temp = temp->next;

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/30 10:13:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:05:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ typedef struct image_map
 
 typedef struct image_player
 {
-	mlx_texture_t	*texture_character[5];
-	mlx_image_t		*image_character[5];
+	mlx_texture_t	*texture_character;
+	mlx_texture_t	*texture_right_animation[5];
+	mlx_texture_t	*texture_left_animation[5];
+	
+	mlx_image_t		*image_character;
+	mlx_image_t		*image_right_animation[5];
+	mlx_image_t		*image_left_animation[5];
 }					t_image_player;
 
 typedef struct image_ui

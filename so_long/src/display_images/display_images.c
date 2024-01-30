@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:05:29 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/30 11:31:17 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/01/30 14:28:31 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,59 @@ void	display_ui(mlx_t *mlx, t_game *game)
 		x++;
 	}
 }
+void	display_left_animation(mlx_t *mlx, t_game *game, int y, int x)
+{
+	int	pixels;
+
+	pixels = 128;
+	mlx_image_to_window(mlx, game->image_player.image_left_animation[0], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_left_animation[1], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_left_animation[2], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_left_animation[3], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_left_animation[4], \
+	x * pixels, y * pixels);
+	game->image_player.image_left_animation[0]->instances[0].enabled = false;
+	game->image_player.image_left_animation[1]->instances[0].enabled = false;
+	game->image_player.image_left_animation[2]->instances[0].enabled = false;
+	game->image_player.image_left_animation[3]->instances[0].enabled = false;
+	game->image_player.image_left_animation[4]->instances[0].enabled = false;
+}
+
+void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x)
+{
+	int	pixels;
+
+	pixels = 128;
+	mlx_image_to_window(mlx, game->image_player.image_right_animation[0], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_right_animation[1], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_right_animation[2], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_right_animation[3], \
+	x * pixels, y * pixels);
+	mlx_image_to_window(mlx, game->image_player.image_right_animation[4], \
+	x * pixels, y * pixels);
+	game->image_player.image_right_animation[0]->instances[0].enabled = false;
+	game->image_player.image_right_animation[1]->instances[0].enabled = false;
+	game->image_player.image_right_animation[2]->instances[0].enabled = false;
+	game->image_player.image_right_animation[3]->instances[0].enabled = false;
+	game->image_player.image_right_animation[4]->instances[0].enabled = false;
+}
 
 void	display_player(mlx_t *mlx, t_game *game, int y, int x)
 {
 	int	pixels;
 
 	pixels = 128;
-	mlx_image_to_window(mlx, game->image_player.image_character[0], \
+	mlx_image_to_window(mlx, game->image_player.image_character, \
 	x * pixels, y * pixels);
-	mlx_image_to_window(mlx, game->image_player.image_character[1], \
-	x * pixels, y * pixels);
-	mlx_image_to_window(mlx, game->image_player.image_character[2], \
-	x * pixels, y * pixels);
-	mlx_image_to_window(mlx, game->image_player.image_character[3], \
-	x * pixels, y * pixels);
-	mlx_image_to_window(mlx, game->image_player.image_character[4], \
-	x * pixels, y * pixels);
-	game->image_player.image_character[1]->instances[0].enabled = false;
-	game->image_player.image_character[2]->instances[0].enabled = false;
-	game->image_player.image_character[3]->instances[0].enabled = false;
-	game->image_player.image_character[4]->instances[0].enabled = false;
+	display_right_animation(mlx, game, y, x);
+	display_left_animation(mlx, game, y, x);
 }
 
 void	display_trap(mlx_t *mlx, t_game *game)
@@ -78,7 +111,6 @@ void	display_trap(mlx_t *mlx, t_game *game)
 			}
 		}
 	}
-	game->image_map.image_trap[0]->instances->enabled = false;
 	game->image_map.image_trap[1]->instances->enabled = false;
 	game->image_map.image_trap[2]->instances->enabled = false;
 	game->image_map.image_trap[3]->instances->enabled = false;
