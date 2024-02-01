@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 11:50:12 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/01 13:29:02 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,23 +87,35 @@ typedef struct player
 }		t_player;
 
 /****
+* STRUCT ANIMATION */
+typedef struct character_animation
+{
+	int	time;
+	int	animation;
+}		t_character_animation;
+
+typedef struct trap_animation
+{
+	int	time;
+	int	animation;
+}		t_trap_animation;
+
+/****
 * STRUCT GAME */
 typedef struct game
 {
-	t_map				map;
-	t_player			player;
-	t_image_map			image_map;
-	t_image_player		image_player;
-	t_image_ui			image_ui;
-	t_list_component	*list_component;
-}						t_game;
+	t_map					map;
+	t_player				player;
+	t_image_map				image_map;
+	t_image_player			image_player;
+	t_image_ui				image_ui;
+	t_list_component		*list_component;
+	t_character_animation	character_animation;
+	t_trap_animation		trap_animation;
+}							t_game;
 
 extern t_game	g_game;
 extern int				g_pixels;
-extern int				g_time;
-extern int				g_time2;
-extern int				g_animation;
-extern int				g_animation2;
 extern int				g_over;
 
 /****
@@ -144,6 +156,24 @@ void	add_data_to_node(t_game *game);
 
 /****
 * HOOKS */
-void hook_movement(void* param);
+void	hook_movement(void* param);
+void	hook_trap(void *param);
+
+/****
+* EVENTS */
+int	collision_event(t_list_component *temp);
+
+/****
+* ANIMATIONS */
+void	animation_left(mlx_t *mlx);
+void	animation_right(mlx_t *mlx);
+void	reset_animation();
+
+/****
+* MOVEMENTS */
+void	moove_down();
+void	moove_left();
+void	moove_right();
+void	moove_up();
 
 #endif

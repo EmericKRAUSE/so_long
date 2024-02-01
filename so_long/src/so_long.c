@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 11:49:20 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/01 13:26:45 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,6 @@ t_player	init_player(mlx_t *mlx)
 
 // SO LONG //
 
-void	update_trap(mlx_t *mlx)
-{
-	int i = 0;
-	while (i < 5)
-	{
-		if (g_animation == 0)
-			g_game.image_map.image_trap[4]->instances[i].enabled = false;
-		else if (g_game.image_map.image_trap[g_animation - 1]->instances[i].enabled == true)
-			g_game.image_map.image_trap[g_animation - 1]->instances[i].enabled = false;
-		g_game.image_map.image_trap[g_animation]->instances[i++].enabled = true;
-	}
-}
-
-void	hook_time_animation(void *param)
-{
-	g_time ++;
-	if (g_time % 10 == 0)
-	{
-		update_trap(param);
-		g_animation++;
-		if (g_animation == 5)
-			g_animation = 0;
-		g_time = 0;	
-	}
-}
-
 static	void	so_long(char *file)
 {
 	mlx_t		*mlx;
@@ -68,9 +42,11 @@ static	void	so_long(char *file)
 
 	init_images(mlx, &g_game);
 	display_images(mlx, &g_game);
-
+	g_game.character_animation.time = 0;
+	g_game.character_animation.animation = 0;
+	
 	mlx_loop_hook(mlx, &hook_movement, mlx);
-	mlx_loop_hook(mlx, &hook_time_animation, mlx);
+	//mlx_loop_hook(mlx, &hook_trap, mlx);
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);
