@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/30 14:05:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/01 11:50:12 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <string.h>
 
+
 /****
 * STRUCT IMAGES */
 typedef struct image_map
@@ -29,7 +30,6 @@ typedef struct image_map
 	mlx_texture_t	*texture_collectible;
 	mlx_texture_t	*texture_exit;
 	mlx_texture_t	*texture_trap[5];
-
 	mlx_image_t		*image_background;
 	mlx_image_t		*image_wall;
 	mlx_image_t		*image_collectible;
@@ -42,7 +42,6 @@ typedef struct image_player
 	mlx_texture_t	*texture_character;
 	mlx_texture_t	*texture_right_animation[5];
 	mlx_texture_t	*texture_left_animation[5];
-	
 	mlx_image_t		*image_character;
 	mlx_image_t		*image_right_animation[5];
 	mlx_image_t		*image_left_animation[5];
@@ -53,7 +52,6 @@ typedef struct image_ui
 	mlx_texture_t	*texture_heart_1;
 	mlx_texture_t	*texture_inventory;
 	mlx_texture_t	*texture_slot;
-
 	mlx_image_t		*image_heart_1;
 	mlx_image_t		*image_inventory;
 	mlx_image_t		*image_slot;
@@ -84,11 +82,13 @@ typedef struct map
 typedef struct player
 {
 	int	y;
-	int x;
-	int collectible;
+	int	x;
+	int	collectible;
 }		t_player;
 
-typedef	struct game
+/****
+* STRUCT GAME */
+typedef struct game
 {
 	t_map				map;
 	t_player			player;
@@ -97,6 +97,14 @@ typedef	struct game
 	t_image_ui			image_ui;
 	t_list_component	*list_component;
 }						t_game;
+
+extern t_game	g_game;
+extern int				g_pixels;
+extern int				g_time;
+extern int				g_time2;
+extern int				g_animation;
+extern int				g_animation2;
+extern int				g_over;
 
 /****
 * PARSING */
@@ -133,5 +141,9 @@ t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
 void	add_data_to_node(t_game *game);
+
+/****
+* HOOKS */
+void hook_movement(void* param);
 
 #endif
