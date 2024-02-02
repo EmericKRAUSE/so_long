@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:29:07 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:25:14 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,55 +100,4 @@ t_list_component	*create_node(t_list_component *head, int y, int x, char type)
 		current->next = node;
 	}
 	return (head);
-}
-
-void	add_data_to_node(t_game *game)
-{
-	t_list_component	*temp;
-	int	c;
-	int t;
-
-	temp = game->list_component;
-	c = 0;
-	t = 0;
-	while (temp)
-	{
-		if (temp->type == 'C')
-			temp->nb = c++;
-		else if (temp->type == 'T')
-			temp->nb = t++;
-		else
-			temp->nb = 0;
-		temp = temp->next;
-	}
-}
-
-void	add_to_list(t_game *game)
-{
-	int	pixels;
-	int	y;
-	int	x;
-
-	pixels = 128;
-	y = -1;
-	while (++y < game->map.y)
-	{
-		x = -1;
-		while (++x < game->map.x)
-		{
-			if (game->map.tab[y][x] == '1')
-				game->list_component = create_node(game->list_component, \
-				y * pixels, x * pixels, '1');
-			else if (game->map.tab[y][x] == 'C')
-				game->list_component = create_node(game->list_component, \
-				y * pixels, x * pixels, 'C');
-			else if (game->map.tab[y][x] == 'E')
-				game->list_component = create_node(game->list_component, \
-				y * pixels, x * pixels, 'E');
-			else if (game->map.tab[y][x] == 'T')
-				game->list_component = create_node(game->list_component, \
-				y * pixels, x * pixels, 'T');
-		}
-	}
-	add_data_to_node(game);
 }

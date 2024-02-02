@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:50:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:47:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_player	init_player(mlx_t *mlx)
 	
 	player.y = get_position(g_game.map, 'y');
 	player.x = get_position(g_game.map, 'x');
+	player.time = 0;
+	player.animation = 0;
 	player.collectible = 0;
 	return (player);
 }
@@ -34,12 +36,13 @@ static	void	so_long(char *file)
 
 	g_game.map = map_parser(file);
 	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
+	g_game.pixel = 128;
 	g_game.player = init_player(mlx);
-
+	
 	init_images(mlx, &g_game);
 	display_images(mlx, &g_game);
-	g_game.player.time = 0;
-	g_game.player.animation = 0;
+	g_game.time.time = 0;
+	g_game.time.animation = 0;
 	
 	mlx_loop_hook(mlx, &hook_movement, mlx);
 	mlx_loop_hook(mlx, &hook_trap, mlx);

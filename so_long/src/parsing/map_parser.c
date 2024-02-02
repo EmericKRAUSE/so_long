@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/23 13:52:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:29:33 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static	int	map_component_is_valid(t_map *map)
 				return (0);
 			if (map->tab[y][x] == 'C')
 				map->collectible++;
+			else if (map->tab[y][x] == 'T')
+				map->trap++;
 			else if (map->tab[y][x] == 'E')
 				map->exit++;
 			else if (map->tab[y][x] == 'P')

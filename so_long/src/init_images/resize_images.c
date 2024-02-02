@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:47:24 by ekrause           #+#    #+#             */
-/*   Updated: 2024/01/30 14:22:13 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:54:05 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,44 @@
 
 void	resize_image_ui(mlx_t *mlx, t_game *game)
 {
-	int	pixels;
-
-	pixels = 128;
-	mlx_resize_image(game->image_ui.image_heart_1, pixels, pixels);
-	mlx_resize_image(game->image_ui.image_slot, pixels, pixels);
+	mlx_resize_image(game->image_ui.image_heart_1, \
+	g_game.pixel, g_game.pixel);
+	mlx_resize_image(game->image_ui.image_slot, \
+	g_game.pixel, g_game.pixel);
 }
 
 void	resize_image_player(mlx_t *mlx, t_game *game)
 {
 	int	width;
 	int	height;
+	int	i;
 
 	width = 68;
 	height = 100;
+	i = 0;
 	mlx_resize_image(game->image_player.image_character, width, height);
-	mlx_resize_image(game->image_player.image_right_animation[0], width, height);
-	mlx_resize_image(game->image_player.image_right_animation[1], width, height);
-	mlx_resize_image(game->image_player.image_right_animation[2], width, height);
-	mlx_resize_image(game->image_player.image_right_animation[3], width, height);
-	mlx_resize_image(game->image_player.image_right_animation[4], width, height);
-	mlx_resize_image(game->image_player.image_left_animation[0], width, height);
-	mlx_resize_image(game->image_player.image_left_animation[1], width, height);
-	mlx_resize_image(game->image_player.image_left_animation[2], width, height);
-	mlx_resize_image(game->image_player.image_left_animation[3], width, height);
-	mlx_resize_image(game->image_player.image_left_animation[4], width, height);
+	while (i < 5)
+	{
+		mlx_resize_image(game->image_player.image_right_animation[i], width, height);
+		mlx_resize_image(game->image_player.image_left_animation[i++], width, height);
+	}
 }
 
 void	resize_image_trap(mlx_t *mlx, t_game *game)
 {
-	int	pixels;
+	int	i;
 
-	pixels = 128;
-	mlx_resize_image(game->image_map.image_trap[0], pixels, pixels);
-	mlx_resize_image(game->image_map.image_trap[1], pixels, pixels);
-	mlx_resize_image(game->image_map.image_trap[2], pixels, pixels);
-	mlx_resize_image(game->image_map.image_trap[3], pixels, pixels);
-	mlx_resize_image(game->image_map.image_trap[4], pixels, pixels);
+	i = 0;
+	while (i < 5)
+		mlx_resize_image(game->image_map.image_trap[i++], \
+		g_game.pixel, g_game.pixel);
 }
 
 void	resize_image_map(mlx_t *mlx, t_game *game)
 {
-	int	pixels;
-
-	pixels = 128;
-	mlx_resize_image(game->image_map.image_background, pixels, pixels);
-	mlx_resize_image(game->image_map.image_wall, pixels, pixels);
-	mlx_resize_image(game->image_map.image_collectible, pixels, pixels);
-	mlx_resize_image(game->image_map.image_exit, pixels, pixels);
+	mlx_resize_image(game->image_map.image_background, g_game.pixel, g_game.pixel);
+	mlx_resize_image(game->image_map.image_wall, g_game.pixel, g_game.pixel);
+	mlx_resize_image(game->image_map.image_collectible, g_game.pixel, g_game.pixel);
+	mlx_resize_image(game->image_map.image_exit, g_game.pixel, g_game.pixel);
 	resize_image_trap(mlx, game);
 }

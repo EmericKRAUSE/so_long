@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:36:30 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 12:45:05 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct map
 	int			x;
 	int			y;
 	int			collectible;
+	int			trap;
 	int			exit;
 	int			position;
 	char		*component;
@@ -90,11 +91,11 @@ typedef struct player
 /****
 * STRUCT ANIMATION */
 
-typedef struct trap_animation
+typedef struct time
 {
 	int	time;
 	int	animation;
-}		t_trap_animation;
+}		t_time;
 
 /****
 * STRUCT GAME */
@@ -106,11 +107,11 @@ typedef struct game
 	t_image_player			image_player;
 	t_image_ui				image_ui;
 	t_list_component		*list_component;
-	t_trap_animation		trap_animation;
+	t_time					time;
+	int						pixel;
 }							t_game;
 
 extern t_game			g_game;
-extern int				g_pixels;
 extern int				g_over;
 
 /****
@@ -153,8 +154,6 @@ int		ft_strcmp(char *s1, char *s2);
 t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
-void	add_data_to_node(t_game *game);
-void	add_to_list(t_game *game);
 
 /****
 * HOOKS */
