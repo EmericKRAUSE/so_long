@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 13:29:02 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 10:36:30 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
-
 
 /****
 * STRUCT IMAGES */
@@ -83,16 +82,13 @@ typedef struct player
 {
 	int	y;
 	int	x;
+	int	time;
+	int	animation;
 	int	collectible;
 }		t_player;
 
 /****
 * STRUCT ANIMATION */
-typedef struct character_animation
-{
-	int	time;
-	int	animation;
-}		t_character_animation;
 
 typedef struct trap_animation
 {
@@ -110,11 +106,10 @@ typedef struct game
 	t_image_player			image_player;
 	t_image_ui				image_ui;
 	t_list_component		*list_component;
-	t_character_animation	character_animation;
 	t_trap_animation		trap_animation;
 }							t_game;
 
-extern t_game	g_game;
+extern t_game			g_game;
 extern int				g_pixels;
 extern int				g_over;
 
@@ -136,6 +131,12 @@ void	init_images(mlx_t *mlx, t_game *game);
 /****
 * DISPLAY IMAGES */
 void	display_images(mlx_t *mlx, t_game *game);
+void	display_left_animation(mlx_t *mlx, t_game *game, int y, int x);
+void	display_map(mlx_t *mlx, t_game *game);
+void	display_player(mlx_t *mlx, t_game *game, int y, int x);
+void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x);
+void	display_trap(mlx_t *mlx, t_game *game);
+void	display_ui(mlx_t *mlx, t_game *game);
 
 /****
 * RESIZE IMAGES */
@@ -153,27 +154,29 @@ t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
 void	add_data_to_node(t_game *game);
+void	add_to_list(t_game *game);
 
 /****
 * HOOKS */
-void	hook_movement(void* param);
+void	hook_movement(void *param);
 void	hook_trap(void *param);
 
 /****
 * EVENTS */
-int	collision_event(t_list_component *temp);
+int		collision_event(t_list_component *temp);
 
 /****
 * ANIMATIONS */
 void	animation_left(mlx_t *mlx);
 void	animation_right(mlx_t *mlx);
-void	reset_animation();
+void	reset_animation(void);
+void	update_trap(mlx_t *mlx);
 
 /****
 * MOVEMENTS */
-void	moove_down();
-void	moove_left();
-void	moove_right();
-void	moove_up();
+void	moove_down(void);
+void	moove_left(void);
+void	moove_right(void);
+void	moove_up(void);
 
 #endif

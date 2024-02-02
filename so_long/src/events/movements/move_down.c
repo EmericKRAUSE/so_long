@@ -6,13 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:36:03 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 12:36:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 10:23:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/so_long.h"
 
-void	moove_down()
+void	moove_down(void)
 {
 	int	i;
 

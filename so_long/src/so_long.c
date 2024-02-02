@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 13:26:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 10:50:05 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 t_game			g_game;
 int				g_pixels = 128;
-int				g_time = 0;
-int				g_time2 = 0;
-int				g_animation = 0;
-int				g_animation2 = 0;
 int				g_over = 0;
 
 t_player	init_player(mlx_t *mlx)
@@ -42,11 +38,11 @@ static	void	so_long(char *file)
 
 	init_images(mlx, &g_game);
 	display_images(mlx, &g_game);
-	g_game.character_animation.time = 0;
-	g_game.character_animation.animation = 0;
+	g_game.player.time = 0;
+	g_game.player.animation = 0;
 	
 	mlx_loop_hook(mlx, &hook_movement, mlx);
-	//mlx_loop_hook(mlx, &hook_trap, mlx);
+	mlx_loop_hook(mlx, &hook_trap, mlx);
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);

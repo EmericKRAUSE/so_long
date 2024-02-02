@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/01 13:28:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/02 10:22:38 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void hook_movement(void* param)
 	x = g_game.image_player.image_character->instances[0].x;
 
     if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-        mlx_close_window(param);
+    	mlx_close_window(param);
     if (mlx_is_key_down(param, MLX_KEY_W) && check_collision(y - 8, x))
 		moove_up();
     if (mlx_is_key_down(param, MLX_KEY_S) && check_collision(y + 8, x))

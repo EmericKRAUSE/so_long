@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_right.c                                       :+:      :+:    :+:   */
+/*   udpate_trap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 12:29:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:24:12 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/02 09:51:12 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/02 09:59:47 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/so_long.h"
 
-void	moove_right(void)
+void	update_trap(mlx_t *mlx)
 {
 	int	i;
 
 	i = 0;
-	g_game.image_player.image_character->instances[0].x += 8;
 	while (i < 5)
 	{
-		g_game.image_player.image_left_animation[i]->instances[0].x += 8;
-		g_game.image_player.image_right_animation[i++]->instances[0].x += 8;
+		if (g_game.trap_animation.animation == 0)
+			g_game.image_map.image_trap[4]->instances[i].enabled = false;
+		else if (g_game.image_map.image_trap \
+		[g_game.trap_animation.animation - 1] \
+		->instances[i].enabled == true)
+			g_game.image_map.image_trap[g_game.trap_animation.animation - 1] \
+			->instances[i].enabled = false;
+		g_game.image_map.image_trap[g_game.trap_animation.animation] \
+		->instances[i++].enabled = true;
 	}
 }
