@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:47:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:22:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_player	init_player(mlx_t *mlx)
 	player.time = 0;
 	player.animation = 0;
 	player.collectible = 0;
+	player.movement = 0;
 	return (player);
 }
 

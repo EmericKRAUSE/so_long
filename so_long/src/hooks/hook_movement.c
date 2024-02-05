@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:58:39 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:48:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,9 @@ void	hook_movement(void *param)
 	if (mlx_is_key_down(param, MLX_KEY_S) && check_collision(y + 8, x))
 		moove_down();
 	if (mlx_is_key_down(param, MLX_KEY_A) && check_collision(y, x - 8))
-	{
-		moove_left();
-		animation_left(param);
-	}
+		moove_left(param);
 	if (mlx_is_key_down(param, MLX_KEY_D) && check_collision(y, x + 8))
-	{
-		moove_right();
-		animation_right(param);
-	}
+		moove_right(param);
 	if (!mlx_is_key_down(param, MLX_KEY_W) && \
 	!mlx_is_key_down(param, MLX_KEY_S) && \
 	!mlx_is_key_down(param, MLX_KEY_A) && \

@@ -6,13 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:36:10 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:23:45 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:46:41 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/so_long.h"
 
-void	moove_left(void)
+void	moove_left(mlx_t *mlx)
 {
 	int	i;
 
@@ -23,4 +23,5 @@ void	moove_left(void)
 		g_game.image_player.image_left_animation[i]->instances[0].x -= 8;
 		g_game.image_player.image_right_animation[i++]->instances[0].x -= 8;
 	}
+	animation_left(mlx);
 }

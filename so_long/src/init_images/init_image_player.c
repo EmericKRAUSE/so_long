@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_right.c                                       :+:      :+:    :+:   */
+/*   init_image_player.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 12:29:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/05 11:47:49 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/05 11:52:31 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/05 11:56:20 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../include/so_long.h"
 
-void	moove_right(mlx_t *mlx)
+void	init_image_player(mlx_t *mlx, t_image_player *images)
 {
-	int	i;
-
-	i = 0;
-	g_game.image_player.image_character->instances[0].x += 8;
-	while (i < 5)
-	{
-		g_game.image_player.image_left_animation[i]->instances[0].x += 8;
-		g_game.image_player.image_right_animation[i++]->instances[0].x += 8;
-	}
-	animation_right(mlx);
+	images->texture_character = \
+	mlx_load_png("../assets/character/character.png");
+	images->image_character = \
+	mlx_texture_to_image(mlx, images->texture_character);
+	init_right_animation(mlx, images);
+	init_left_animation(mlx, images);
 }

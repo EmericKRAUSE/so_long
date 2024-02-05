@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:45:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/05 11:55:35 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct player
 	int	time;
 	int	animation;
 	int	collectible;
+	int	movement;
 }		t_player;
 
 /****
@@ -115,6 +116,43 @@ extern t_game			g_game;
 extern int				g_over;
 
 /****
+* DISPLAY IMAGES */
+void	display_images(mlx_t *mlx, t_game *game);
+void	display_left_animation(mlx_t *mlx, t_game *game, int y, int x);
+void	display_map(mlx_t *mlx, t_game *game);
+void	display_player(mlx_t *mlx, t_game *game, int y, int x);
+void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x);
+void	display_trap(mlx_t *mlx, t_game *game);
+void	display_ui(mlx_t *mlx, t_game *game);
+
+/****
+* ANIMATIONS */
+void	animation_left(mlx_t *mlx);
+void	animation_right(mlx_t *mlx);
+void	reset_animation(void);
+void	update_trap(mlx_t *mlx);
+
+/****
+* COLLISIONS */
+int		collision_event(t_list_component *temp);
+
+/****
+* MOVEMENTS */
+void	moove_down(void);
+void	moove_left(mlx_t *mlx);
+void	moove_right(mlx_t *mlx);
+void	moove_up(void);
+
+/****
+* HOOKS */
+void	hook_movement(void *param);
+void	hook_trap(void *param);
+
+/****
+* INIT IMAGES */
+void	init_images(mlx_t *mlx, t_game *game);
+
+/****
 * PARSING */
 int		create_map(t_map *map);
 void	fill_map(t_map *map, char *file);
@@ -128,16 +166,6 @@ int		path_is_valid(t_map *map);
 /****
 * INIT IMAGES */
 void	init_images(mlx_t *mlx, t_game *game);
-
-/****
-* DISPLAY IMAGES */
-void	display_images(mlx_t *mlx, t_game *game);
-void	display_left_animation(mlx_t *mlx, t_game *game, int y, int x);
-void	display_map(mlx_t *mlx, t_game *game);
-void	display_player(mlx_t *mlx, t_game *game, int y, int x);
-void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x);
-void	display_trap(mlx_t *mlx, t_game *game);
-void	display_ui(mlx_t *mlx, t_game *game);
 
 /****
 * RESIZE IMAGES */
@@ -155,27 +183,5 @@ t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
 
-/****
-* HOOKS */
-void	hook_movement(void *param);
-void	hook_trap(void *param);
-
-/****
-* EVENTS */
-int		collision_event(t_list_component *temp);
-
-/****
-* ANIMATIONS */
-void	animation_left(mlx_t *mlx);
-void	animation_right(mlx_t *mlx);
-void	reset_animation(void);
-void	update_trap(mlx_t *mlx);
-
-/****
-* MOVEMENTS */
-void	moove_down(void);
-void	moove_left(void);
-void	moove_right(void);
-void	moove_up(void);
 
 #endif
