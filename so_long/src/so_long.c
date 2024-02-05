@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/05 11:22:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/05 13:38:16 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_game			g_game;
 int				g_pixels = 128;
 int				g_over = 0;
 
-t_player	init_player(mlx_t *mlx)
+t_player	init_player(void)
 {
 	t_player	player;
 	
@@ -38,7 +38,7 @@ static	void	so_long(char *file)
 	g_game.map = map_parser(file);
 	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
 	g_game.pixel = 128;
-	g_game.player = init_player(mlx);
+	g_game.player = init_player();
 	
 	init_images(mlx, &g_game);
 	display_images(mlx, &g_game);
