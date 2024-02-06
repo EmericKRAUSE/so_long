@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/05 13:38:16 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:59:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static	void	so_long(char *file)
 	g_game.time.animation = 0;
 	
 	mlx_loop_hook(mlx, &hook_movement, mlx);
-	mlx_loop_hook(mlx, &hook_trap, mlx);
+	//mlx_loop_hook(mlx, (void *)&hook_trap, mlx);
 	mlx_loop(mlx);
 	
 	free_map(g_game.map);

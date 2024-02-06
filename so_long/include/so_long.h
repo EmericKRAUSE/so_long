@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/05 13:39:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:31:59 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ void	display_ui(mlx_t *mlx, t_game *game);
 
 /****
 * ANIMATIONS */
-void	animation_left(mlx_t *mlx);
-void	animation_right(mlx_t *mlx);
+void	animation_left(void);
+void	animation_right(void);
 void	reset_animation(void);
-void	update_trap(mlx_t *mlx);
+void	update_trap(void);
 
 /****
 * COLLISIONS */
@@ -139,14 +139,14 @@ int		collision_event(t_list_component *temp);
 /****
 * MOVEMENTS */
 void	moove_down(void);
-void	moove_left(mlx_t *mlx);
-void	moove_right(mlx_t *mlx);
+void	moove_left(void);
+void	moove_right(void);
 void	moove_up(void);
 
 /****
 * HOOKS */
 void	hook_movement(void *param);
-void	hook_trap(void *param);
+void	hook_trap(void);
 
 /****
 * INIT IMAGES */
@@ -176,9 +176,9 @@ void	init_right_animation(mlx_t *mlx, t_image_player *images);
 /****
 * RESIZE IMAGES */
 void	resize_image_ui(void);
-void	resize_image_player(mlx_t *mlx, t_game *game);
-void	resize_image_trap(mlx_t *mlx, t_game *game);
-void	resize_image_map(mlx_t *mlx, t_game *game);
+void	resize_image_player(void);
+void	resize_image_trap(void);
+void	resize_image_map(void);
 
 /****
 * UTILS */
@@ -189,6 +189,5 @@ int		ft_strcmp(char *s1, char *s2);
 t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
-
 
 #endif

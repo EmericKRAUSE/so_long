@@ -6,13 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:33:55 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:11:56 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:25:11 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/so_long.h"
 
-void	animation_right(mlx_t *mlx)
+void	animation_right(void)
 {
 	g_game.player.time ++;
 	if (g_game.player.time % 10 == 0)

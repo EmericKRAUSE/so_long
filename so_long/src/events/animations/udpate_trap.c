@@ -6,13 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:51:12 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:38:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/06 13:25:26 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/so_long.h"
 
-void	update_trap(mlx_t *mlx)
+void	update_trap(void)
 {
 	int	i;
 
