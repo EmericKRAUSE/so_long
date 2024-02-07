@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/06 13:59:51 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/07 11:13:34 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static	void	so_long(char *file)
 	g_game.pixel = 128;
 	g_game.player = init_player();
 	
-	init_images(mlx, &g_game);
+	init_images(mlx);
 	display_images(mlx, &g_game);
 	g_game.time.time = 0;
 	g_game.time.animation = 0;

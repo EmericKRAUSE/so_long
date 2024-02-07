@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/06 13:31:59 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/07 10:34:57 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,6 @@ void	hook_movement(void *param);
 void	hook_trap(void);
 
 /****
-* INIT IMAGES */
-void	init_images(mlx_t *mlx, t_game *game);
-
-/****
 * PARSING */
 int		create_map(t_map *map);
 void	fill_map(t_map *map, char *file);
@@ -165,13 +161,13 @@ int		path_is_valid(t_map *map);
 
 /****
 * INIT IMAGES */
-void	init_image_map(mlx_t *mlx, t_image_map *images);
-void	init_image_player(mlx_t *mlx, t_image_player *images);
-void	init_image_trap(mlx_t *mlx, t_image_map *images);
-void	init_image_ui(mlx_t *mlx, t_image_ui *images);
-void	init_images(mlx_t *mlx, t_game *game);
-void	init_left_animation(mlx_t *mlx, t_image_player *images);
-void	init_right_animation(mlx_t *mlx, t_image_player *images);
+void	init_image_map(mlx_t *mlx);
+void	init_image_player(mlx_t *mlx);
+void	init_image_trap(mlx_t *mlx);
+void	init_image_ui(mlx_t *mlx);
+void	init_images(mlx_t *mlx);
+void	init_left_animation(mlx_t *mlx);
+void	init_right_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */
