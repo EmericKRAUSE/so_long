@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 13:26:20 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:18:29 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,25 @@ void	init_player(void)
 
 static	void	so_long(char *file)
 {
-	mlx_t		*mlx;
+	//mlx_t		*mlx;
 
 	g_game.map = map_parser(file);
-	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
-	g_game.pixel = 128;
-	init_player();
-	init_images(mlx);
-	resize_images();
-	display_images(mlx, &g_game);
-	g_game.time.time = 0;
-	g_game.time.animation = 0;
+	// mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
+	// g_game.pixel = 128;
+	// g_game.time.time = 0;
+	// g_game.time.animation = 0;
+	// init_player();
+	// init_images(mlx);
+	// resize_images();
+	// display_images(mlx, &g_game);
 	
-	mlx_loop_hook(mlx, &hook_movement, mlx);
-	mlx_loop_hook(mlx, (void *)&hook_trap, mlx);
-	mlx_loop(mlx);
+	// mlx_loop_hook(mlx, &hook_movement, mlx);
+	// mlx_loop_hook(mlx, (void *)&hook_trap, mlx);
+	// mlx_loop(mlx);
 	
-	free_map(g_game.map);
-	free_list(&g_game.list_component);
-	mlx_terminate(mlx);
+	// free_map(g_game.map);
+	// free_list(&g_game.list_component);
+	// mlx_terminate(mlx);
 }
 
 static	int	is_ber(char *file)

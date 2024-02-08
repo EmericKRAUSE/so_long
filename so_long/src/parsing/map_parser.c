@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:29:33 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 15:24:18 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,30 @@ static	int	map_wall_is_valid(t_map *map)
 	return (1);
 }
 
+int	trap_is_valid(t_map	*map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < map->y)
+	{
+		x = 0;
+		while (x < map->x)
+		{
+			if (map->tab[y][x] == 'T')
+				if ((y > 0 && map->tab[y - 1][x] == 'T') || \
+				(y < map->y && map->tab[y + 1][x] == 'T') || \
+				(x > 0 && map->tab[y][x - 1] == 'T') || \
+				(x > map->x && map->tab[y][x + 1] == 'T'))
+					return (0);
+			x++;
+		}
+		y++;
+	}
+	return (1);
+}
+
 /****
 * Parsing de la map
 */
@@ -93,5 +117,10 @@ t_map	map_parser(char *file)
 		ft_error("map is not surrounded by walls");
 	if (!path_is_valid(&map))
 		ft_error("path is not valid");
+	if (!trap_is_valid(&map))
+	{
+		free_map(map);
+		ft_error("trap disposition is not valid");
+	}
 	return (map);
 }
