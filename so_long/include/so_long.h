@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:17:37 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 13:37:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct game
 	t_list_component		*list_component;
 	t_time					time;
 	int						pixel;
+	mlx_image_t				*movement_string;
 }							t_game;
 
 extern t_game			g_game;
@@ -186,5 +187,6 @@ int		ft_strcmp(char *s1, char *s2);
 t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
+char	*ft_itoa(int n);
 
 #endif

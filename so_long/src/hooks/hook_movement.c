@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/06 13:30:15 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 13:46:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,23 @@ static	int	check_collision(int y, int x)
 	temp = g_game.list_component;
 	while (temp)
 	{
-		if (!(y + g_game.image_player.image_character->height <= temp->y \
+		if (!(y + g_game.image_player.image_character->height \
+		<= (unsigned int)temp->y \
 		|| y >= temp->y + g_game.pixel \
-		|| x + g_game.image_player.image_character->width <= temp->x \
+		|| x + g_game.image_player.image_character->width <= \
+		(unsigned int)temp->x \
 		|| x >= temp->x + g_game.pixel))
 			if (!collision_event(temp))
 				return (0);
 		temp = temp->next;
 	}
 	return (1);
+}
+
+static	void	reset_player(void)
+{
+	reset_animation();
+	g_game.image_player.image_character->instances[0].enabled = true;
 }
 
 void	hook_movement(void *param)
@@ -51,8 +59,8 @@ void	hook_movement(void *param)
 	!mlx_is_key_down(param, MLX_KEY_S) && \
 	!mlx_is_key_down(param, MLX_KEY_A) && \
 	!mlx_is_key_down(param, MLX_KEY_D))
-	{
-		reset_animation();
-		g_game.image_player.image_character->instances[0].enabled = true;
-	}
+		reset_player();
+	mlx_delete_image(param, g_game.movement_string);
+	g_game.movement_string = mlx_put_string \
+	(param, ft_itoa(g_game.player.movement), 0, 0);
 }

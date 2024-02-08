@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:19:47 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 13:26:20 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ t_game			g_game;
 int				g_pixels = 128;
 int				g_over = 0;
 
-t_player	init_player(void)
+void	init_player(void)
 {
-	t_player	player;
-	
-	player.y = get_position(g_game.map, 'y');
-	player.x = get_position(g_game.map, 'x');
-	player.time = 0;
-	player.animation = 0;
-	player.collectible = 0;
-	player.movement = 0;
-	return (player);
+	g_game.player.y = get_position(g_game.map, 'y');
+	g_game.player.x = get_position(g_game.map, 'x');
+	g_game.player.time = 0;
+	g_game.player.animation = 0;
+	g_game.player.collectible = 0;
+	g_game.player.movement = 0;
 }
 
 // SO LONG //
@@ -38,8 +35,7 @@ static	void	so_long(char *file)
 	g_game.map = map_parser(file);
 	mlx = mlx_init(g_game.map.x * g_pixels, g_game.map.y * g_pixels, "game", true);
 	g_game.pixel = 128;
-	g_game.player = init_player();
-	
+	init_player();
 	init_images(mlx);
 	resize_images();
 	display_images(mlx, &g_game);

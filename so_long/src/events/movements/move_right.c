@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:29:13 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:05:00 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 13:37:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	moove_right(void)
 		g_game.image_player.image_right_animation[i++]->instances[0].x += 8;
 	}
 	animation_right();
+	g_game.player.movement++;
 }
