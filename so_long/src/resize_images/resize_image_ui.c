@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_up.c                                          :+:      :+:    :+:   */
+/*   resize_image_ui.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 12:36:18 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:04:49 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/08 10:12:19 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/08 10:12:22 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/so_long.h"
+#include "../../include/so_long.h"
 
-void	moove_up(void)
+void	resize_image_ui(void)
 {
-	int	i;
-
-	i = 0;
-	g_game.image_player.image_character->instances[0].y -= 8;
-	while (i < 5)
-	{
-		g_game.image_player.image_left_animation[i]->instances[0].y -= 8;
-		g_game.image_player.image_right_animation[i++]->instances[0].y -= 8;
-	}
+	mlx_resize_image(g_game.image_ui.image_heart_1, \
+	g_game.pixel, g_game.pixel);
+	mlx_resize_image(g_game.image_ui.image_slot, \
+	g_game.pixel, g_game.pixel);
 }

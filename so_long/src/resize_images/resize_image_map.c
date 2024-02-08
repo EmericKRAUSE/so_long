@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_image_player.c                                :+:      :+:    :+:   */
+/*   resize_image_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 11:52:31 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:16:09 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/08 10:13:27 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/08 10:13:32 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	init_image_player(mlx_t *mlx)
+void	resize_image_map(void)
 {
-	g_game.image_player.texture_character = \
-	mlx_load_png("../assets/character/character.png");
-	g_game.image_player.image_character = \
-	mlx_texture_to_image(mlx, g_game.image_player.texture_character);
+	mlx_resize_image(g_game.image_map.image_background, \
+	g_game.pixel, g_game.pixel);
+	mlx_resize_image(g_game.image_map.image_wall, \
+	g_game.pixel, g_game.pixel);
+	mlx_resize_image(g_game.image_map.image_collectible, \
+	g_game.pixel, g_game.pixel);
+	mlx_resize_image(g_game.image_map.image_exit, \
+	g_game.pixel, g_game.pixel);
+	resize_image_trap();
 }

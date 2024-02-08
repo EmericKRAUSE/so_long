@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resize_images.c                                    :+:      :+:    :+:   */
+/*   resize_images_player.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/29 14:47:24 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/07 13:28:19 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/08 10:12:53 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/08 10:12:58 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-
-void	resize_image_ui(void)
-{
-	mlx_resize_image(g_game.image_ui.image_heart_1, \
-	g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_ui.image_slot, \
-	g_game.pixel, g_game.pixel);
-}
 
 void	resize_image_player(void)
 {
@@ -37,23 +29,4 @@ void	resize_image_player(void)
 		mlx_resize_image(g_game.image_player.image_left_animation[i++], \
 		width, height);
 	}
-}
-
-void	resize_image_trap(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < 5)
-		mlx_resize_image(g_game.image_map.image_trap[i++], \
-		g_game.pixel, g_game.pixel);
-}
-
-void	resize_image_map(void)
-{
-	mlx_resize_image(g_game.image_map.image_background, g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_map.image_wall, g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_map.image_collectible, g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_map.image_exit, g_game.pixel, g_game.pixel);
-	resize_image_trap();
 }

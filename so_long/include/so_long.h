@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/07 10:34:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/08 10:17:37 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,11 @@ void	init_right_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */
-void	resize_image_ui(void);
+void	resize_image_map(void);
 void	resize_image_player(void);
 void	resize_image_trap(void);
-void	resize_image_map(void);
+void	resize_image_ui(void);
+void	resize_images(void);
 
 /****
 * UTILS */
