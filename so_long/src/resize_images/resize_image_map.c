@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 10:13:27 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 10:13:32 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:11:31 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	resize_image_map(void)
 	g_game.pixel, g_game.pixel);
 	mlx_resize_image(g_game.image_map.image_exit, \
 	g_game.pixel, g_game.pixel);
-	resize_image_trap();
 }

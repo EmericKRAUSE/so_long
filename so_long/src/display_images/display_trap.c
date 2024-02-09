@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:34:17 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:49:39 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:31:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	void	draw_trap(mlx_t *mlx, int y, int x, int j)
 	int	i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 9)
 	{
 		mlx_image_to_window(mlx, g_game.image_map.image_trap[i], \
 		x * g_game.pixel, y * g_game.pixel);

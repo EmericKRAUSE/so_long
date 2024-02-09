@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 13:37:51 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:30:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ typedef struct image_map
 	mlx_texture_t	*texture_wall;
 	mlx_texture_t	*texture_collectible;
 	mlx_texture_t	*texture_exit;
-	mlx_texture_t	*texture_trap[5];
+	mlx_texture_t	*texture_trap[9];
 	mlx_image_t		*image_background;
 	mlx_image_t		*image_wall;
 	mlx_image_t		*image_collectible;
 	mlx_image_t		*image_exit;
-	mlx_image_t		*image_trap[5];
+	mlx_image_t		*image_trap[9];
 }					t_image_map;
 
 typedef struct image_player
@@ -111,10 +111,10 @@ typedef struct game
 	t_time					time;
 	int						pixel;
 	mlx_image_t				*movement_string;
+	int						is_over;
 }							t_game;
 
 extern t_game			g_game;
-extern int				g_over;
 
 /****
 * DISPLAY IMAGES */
@@ -146,6 +146,7 @@ void	moove_up(void);
 
 /****
 * HOOKS */
+void	hook_close(void *param);
 void	hook_movement(void *param);
 void	hook_trap(void);
 

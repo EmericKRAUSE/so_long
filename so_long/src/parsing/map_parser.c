@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:40:11 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 15:24:18 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:50:09 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static	int	map_component_is_valid(t_map *map)
 		}
 		y++;
 	}
-	return (map->collectible > 0 && map->exit == 1 && map->position == 1);
+	return (map->collectible > 0 && map->exit == 1 && map->position == 1 \
+	&& map->trap > 0);
 }
 
 /****
@@ -71,7 +72,10 @@ static	int	map_wall_is_valid(t_map *map)
 	return (1);
 }
 
-int	trap_is_valid(t_map	*map)
+/****
+* Verifie la qu'il n'y ait pas des trap cote a cote
+*/
+static	int	trap_is_valid(t_map	*map)
 {
 	int	y;
 	int	x;

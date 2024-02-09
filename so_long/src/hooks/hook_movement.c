@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/08 13:46:43 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/09 15:56:51 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	int	check_collision(int y, int x)
 		|| x + g_game.image_player.image_character->width <= \
 		(unsigned int)temp->x \
 		|| x >= temp->x + g_game.pixel))
-			if (!collision_event(temp))
+			if (temp->type == '1')
 				return (0);
 		temp = temp->next;
 	}
@@ -43,10 +43,10 @@ void	hook_movement(void *param)
 	int	y;
 	int	x;
 
+	if (g_game.is_over == 1)
+		return ;
 	y = g_game.image_player.image_character->instances[0].y;
 	x = g_game.image_player.image_character->instances[0].x;
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-		mlx_close_window(param);
 	if (mlx_is_key_down(param, MLX_KEY_W) && check_collision(y - 8, x))
 		moove_up();
 	if (mlx_is_key_down(param, MLX_KEY_S) && check_collision(y + 8, x))
@@ -60,7 +60,7 @@ void	hook_movement(void *param)
 	!mlx_is_key_down(param, MLX_KEY_A) && \
 	!mlx_is_key_down(param, MLX_KEY_D))
 		reset_player();
-	mlx_delete_image(param, g_game.movement_string);
-	g_game.movement_string = mlx_put_string \
-	(param, ft_itoa(g_game.player.movement), 0, 0);
+	//mlx_delete_image(param, g_game.movement_string);
+	//g_game.movement_string = mlx_put_string 
+	//(param, ft_itoa(g_game.player.movement), 0, 0);
 }
