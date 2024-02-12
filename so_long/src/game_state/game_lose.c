@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_image_ui.c                                    :+:      :+:    :+:   */
+/*   game_lose.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 11:50:49 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 14:36:24 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/12 15:03:44 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/12 15:06:50 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	init_image_ui(mlx_t *mlx)
+
+void	game_lose()
 {
-	g_game.image_ui.texture_win = mlx_load_png("assets/UI/you_win.png");
-	g_game.image_ui.texture_lose = mlx_load_png("assets/UI/you_lose.png");
-	g_game.image_ui.image_win = mlx_texture_to_image \
-	(mlx, g_game.image_ui.texture_win);
-	g_game.image_ui.image_lose = mlx_texture_to_image \
-	(mlx, g_game.image_ui.texture_lose);
+	g_game.is_over = 1;
+	g_game.image_ui.image_lose->enabled = true;
 }

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:30:36 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:49:57 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:57:46 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 void	display_ui(mlx_t *mlx, t_game *game)
 {
-	int	x;
+	int	win_width;
+	int	win_height;
+	int	img_width;
+	int	img_height;
 
-	x = 0;
-	mlx_image_to_window(mlx, game->image_ui.image_heart_1, \
-	0, game->map.y * g_game.pixel - g_game.pixel * 2);
-	while (x < 4)
-	{
-		mlx_image_to_window(mlx, game->image_ui.image_slot, \
-		x * g_game.pixel, game->map.y * g_game.pixel - g_game.pixel);
-		x++;
-	}
+	win_width = g_game.map.x * g_game.pixel;
+	win_height = g_game.map.y * g_game.pixel;
+	img_width = g_game.image_ui.image_win->width;
+	img_height = g_game.image_ui.image_win->height;
+	mlx_image_to_window(mlx, game->image_ui.image_win, (win_width - win_width / 2) \
+	- (img_width / 2), (win_height - win_height / 2) - (img_height / 2));
+	mlx_image_to_window(mlx, game->image_ui.image_lose, (win_width - win_width / 2) \
+	- (img_width / 2), (win_height - win_height / 2) - (img_height / 2));
+	g_game.image_ui.image_win->enabled = false;
+	g_game.image_ui.image_lose->enabled = false;
 }

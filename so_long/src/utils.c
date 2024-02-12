@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 12:47:31 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 14:39:03 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	finder(char *str, char to_find)
 	return (0);
 }
 
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -57,15 +56,6 @@ void	free_list(t_list_component **head)
 		previous = *head;
 		*head = (*head)->next;
 		free (previous);
-	}
-}
-
-void	print_list(t_list_component	*head)
-{
-	while (head)
-	{
-		printf ("%d / %c\n", head->nb, head->type);
-		head = head->next;
 	}
 }
 

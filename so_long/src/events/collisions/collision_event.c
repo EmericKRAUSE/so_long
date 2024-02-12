@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:30:24 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/09 15:43:33 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:03:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	collision_event(t_list_component *temp)
 	}
 	else if (temp->type == 'T' && g_game.image_map.image_trap \
 	[4]->instances[temp->nb].enabled == true)
-		g_game.is_over = 1;
+		game_lose();
 	else if (temp->type == 'E' && g_game.player.collectible \
 	== g_game.map.collectible)
-		g_game.is_over = 1;
+		game_win();
 	return (1);
 }

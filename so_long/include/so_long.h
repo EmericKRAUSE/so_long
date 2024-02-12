@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 12:48:54 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:06:21 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ typedef struct image_player
 
 typedef struct image_ui
 {
-	mlx_texture_t	*texture_heart_1;
-	mlx_texture_t	*texture_inventory;
-	mlx_texture_t	*texture_slot;
-	mlx_image_t		*image_heart_1;
-	mlx_image_t		*image_inventory;
-	mlx_image_t		*image_slot;
+	mlx_texture_t	*texture_win;
+	mlx_texture_t	*texture_lose;
+	mlx_image_t		*image_win;
+	mlx_image_t		*image_lose;
 }					t_image_ui;
 
 // ************************************** //
@@ -143,6 +141,11 @@ void	moove_down(void);
 void	moove_left(void);
 void	moove_right(void);
 void	moove_up(void);
+
+/****
+* GAME_STATE */
+void	game_win();
+void	game_lose();
 
 /****
 * HOOKS */
