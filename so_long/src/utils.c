@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 14:39:03 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:27:49 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_strcmp(char *s1, char *s2)
 void	free_list(t_list_component **head)
 {
 	t_list_component	*previous;
+
 	while (*head)
 	{
 		previous = *head;
@@ -59,14 +60,15 @@ void	free_list(t_list_component **head)
 	}
 }
 
-t_list_component	*create_node(t_list_component *head, int y, int x, char type)
+t_list_component	*create_node(t_list_component *head, \
+int y, int x, char type)
 {
 	t_list_component	*node;
 	t_list_component	*current;
 
 	node = malloc(sizeof(t_list_component));
 	if (!node)
-		return NULL;
+		return (NULL);
 	node->next = NULL;
 	node->y = y;
 	node->x = x;

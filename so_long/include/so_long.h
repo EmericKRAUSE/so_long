@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 15:06:21 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 16:09:04 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,79 +116,83 @@ extern t_game			g_game;
 
 /****
 * DISPLAY IMAGES */
-void	display_images(mlx_t *mlx, t_game *game);
-void	display_left_animation(mlx_t *mlx, t_game *game, int y, int x);
-void	display_map(mlx_t *mlx, t_game *game);
-void	display_player(mlx_t *mlx, t_game *game, int y, int x);
-void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x);
-void	display_trap(mlx_t *mlx, t_game *game);
-void	display_ui(mlx_t *mlx, t_game *game);
+void				display_images(mlx_t *mlx, t_game *game);
+void				display_left_animation(mlx_t *mlx, \
+t_game *game, int y, int x);
+void				display_map(mlx_t *mlx, t_game *game);
+void				display_player(mlx_t *mlx, t_game *game, int y, int x);
+void				display_right_animation(mlx_t *mlx, \
+t_game *game, int y, int x);
+void				display_trap(mlx_t *mlx, t_game *game);
+void				display_ui(mlx_t *mlx, t_game *game);
 
 /****
 * ANIMATIONS */
-void	animation_left(void);
-void	animation_right(void);
-void	reset_animation(void);
-void	update_trap(void);
+void				animation_left(void);
+void				animation_right(void);
+void				reset_animation(void);
+void				update_trap(void);
 
 /****
 * COLLISIONS */
-int		collision_event(t_list_component *temp);
+int					collision_event(t_list_component *temp);
 
 /****
 * MOVEMENTS */
-void	moove_down(void);
-void	moove_left(void);
-void	moove_right(void);
-void	moove_up(void);
+void				moove_down(void);
+void				moove_left(void);
+void				moove_right(void);
+void				moove_up(void);
 
 /****
 * GAME_STATE */
-void	game_win();
-void	game_lose();
+void				game_win(void);
+void				game_lose(void);
 
 /****
 * HOOKS */
-void	hook_close(void *param);
-void	hook_movement(void *param);
-void	hook_trap(void);
+void				hook_close(void *param);
+void				hook_collision(void);
+void				hook_movement(void *param);
+void				hook_trap(void);
 
 /****
 * PARSING */
-int		create_map(t_map *map);
-void	fill_map(t_map *map, char *file);
-void	free_map(t_map map);
-int		get_map_size(t_map *map, char *file);
-int		get_position(t_map flooded_map, char c);
-t_map	init_map(void);
-t_map	map_parser(char *file);
-int		path_is_valid(t_map *map);
+int					create_map(t_map *map);
+void				fill_map(t_map *map, char *file);
+void				free_map(t_map map);
+int					get_map_size(t_map *map, char *file);
+int					get_position(t_map flooded_map, char c);
+t_map				init_map(void);
+t_map				map_parser(char *file);
+int					path_is_valid(t_map *map);
 
 /****
 * INIT IMAGES */
-void	init_image_map(mlx_t *mlx);
-void	init_image_player(mlx_t *mlx);
-void	init_image_trap(mlx_t *mlx);
-void	init_image_ui(mlx_t *mlx);
-void	init_images(mlx_t *mlx);
-void	init_left_animation(mlx_t *mlx);
-void	init_right_animation(mlx_t *mlx);
+void				init_image_map(mlx_t *mlx);
+void				init_image_player(mlx_t *mlx);
+void				init_image_trap(mlx_t *mlx);
+void				init_image_ui(mlx_t *mlx);
+void				init_images(mlx_t *mlx);
+void				init_left_animation(mlx_t *mlx);
+void				init_right_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */
-void	resize_image_map(void);
-void	resize_image_player(void);
-void	resize_image_trap(void);
-void	resize_image_ui(void);
-void	resize_images(void);
+void				resize_image_map(void);
+void				resize_image_player(void);
+void				resize_image_trap(void);
+void				resize_image_ui(void);
+void				resize_images(void);
 
 /****
 * UTILS */
-void	ft_error(char *str);
-int		ft_strcmp(char *s1, char *s2);
-int		finder(char *str, char to_find);
-t_list_component	*create_node(t_list_component *head, int y, int x, char type);
-void	print_list(t_list_component *head);
-void	free_list(t_list_component **head);
+void				ft_error(char *str);
+int					ft_strcmp(char *s1, char *s2);
+int					finder(char *str, char to_find);
+t_list_component	*create_node(t_list_component *head, \
+int y, int x, char type);
+void				print_list(t_list_component *head);
+void				free_list(t_list_component **head);
 
 #endif

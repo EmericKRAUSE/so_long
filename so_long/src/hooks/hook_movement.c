@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 10:49:53 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 15:29:56 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static	void	reset_player(void)
 
 void	hook_movement(void *param)
 {
-	int	y;
-	int	x;
-	char *str;
+	int		y;
+	int		x;
+	char	*str;
 
 	if (g_game.is_over == 1)
 		return ;
