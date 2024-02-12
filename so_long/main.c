@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 14:26:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/09 15:43:12 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/12 11:21:01 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/12 11:22:06 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "include/so_long.h"
 
 t_game			g_game;
 
@@ -47,8 +47,6 @@ void	hook_collision(void)
 		temp = temp->next;
 	}
 }
-
-// SO LONG //
 
 static	void	so_long(char *file)
 {
@@ -104,5 +102,3 @@ int	main(int argc, char **argv)
 	so_long(file);
 	return (0);
 }
-
-// SO LONG //

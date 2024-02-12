@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/09 15:56:51 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 10:49:53 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	hook_movement(void *param)
 {
 	int	y;
 	int	x;
+	char *str;
 
 	if (g_game.is_over == 1)
 		return ;
@@ -60,7 +61,8 @@ void	hook_movement(void *param)
 	!mlx_is_key_down(param, MLX_KEY_A) && \
 	!mlx_is_key_down(param, MLX_KEY_D))
 		reset_player();
-	//mlx_delete_image(param, g_game.movement_string);
-	//g_game.movement_string = mlx_put_string 
-	//(param, ft_itoa(g_game.player.movement), 0, 0);
+	mlx_delete_image(param, g_game.movement_string);
+	str = ft_itoa(g_game.player.movement);
+	g_game.movement_string = mlx_put_string(param, str, 0, 0);
+	free(str);
 }

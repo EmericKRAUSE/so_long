@@ -1,27 +1,30 @@
-NAME	= Game
-CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX	= ./lib/MLX42
+NAME	= so_long.a
+CC		= gcc
+CFLAGS	= -Wextra -Wall -Werror
+LIBFT	= libft/libft.a
+MAKE_LIBFT	= @make -C libft
 
-HEADERS	= -I ./include -I $(LIBMLX)/include
-LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	= $(shell find ./src -iname "*.c")
-OBJS	= ${SRCS:.c=.o}
+SRC	= $(shell find src -type f -name "*.c")
+OBJ	= ${SRC:.c=.o}
 
-all: libmlx $(NAME)
+all: $(NAME)
 
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+$(LIBFT):
+	$(MAKE_LIBFT)
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	cp $(LIBFT) $(NAME)
+	ar crs $@ $^
 
 clean:
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	rm -rf $(OBJ)
+	$(MAKE_LIBFT) clean
 
 fclean: clean
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
+	$(MAKE_LIBFT) fclean
 
 re: clean all
+	$(MAKE_LIBFT) re
 
-.PHONY: all, clean, fclean, re, libmlx
+.PHONY: all, clean, fclean, re

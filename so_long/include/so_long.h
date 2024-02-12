@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/09 15:30:27 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/12 12:48:54 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SO_LONG_H
 
 # include "../MLX42/include/MLX42/MLX42.h"
-# include <stdio.h> // A ENLEVER //
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -182,12 +182,10 @@ void	resize_images(void);
 /****
 * UTILS */
 void	ft_error(char *str);
-int		ft_strchr(char *str, char to_find);
-int		ft_strlen(char *str);
 int		ft_strcmp(char *s1, char *s2);
+int		finder(char *str, char to_find);
 t_list_component	*create_node(t_list_component *head, int y, int x, char type);
 void	print_list(t_list_component *head);
 void	free_list(t_list_component **head);
-char	*ft_itoa(int n);
 
 #endif
