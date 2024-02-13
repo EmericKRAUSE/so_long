@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 12:48:40 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 15:27:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/13 12:36:02 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_error(char *str)
 {
+	ft_putendl_fd("Error", 1);
 	ft_putendl_fd(str, 1);
 	exit(EXIT_FAILURE);
 }

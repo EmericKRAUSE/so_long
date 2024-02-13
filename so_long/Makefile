@@ -1,7 +1,10 @@
-NAME	= so_long.a
+NAME	= so_long
 CC		= gcc
 CFLAGS	= -Wextra -Wall -Werror
+MAIN	= main.c
 LIBFT	= libft/libft.a
+LIBMLX	= MLX42/build/libmlx42.a
+INC		= -Iinclude -ldl -lglfw -pthread -lm
 MAKE_LIBFT	= @make -C libft
 
 SRC	= $(shell find src -type f -name "*.c")
@@ -12,9 +15,8 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE_LIBFT)
 
-$(NAME): $(OBJ) $(LIBFT)
-	cp $(LIBFT) $(NAME)
-	ar crs $@ $^
+$(NAME): $(LIBFT)
+	$(CC) $(MAIN) $(SRC) $(LIBFT) $(LIBMLX) $(INC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
