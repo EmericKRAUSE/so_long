@@ -1,10 +1,10 @@
-NAME	= so_long
-CC		= gcc
-CFLAGS	= -Wextra -Wall -Werror
-MAIN	= main.c
-LIBFT	= libft/libft.a
-LIBMLX	= MLX42/build/libmlx42.a
-INC		= -Iinclude -ldl -lglfw -pthread -lm
+NAME		= so_long
+CC			= gcc
+CFLAGS		= -Wextra -Wall -Werror
+INC			= -Iinclude -ldl -lglfw -pthread -lm
+MAIN		= main.c
+LIBMLX		= MLX42/build/libmlx42.a
+LIBFT		= libft/libft.a
 MAKE_LIBFT	= @make -C libft
 
 SRC	= $(shell find src -type f -name "*.c")
@@ -15,8 +15,8 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE_LIBFT)
 
-$(NAME): $(LIBFT)
-	$(CC) $(MAIN) $(SRC) $(LIBFT) $(LIBMLX) $(INC) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(MAIN) $(OBJ) $(LIBFT) $(LIBMLX) $(INC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)
@@ -26,7 +26,7 @@ fclean: clean
 	rm -rf $(NAME)
 	$(MAKE_LIBFT) fclean
 
-re: clean all
+re: fclean all
 	$(MAKE_LIBFT) re
 
 .PHONY: all, clean, fclean, re
