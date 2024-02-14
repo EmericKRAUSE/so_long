@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   resize_image_map.c                                 :+:      :+:    :+:   */
+/*   resize_image_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 10:13:27 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/14 13:36:17 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/14 13:35:58 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/14 13:36:48 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	resize_image_map(void)
+void	resize_image_exit(void)
 {
-	mlx_resize_image(g_game.image_map.image_background, \
-	g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_map.image_wall, \
-	g_game.pixel, g_game.pixel);
-	mlx_resize_image(g_game.image_map.image_collectible, \
-	g_game.pixel, g_game.pixel);
+	int	i;
+
+	i = 0;
+	while (i < 4)
+		mlx_resize_image(g_game.image_map.image_exit[i++], \
+		g_game.pixel, g_game.pixel);
 }

@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:50:08 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 12:15:24 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:19:27 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@ void	init_image_map(mlx_t *mlx)
 	("assets/map/wall.png");
 	g_game.image_map.texture_collectible = mlx_load_png \
 	("assets/map/collectible.png");
-	g_game.image_map.texture_exit = mlx_load_png \
-	("assets/map/exit.png");
 	g_game.image_map.image_background = mlx_texture_to_image \
 	(mlx, g_game.image_map.texture_background);
 	g_game.image_map.image_wall = mlx_texture_to_image \
 	(mlx, g_game.image_map.texture_wall);
 	g_game.image_map.image_collectible = mlx_texture_to_image \
 	(mlx, g_game.image_map.texture_collectible);
-	g_game.image_map.image_exit = mlx_texture_to_image \
-	(mlx, g_game.image_map.texture_exit);
 }

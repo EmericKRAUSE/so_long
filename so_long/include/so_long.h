@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 16:09:04 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:39:47 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ typedef struct image_map
 	mlx_texture_t	*texture_background;
 	mlx_texture_t	*texture_wall;
 	mlx_texture_t	*texture_collectible;
-	mlx_texture_t	*texture_exit;
+	mlx_texture_t	*texture_exit[4];
 	mlx_texture_t	*texture_trap[9];
 	mlx_image_t		*image_background;
 	mlx_image_t		*image_wall;
 	mlx_image_t		*image_collectible;
-	mlx_image_t		*image_exit;
+	mlx_image_t		*image_exit[4];
 	mlx_image_t		*image_trap[9];
 }					t_image_map;
 
@@ -93,7 +93,8 @@ typedef struct player
 typedef struct time
 {
 	int	time;
-	int	animation;
+	int	animation_trap;
+	int	animation_exit;
 }		t_time;
 
 /****
@@ -116,6 +117,7 @@ extern t_game			g_game;
 
 /****
 * DISPLAY IMAGES */
+void				display_exit(mlx_t *mlx, t_game *game);
 void				display_images(mlx_t *mlx, t_game *game);
 void				display_left_animation(mlx_t *mlx, \
 t_game *game, int y, int x);
@@ -169,6 +171,7 @@ int					path_is_valid(t_map *map);
 
 /****
 * INIT IMAGES */
+void				init_image_exit(mlx_t *mlx);
 void				init_image_map(mlx_t *mlx);
 void				init_image_player(mlx_t *mlx);
 void				init_image_trap(mlx_t *mlx);
@@ -179,6 +182,7 @@ void				init_right_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */
+void				resize_image_exit(void);
 void				resize_image_map(void);
 void				resize_image_player(void);
 void				resize_image_trap(void);

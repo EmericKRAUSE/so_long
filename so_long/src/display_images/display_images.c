@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:05:29 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/09 15:16:03 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/14 13:57:28 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	display_images(mlx_t *mlx, t_game *game)
 {
 	display_map(mlx, game);
 	display_trap(mlx, game);
+	display_exit(mlx, game);
 	add_to_list(game);
 	display_player(mlx, game, game->player.y, game->player.x);
 	display_ui(mlx, game);

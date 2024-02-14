@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:21:01 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 16:10:50 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/14 14:42:10 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static	void	so_long(char *file)
 	mlx = mlx_init(g_game.map.x * g_game.pixel, \
 	g_game.map.y * g_game.pixel, "game", true);
 	g_game.time.time = 0;
-	g_game.time.animation = 0;
+	g_game.time.animation_trap = 0;
+	g_game.time.animation_exit = 0;
 	g_game.is_over = 0;
 	init_player();
 	init_images(mlx);
