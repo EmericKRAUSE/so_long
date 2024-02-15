@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 14:58:34 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 15:19:25 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct image_ui
 	mlx_image_t		*image_lose;
 }					t_image_ui;
 
-// ************************************** //
-
+/****
+* OTHER STRUCT */
 typedef struct list_component
 {
 	struct list_component	*next;
@@ -93,7 +93,6 @@ typedef struct player
 
 /****
 * STRUCT ANIMATION */
-
 typedef struct time
 {
 	int	time;
@@ -170,17 +169,6 @@ void				hook_movement(void *param);
 void				hook_trap(void);
 
 /****
-* PARSING */
-int					create_map(t_map *map);
-void				fill_map(t_map *map, char *file);
-void				free_map(t_map map);
-int					get_map_size(t_map *map, char *file);
-int					get_position(t_map flooded_map, char c);
-t_map				init_map(void);
-t_map				map_parser(char *file);
-int					path_is_valid(t_map *map);
-
-/****
 * INIT IMAGES */
 void				init_image_exit(mlx_t *mlx);
 void				init_image_map(mlx_t *mlx);
@@ -192,6 +180,22 @@ void				init_left_animation(mlx_t *mlx);
 void				init_right_animation(mlx_t *mlx);
 void				init_up_animation(mlx_t *mlx);
 void				init_down_animation(mlx_t *mlx);
+
+/****
+* INIT OTHER */
+void				init_player(void);
+void				init_time(void);
+
+/****
+* PARSING */
+int					create_map(t_map *map);
+void				fill_map(t_map *map, char *file);
+void				free_map(t_map map);
+int					get_map_size(t_map *map, char *file);
+int					get_position(t_map flooded_map, char c);
+t_map				init_map(void);
+t_map				map_parser(char *file);
+int					path_is_valid(t_map *map);
 
 /****
 * RESIZE IMAGES */

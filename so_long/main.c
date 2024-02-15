@@ -6,30 +6,13 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:21:01 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 10:57:49 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 15:08:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/so_long.h"
 
 t_game			g_game;
-
-static	void	init_player(void)
-{
-	g_game.player.y = get_position(g_game.map, 'y');
-	g_game.player.x = get_position(g_game.map, 'x');
-	g_game.player.time = 0;
-	g_game.player.animation = 0;
-	g_game.player.collectible = 0;
-	g_game.player.movement = 0;
-}
-
-static	void	init_time(void)
-{
-	g_game.time.time = 0;
-	g_game.time.animation_trap = 0;
-	g_game.time.animation_exit = 0;
-}
 
 static	void	so_long(char *file)
 {
