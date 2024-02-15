@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_images.c                                      :+:      :+:    :+:   */
+/*   display_up_animation.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:41:20 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 11:30:05 by ekrause          ###   ########.fr       */
+/*   Created: 2024/02/15 11:31:40 by ekrause           #+#    #+#             */
+/*   Updated: 2024/02/15 11:32:55 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
 
-void	init_images(mlx_t *mlx)
+void	display_up_animation(mlx_t *mlx, t_game *game, int y, int x)
 {
-	init_image_map(mlx);
-	init_image_player(mlx);
-	init_image_trap(mlx);
-	init_image_exit(mlx);
-	init_image_ui(mlx);
-	init_left_animation(mlx);
-	init_right_animation(mlx);
-	init_up_animation(mlx);
+	int	i;
+
+	i = 0;
+	while (i < 6)
+	{
+		mlx_image_to_window(mlx, game \
+		->image_player.image_up_animation[i], \
+		x * g_game.pixel, y * g_game.pixel);
+		game->image_player.image_up_animation[i++] \
+		->instances[0].enabled = false;
+	}
 }

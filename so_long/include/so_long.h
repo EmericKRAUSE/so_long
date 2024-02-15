@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/14 14:39:47 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 11:32:50 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ typedef struct image_map
 typedef struct image_player
 {
 	mlx_texture_t	*texture_character;
-	mlx_texture_t	*texture_right_animation[5];
-	mlx_texture_t	*texture_left_animation[5];
+	mlx_texture_t	*texture_right_animation[6];
+	mlx_texture_t	*texture_left_animation[6];
+	mlx_texture_t	*texture_up_animation[6];
 	mlx_image_t		*image_character;
-	mlx_image_t		*image_right_animation[5];
-	mlx_image_t		*image_left_animation[5];
+	mlx_image_t		*image_right_animation[6];
+	mlx_image_t		*image_left_animation[6];
+	mlx_image_t		*image_up_animation[6];
 }					t_image_player;
 
 typedef struct image_ui
@@ -108,8 +110,8 @@ typedef struct game
 	t_image_ui				image_ui;
 	t_list_component		*list_component;
 	t_time					time;
-	int						pixel;
 	mlx_image_t				*movement_string;
+	int						pixel;
 	int						is_over;
 }							t_game;
 
@@ -127,13 +129,16 @@ void				display_right_animation(mlx_t *mlx, \
 t_game *game, int y, int x);
 void				display_trap(mlx_t *mlx, t_game *game);
 void				display_ui(mlx_t *mlx, t_game *game);
+void	display_up_animation(mlx_t *mlx, t_game *game, int y, int x);
 
 /****
 * ANIMATIONS */
 void				animation_left(void);
 void				animation_right(void);
+void				animation_up(void);
 void				reset_animation(void);
 void				update_trap(void);
+void				update_exit(void);
 
 /****
 * COLLISIONS */
@@ -179,6 +184,7 @@ void				init_image_ui(mlx_t *mlx);
 void				init_images(mlx_t *mlx);
 void				init_left_animation(mlx_t *mlx);
 void				init_right_animation(mlx_t *mlx);
+void				init_up_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */

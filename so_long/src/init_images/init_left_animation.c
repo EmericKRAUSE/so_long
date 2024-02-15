@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:51:20 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 12:15:48 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 11:24:43 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	init_left_animation(mlx_t *mlx)
 	mlx_load_png("assets/character/left4.png");
 	g_game.image_player.texture_left_animation[4] = \
 	mlx_load_png("assets/character/left5.png");
-	while (++i < 5)
+	g_game.image_player.texture_left_animation[5] = \
+	mlx_load_png("assets/character/left6.png");
+	while (++i < 6)
 		g_game.image_player.image_left_animation[i] = \
 		mlx_texture_to_image \
 		(mlx, g_game.image_player.texture_left_animation[i]);

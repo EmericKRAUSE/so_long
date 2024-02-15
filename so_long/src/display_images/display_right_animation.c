@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:32:44 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 12:49:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 11:25:20 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	display_right_animation(mlx_t *mlx, t_game *game, int y, int x)
 	int	i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		mlx_image_to_window(mlx, game \
 		->image_player.image_right_animation[i], \

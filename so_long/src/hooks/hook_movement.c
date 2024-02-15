@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 10:19:25 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/12 15:29:56 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 13:34:53 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,20 @@ static	void	reset_player(void)
 	g_game.image_player.image_character->instances[0].enabled = true;
 }
 
+static	void	put_movement(mlx_t *mlx)
+{
+	char	*str;
+
+	mlx_delete_image(mlx, g_game.movement_string);
+	str = ft_itoa(g_game.player.movement);
+	g_game.movement_string = mlx_put_string(mlx, str, 0, 0);
+	free(str);
+}
+
 void	hook_movement(void *param)
 {
 	int		y;
 	int		x;
-	char	*str;
 
 	if (g_game.is_over == 1)
 		return ;
@@ -50,19 +59,13 @@ void	hook_movement(void *param)
 	x = g_game.image_player.image_character->instances[0].x;
 	if (mlx_is_key_down(param, MLX_KEY_W) && check_collision(y - 8, x))
 		moove_up();
-	if (mlx_is_key_down(param, MLX_KEY_S) && check_collision(y + 8, x))
+	else if (mlx_is_key_down(param, MLX_KEY_S) && check_collision(y + 8, x))
 		moove_down();
-	if (mlx_is_key_down(param, MLX_KEY_A) && check_collision(y, x - 8))
+	else if (mlx_is_key_down(param, MLX_KEY_A) && check_collision(y, x - 8))
 		moove_left();
-	if (mlx_is_key_down(param, MLX_KEY_D) && check_collision(y, x + 8))
+	else if (mlx_is_key_down(param, MLX_KEY_D) && check_collision(y, x + 8))
 		moove_right();
-	if (!mlx_is_key_down(param, MLX_KEY_W) && \
-	!mlx_is_key_down(param, MLX_KEY_S) && \
-	!mlx_is_key_down(param, MLX_KEY_A) && \
-	!mlx_is_key_down(param, MLX_KEY_D))
+	else
 		reset_player();
-	mlx_delete_image(param, g_game.movement_string);
-	str = ft_itoa(g_game.player.movement);
-	g_game.movement_string = mlx_put_string(param, str, 0, 0);
-	free(str);
+	put_movement(param);
 }

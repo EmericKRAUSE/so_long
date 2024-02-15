@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:41:18 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/02 10:22:11 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 13:04:21 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	reset_animation(void)
 	int	i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		if (g_game.image_player.image_left_animation[i] \
 		->instances[0].enabled == true)
@@ -26,6 +26,10 @@ void	reset_animation(void)
 		if (g_game.image_player.image_right_animation[i] \
 		->instances[0].enabled == true)
 			g_game.image_player.image_right_animation[i] \
+			->instances[0].enabled = false;
+		if (g_game.image_player.image_up_animation[i] \
+		->instances[0].enabled == true)
+			g_game.image_player.image_up_animation[i] \
 			->instances[0].enabled = false;
 		i++;
 	}
