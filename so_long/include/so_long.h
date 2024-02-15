@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 11:32:50 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 14:58:34 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ typedef struct image_player
 	mlx_texture_t	*texture_right_animation[6];
 	mlx_texture_t	*texture_left_animation[6];
 	mlx_texture_t	*texture_up_animation[6];
+	mlx_texture_t	*texture_down_animation[6];
 	mlx_image_t		*image_character;
 	mlx_image_t		*image_right_animation[6];
 	mlx_image_t		*image_left_animation[6];
 	mlx_image_t		*image_up_animation[6];
+	mlx_image_t		*image_down_animation[6];
 }					t_image_player;
 
 typedef struct image_ui
@@ -129,13 +131,17 @@ void				display_right_animation(mlx_t *mlx, \
 t_game *game, int y, int x);
 void				display_trap(mlx_t *mlx, t_game *game);
 void				display_ui(mlx_t *mlx, t_game *game);
-void	display_up_animation(mlx_t *mlx, t_game *game, int y, int x);
+void				display_up_animation(mlx_t *mlx, \
+t_game *game, int y, int x);
+void				display_down_animation(mlx_t *mlx, \
+t_game *game, int y, int x);
 
 /****
 * ANIMATIONS */
 void				animation_left(void);
 void				animation_right(void);
 void				animation_up(void);
+void				animation_down(void);
 void				reset_animation(void);
 void				update_trap(void);
 void				update_exit(void);
@@ -185,6 +191,7 @@ void				init_images(mlx_t *mlx);
 void				init_left_animation(mlx_t *mlx);
 void				init_right_animation(mlx_t *mlx);
 void				init_up_animation(mlx_t *mlx);
+void				init_down_animation(mlx_t *mlx);
 
 /****
 * RESIZE IMAGES */

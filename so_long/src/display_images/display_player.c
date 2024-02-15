@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 10:33:34 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 12:58:09 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 14:52:07 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	display_player(mlx_t *mlx, t_game *game, int y, int x)
 	display_right_animation(mlx, game, y, x);
 	display_left_animation(mlx, game, y, x);
 	display_up_animation(mlx, game, y, x);
+	display_down_animation(mlx, game, y, x);
 }

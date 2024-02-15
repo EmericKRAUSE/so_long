@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:41:20 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 11:30:05 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/15 14:16:44 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	init_images(mlx_t *mlx)
 	init_left_animation(mlx);
 	init_right_animation(mlx);
 	init_up_animation(mlx);
+	init_down_animation(mlx);
 }
