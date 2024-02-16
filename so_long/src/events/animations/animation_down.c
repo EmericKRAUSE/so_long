@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:12:50 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 14:53:28 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/16 11:09:40 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	animation_down(void)
 {
-	g_game.player.time ++;
 	if (g_game.player.time % 10 == 0)
 	{
 		g_game.image_player.image_character->instances[0].enabled = false;
@@ -35,4 +34,5 @@ void	animation_down(void)
 			g_game.player.animation = 0;
 		g_game.player.time = 0;
 	}
+	g_game.player.time ++;
 }

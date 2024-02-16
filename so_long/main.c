@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:21:01 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 15:08:43 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/16 11:00:06 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	void	so_long(char *file)
 	mlx_loop_hook(mlx, &hook_close, mlx);
 	mlx_loop_hook(mlx, &hook_movement, mlx);
 	mlx_loop_hook(mlx, (void *)&hook_collision, mlx);
-	mlx_loop_hook(mlx, (void *)&hook_trap, mlx);
+	mlx_loop_hook(mlx, (void *)&hook_time, mlx);
 	mlx_loop(mlx);
 	free_map(g_game.map);
 	free_list(&g_game.list_component);

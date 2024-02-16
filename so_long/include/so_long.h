@@ -6,7 +6,7 @@
 /*   By: ekrause <emeric.yukii@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 13:01:05 by ekrause           #+#    #+#             */
-/*   Updated: 2024/02/15 15:19:25 by ekrause          ###   ########.fr       */
+/*   Updated: 2024/02/16 10:59:01 by ekrause          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void				game_lose(void);
 void				hook_close(void *param);
 void				hook_collision(void);
 void				hook_movement(void *param);
-void				hook_trap(void);
+void				hook_time(void);
 
 /****
 * INIT IMAGES */
